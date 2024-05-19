@@ -1,0 +1,154 @@
+@import url('https://fonts.cdnfonts.com/css/made-tommy-outline');
+@import url('https://fonts.cdnfonts.com/css/cavilant');
+
+html {
+  scroll-behavior: smooth;
+}
+
+header {
+  border-bottom: 3px solid #752A7A;
+}
+
+.max-w-8xl {
+  max-width: 95rem;
+}
+
+.max-w-9xl {
+  max-width: 94rem;
+}
+
+.rounded-xl {
+  border-radius: 20px;
+}
+
+.rounded-2xl {
+  border-radius: 15px;
+}
+
+.text-purple {
+  color: #752A7A;
+}
+
+.bg-purple {
+  background-color: #752A7A;
+}
+
+.border-white {
+  border: 2px solid #ffffff;
+}
+
+.text-shadow {
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.027);
+}
+
+.made-tommy {
+  font-family: 'MADE TOMMY';
+  font-style: normal;
+}
+
+.cavilant {
+  font-family: 'Cavilant';
+  font-style: normal;
+}
+
+.text-1xl {
+  font-size: 1.2rem;
+}
+
+.max-main {
+  max-width: 96rem !important;
+}
+
+.color-purple {
+  color: #752A7A;
+}
+
+.color-pink {
+  color: #FF794D;
+}
+
+.text-lg {
+  font-size: 1rem !important;
+  line-height: 1.75rem !important;
+}
+
+.text-lg-a {
+  font-size: 0.9rem !important;
+  line-height: 1.75rem !important;
+}
+
+.bg-purple {
+  background-color: #752A7A;
+}
+
+.hover\:bg-purple:hover {
+  background-color: #752A7A;
+}
+
+.badge-purple {
+  background-color: #752a7a1a;
+}
+
+.bg-purple-transparent {
+  background-color: #752A7AD9;
+}
+
+.border-purple {
+  border: 2px solid #752A7A;
+}
+
+.border-b-purple {
+  border-bottom: 2px solid #752a7a;
+}
+
+.facebook {
+  border: 3px solid #1877F2;
+  color: #1877F2;
+}
+
+.instagram {
+  border: 3px solid #C21F70;
+  color: #C21F70;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fade-in 0.6s;
+}
+
+.items::-webkit-scrollbar {
+  width: 8px;
+}
+
+.items::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+.items::-webkit-scrollbar-thumb:active {
+  background-color: #c4c4c4;
+}
+
+.items::-webkit-scrollbar-thumb:hover {
+  background: #b3b3b3;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.items::-webkit-scrollbar-track {
+  background: #e1e1e1;
+  border-radius: 4px;
+}
+
+.items::-webkit-scrollbar-track:hover, 
+.items::-webkit-scrollbar-track:active {
+  background: #d4d4d4;
+}

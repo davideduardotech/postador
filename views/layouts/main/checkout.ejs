@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Adquira um plano na pluBee">
+  <meta name="author" content="pluBee.net">
+  <meta name="generator" content="pluBee.net">
+  <title>pluBee | Adquirir um plano</title>
+
+  <link rel="shortcut icon" href="/img/main/fav.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/css/main/tailwind.min.css">
+  <link rel="stylesheet" href="/css/main/style.css">
+  <link rel="stylesheet" href="/css/alert-message/style.css">
+
+  <!-- Icones FontAwesome/Bootstrap -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+  <!-- Style -->
+  <link rel="stylesheet" href="/css/checkout/checkout-min.css">
+</head>
+
+<body class="bg-gray-100" class="fade-in">
+  <%- include('../../partials/main/nav') %>
+
+  <main class="data-user mx-auto max-w-7xl px-4 pb-24 pt-16 sm:px-6 lg:px-8">
+    <div class="hidden relative z-10 fade-in" id="popup-await" role="dialog" aria-modal="true">
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-25 transition-opacity"></div>
+    
+      <div class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20 mt-40">
+        <div class="mx-auto max-w-lg transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">      
+          <div class="flex flex-col divide-y divide-gray-100">
+            <div class="min-w-0 flex-auto scroll-py-4 overflow-y-auto px-6 py-4">
+              <div class="flex flex-col divide-y divide-gray-100 px-6">
+                <div>
+                  <div class="flex flex-col items-center justify-center mt-6 py-14">
+                    <div class="loader loader--style3" title="2">
+                      <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                         width="50px" height="50px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                      <path fill="#752A7A" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+                        <animateTransform attributeType="xml"
+                          attributeName="transform"
+                          type="rotate"
+                          from="0 25 25"
+                          to="360 25 25"
+                          dur="0.6s"
+                          repeatCount="indefinite"/>
+                        </path>
+                      </svg>
+                    </div>                                        
+                    <h2 for="content" class="block text-lg font-semibold leading-6 text-gray-900 inter mt-6">Estamos processando o seu pagamento...</h2>
+                    <p class="inter text-center text-md font-medium">Por favor, não feche a janela ou troque de página.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="py-4 bg-transparent">
+      <div class="px-4">
+        <div class="flex flex-col md:flex-row flex-wrap items-center justify-center">
+          <div class="flex items-center">
+            <div class="inline-flex w-7 h-7 mr-4 justify-center items-center rounded-full bg-purple text-sm font-bold text-white">1</div>
+            <span class="font-bold text-purple">Informações pessoais</span>
+          </div>
+          <span class="my-4 md:my-0 md:mx-8 lg:mx-16">
+            <svg width="18" height="14" viewbox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path opacity="0.5" d="M10.6667 1.16669L16.5 7.00002M16.5 7.00002L10.6667 12.8334M16.5 7.00002L1.5 7.00002" stroke="#84878A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </span>
+          <div class="flex items-center">
+            <div id="step-two-line-number" class="inline-flex w-7 h-7 mr-4 justify-center items-center rounded-full bg-blueGray-800 text-sm font-bold text-gray-500">2</div>
+            <span id="step-two-line-text" class="font-bold text-gray-500">Pagamento</span>
+          </div>
+          <span class="my-4 md:my-0 md:mx-8 lg:mx-16">
+            <svg width="18" height="14" viewbox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path opacity="0.5" d="M10.6667 1.16669L16.5 7.00002M16.5 7.00002L10.6667 12.8334M16.5 7.00002L1.5 7.00002" stroke="#84878A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </span>
+          <div class="flex items-center">
+            <div id="step-three-line-number" class="inline-flex w-7 h-7 mr-4 justify-center items-center rounded-full bg-blueGray-800 text-sm font-bold text-gray-500">3</div>
+            <span id="step-three-line-text" class="font-bold text-gray-500">Compra efetuada com sucesso</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="checkout-area" class="mx-auto max-w-4xl">
+      <h1 class="sr-only">Checkout</h1>
+
+      <div class="grid grid-cols-1 gap-y-12 mt-14">
+        <div class="fade-in" id="step-one">
+          <div>
+            <h2 class="text-1xl font-medium text-gray-900 made-tommy color-purple">1. Preencha com as suas informações:</h2>
+            <p class="text-lg text-gray-900 font-medium made-tommy" id="text-temp">Complete a primeira etapa.</p>
+          </div>
+
+          <div class="mt-6 border-t border-gray-400 pt-6">
+            <div class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+              <div>
+                <label for="first-name" class="block text-sm font-medium text-gray-700">Primeiro nome</label>
+                <div class="mt-2">
+                  <input type="text" id="first-name" name="first-name" placeholder="Seu primeiro nome" class="block pl-2 made-tommy w-full py-2 border rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                </div>
+              </div>
+
+              <div>
+                <label for="last-name" class="block text-sm font-medium text-gray-700">Segundo nome</label>
+                <div class="mt-2">
+                  <input type="text" id="last-name" name="last-name" placeholder="Seu segundo nome" class="block pl-2 made-tommy w-full py-2 border rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                </div>
+              </div>
+
+              <div id="container-cpf-step-01">
+                <label for="cpf" class="block text-sm font-medium text-gray-700">CPF</label>
+                <div class="mt-2">
+                  <input type="text" id="cpf" name="cpf" placeholder="Seu CPF" class="block pl-2 made-tommy w-full py-2 border rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                </div>
+              </div>
+
+              <div>
+                <label for="phone" class="block text-sm font-medium text-gray-700">Número de telefone</label>
+                <div class="mt-2">
+                  <input type="text" id="phone" name="phone" placeholder="Seu número de telefone" class="block pl-2 made-tommy w-full py-2 border rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                </div>
+              </div>
+
+              <div id="container-email-step-01">
+                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                <div class="mt-2">
+                  <input type="text" id="email" name="email" placeholder="Seu email" class="block pl-2 made-tommy w-full py-2 border rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                </div>
+              </div>
+
+              <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Senha</label>
+                <div class="mt-2">
+                  <input type="password" id="password" name="password" placeholder="Crie uma senha" class="block pl-2 made-tommy w-full py-2 border rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                </div>
+              </div>
+            </div>
+
+            <button onclick="checkDataUser()" class="w-full lg:block rounded-md border border-transparent px-4 py-2 text-base font-medium text-white shadow-sm bg-purple mt-6">Continuar</button>
+          </div>
+        </div>
+
+        <div class="fade-in hidden" id="step-two">
+          <div>
+            <h2 class="text-1xl font-medium text-gray-900 made-tommy color-purple">2. Realize o pagamento:</h2>
+            <p class="text-lg text-gray-900 font-medium made-tommy" id="text-temp">Complete a segunda etapa.</p>
+          </div>
+
+          <div class="mt-6 border-t border-gray-400 pt-6">
+            <!-- Selecionar Pagamento(Pix, Cartão de Credito) -->
+            <div id="payment-method-container" class="flex flex-row items-center justify-between pt-6">
+              <label for="payment-method" class="block text-base font-medium flex-1">Forma de pagamento:</label>
+              <div class="mt-2 flex-1">
+                  <div class="custom-select">
+                    <div id="custom-select-selected" class="custom-select-selected flex flex-row justify-between items-center w-full py-2 pl-2 pr-2 border rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                      <div class="flex flex-row items-center">
+                        <div class="mr-2">
+                          <img id="payment-method-image" width="25" height="25" src="https://img.icons8.com/ios-glyphs/25/ffffff/pix.png" alt="pix"/>
+                        </div>
+                        <div class="text-base font-medium text-white font-semibold">
+                          <span id="type-payment">PIX</span>
+                        </div>
+                        
+                      </div>
+                      <!--<div class="text-white">
+                        <i class="fa-solid fa-angle-down"></i>
+                      </div>-->
+                    </div>
+                    <div class="custom-select-options hidden">
+                      <div class="custom-select-option-pix flex flex-row items-center w-full py-2 pl-2 pr-2 shadow-sm sm:text-sm">
+                        <!--<div class="mr-2">
+                          <img width="25" height="25" src="https://img.icons8.com/ios-glyphs/25/752A7A/pix.png" alt="pix"/>
+                        </div>-->
+                        <div class="text-base font-medium text-gray-900 font-semibold color-purple">
+                          <span>PIX</span>
+                        </div>
+                      </div>
+                      <div class="custom-select-option-credit-card flex flex-row items-center w-full py-2 pl-2 pr-2 shadow-sm sm:text-sm">
+                        <!--
+                        <div class="mr-2">
+                          <img width="25" height="25" src="https://img.icons8.com/ios-filled/25/752A7A/bank-card-back-side.png" alt="bank-card-back-side"/>
+                        </div>-->
+                        <div class="text-base font-medium text-gray-900 font-semibold color-purple">
+                          <span>Cartão de Crédito</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+
+            <div class="flex items-center flex-col mt-6 hidden fade-in" id="payment-pix-area">
+              <div>
+                <p class="made-tommy color-purple font-normal text-center">Abra seu aplicativo de pagamento onde você utiliza o Pix e escolha a opção <span class="font-bold">Ler QR Code.</span></p>
+                <p class="made-tommy color-purple font-semibold text-center mt-4">E basta apontar a câmera do seu celular!</p>
+
+                <p class="made-tommy text-sm text-gray-500 font-normal mt-4 text-center">OBS: Você receberá a confirmação por email, junto com os dados do pagamento.</p>
+              </div>
+
+              <div id="qrcodeDiv" class="mt-4">
+                <img class="h-60 rounded-lg border" id="qrcodeImage" src="" alt="Código QR de Pagamento">
+              </div>
+
+              <p class="made-tommy text-gray-600 font-medium mt-8">O pagamento expira em: <span id="countdown">10:00</span></p>
+              
+              <div class="w-60 p-2.5 rounded-full bg-purple text-white made-tommy font-semibold mt-6 text-center">Aguardando pagamento...</div>
+            </div>
+
+            <!-- Container de Carregamento -->
+            <div id="container-de-carregamento-credit-card" class="flex justify-center items-center h-64 hidden">
+              <div class="c-loader"></div>
+            </div>     
+            
+            <!-- Container do Cartão de Credito -->
+            <div id="credit-card" class="hidden my-14">
+              <div class="w-full flex justify-center">
+                <div class="credit-card">
+                  <div class="flex flex-row items-center justify-between">
+                    <div class="credit-card-chip">
+                      <img src="https://cdn-icons-png.flaticon.com/512/6404/6404078.png" alt="Chip" />
+                    </div>
+                    <div class="credit-card-payment-method">
+                      <img src="https://img.icons8.com/fluency/48/visa.png" alt="Metodo de Pagamento" id="payment-method-img-credit-card" class="hidden"/>
+                    </div>
+                  </div>
+                  <div>
+                    <!-- Nome do Cartão -->
+                    <div class="ml-5 credit-card-holder">
+                      <p id="card-name-paragraph">TITULAR DO CARTÃO</p>
+                    </div>
+
+                    <!-- Numero do Cartão -->
+                    <div class="credit-card-number ml-5 font-bold">
+                        <p id="card-number-paragraph">**** **** **** ****</p>
+                    </div>
+                  </div>
+                  <div class="credit-card-info">
+                    <div class="credit-card-info-item">
+                      <p class="credit-card-info-label">VALIDADE</p>
+                      <p id="card-expiration-date-paragraph" class="credit-card-info-text font-bold">**/**</p>
+                    </div>
+                    <div class="credit-card-info-item">
+                      <p class="credit-card-info-label">CVC</p>
+                      <p id="card-cvc-paragraph" class="credit-card-info-text font-bold">***</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Formulario do Mercado Pago para Cartão de Credito -->
+            <div class="py-6">
+              <form id="form-checkout" class="hidden">
+                <div class="flex flex-col">
+                  <label for="expiration-date" class="block text-sm font-medium text-gray-700">Titular do Cartão</label>
+                  <input type="text" id="form-checkout__cardholderName" class="mt-2"/>
+                </div>
+
+                <div class="mt-2">
+                  <label for="credit-card-number" class="block text-sm font-medium text-gray-700">Número do cartão</label>
+                  <div class="mt-2 flex flex-row items-center">
+                    <div id="form-checkout__cardNumber" class="container"></div>
+                    <img src="https://img.icons8.com/fluency/48/visa.png" alt="Metodo de Pagamento" id="payment-method-img-input" class="hidden"/>
+                  </div>
+                </div>
+
+                <div class="flex flex-row items-center mt-2">
+                  <div class="flex-1 mr-2">
+                    <label for="expiration-date" class="block text-sm font-medium text-gray-700">Data de validade</label>
+                    <div class="mt-2">
+                      <div id="form-checkout__expirationDate" class="container"></div>
+                    </div>
+                  </div>
+
+                  <div class="flex-1 ml-2">
+                    <label for="cvv" class="block text-sm font-medium text-gray-700">CVV</label>
+                    <div class="mt-2">
+                      <div id="form-checkout__securityCode" class="container"></div>
+                    </div>
+                  </div>
+
+                </div>  
+                
+                
+             
+                <select id="form-checkout__issuer" style="display: none;"></select>
+                <select id="form-checkout__installments" style="display: none;"></select>
+                
+                <div class="flex flex-row mt-2">
+                  <select id="form-checkout__identificationType" style="display: none;"></select>
+                  <div class="flex-1 mr-2">
+                    <label for="cvv" class="block text-sm font-medium text-gray-700">CPF</label>
+                    <div class="mt-2">
+                      <input type="text" id="form-checkout__identificationNumber" />
+                    </div>
+                    
+                  </div>
+
+                  <div class="flex-1 ml-2">
+                    <label for="cvv" class="block text-sm font-medium text-gray-700">Email</label>
+                    <div class="mt-2">
+                      <input type="email" id="form-checkout__cardholderEmail" />
+                    </div>
+                  </div>
+                </div>
+                
+                
+                <button type="submit" id="form-checkout__submit" class="mt-7 w-full lg:block rounded-md border border-transparent px-4 py-2 text-base font-medium text-white shadow-sm bg-purple">Pagar R$<%= plan.valueMonth %>,00</button>
+                
+                
+                <progress value="0" class="progress-bar hidden">Carregando...</progress>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-10 lg:mt-0 fade-in">
+          <div class="rounded-lg border border-purple shadow-sm">
+            <ul role="list" class="divide-y divide-gray-200">
+              <li class="flex px-4 py-6 sm:px-6"> 
+                <div class="flex flex-1 flex-col">
+                  <div class="flex">
+                    <div class="min-w-0 flex-1">
+                      <h4 class="text-sm">
+                        <h2 class="text-1xl font-medium text-gray-700 made-tommy color-purple"><%= plan.title %></h2>
+                      </h4>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-col pt-2">
+                    <div class="flex items-center text-md font-medium text-gray-900 gap-x-2 mt-2">
+                      <svg class="h-6 w-5 flex-none" viewBox="0 0 20 20" fill="#752a7a"
+                        aria-hidden="true">
+                        <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                          clip-rule="evenodd" />
+                      </svg>
+                      Publique no Facebook e Instagram
+                    </div>
+
+                    <div class="flex items-center text-md font-medium text-gray-900 gap-x-2 mt-2">
+                      <svg class="h-6 w-5 flex-none" viewBox="0 0 20 20" fill="#752a7a"
+                        aria-hidden="true">
+                        <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                          clip-rule="evenodd" />
+                      </svg>
+                      Importe até <%= plan.quantityAccounts %> perfis
+                    </div>
+
+                    <div class="flex items-center text-md font-medium text-gray-900 gap-x-2 mt-2">
+                      <svg class="h-6 w-5 flex-none" viewBox="0 0 20 20" fill="#752a7a"
+                        aria-hidden="true">
+                        <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                          clip-rule="evenodd" />
+                      </svg>
+                      Importe até <%= plan.quantityGroups %> grupos
+                    </div>
+
+                    <div class="flex items-center text-md font-medium text-gray-900 gap-x-2 mt-2">
+                      <svg class="h-6 w-5 flex-none" viewBox="0 0 20 20" fill="#752a7a"
+                        aria-hidden="true">
+                        <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                          clip-rule="evenodd" />
+                      </svg>
+                      Importe até <%= plan.quantityPages %> páginas
+                    </div>
+
+                    <div class="flex items-center text-md font-medium text-gray-900 gap-x-2 mt-2">
+                      <svg class="h-6 w-5 flex-none" viewBox="0 0 20 20" fill="#752a7a"
+                        aria-hidden="true">
+                        <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                          clip-rule="evenodd" />
+                      </svg>
+                      Agende até <%= plan.quantitySchedule %> publicações simultaneamente
+                    </div>
+
+                    <div class="flex items-center text-md font-medium text-gray-900 gap-x-2 mt-2">
+                      <svg class="h-6 w-5 flex-none" viewBox="0 0 20 20" fill="#752a7a"
+                        aria-hidden="true">
+                        <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                          clip-rule="evenodd" />
+                      </svg>
+                      Ative até <%= plan.quantityComments %> robôs de comentários automáticos
+                    </div>
+
+                    <div class="flex items-center text-md font-medium text-gray-900 gap-x-2 mt-2">
+                      <svg class="h-6 w-5 flex-none" viewBox="0 0 20 20" fill="#752a7a"
+                        aria-hidden="true">
+                        <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                          clip-rule="evenodd" />
+                      </svg>
+                      Crie até <%= plan.quantitySets %> conjuntos para grupos e páginas
+                    </div>
+
+                    <div class="flex items-center text-md font-medium text-gray-900 gap-x-2 mt-2">
+                      <svg class="h-6 w-5 flex-none" viewBox="0 0 20 20" fill="#752a7a"
+                        aria-hidden="true">
+                        <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                          clip-rule="evenodd" />
+                      </svg>
+                      7 dias de garantia
+                    </div>
+                  </div>
+
+                  <div class="flex items-center justify-between border-t border-gray-200 mt-6 pt-6">
+                    <dt class="text-base font-medium">Total (Mensal)</dt>
+                    <dd class="text-base font-medium text-gray-900 font-semibold color-purple">R$<%= plan.valueMonth %>,00</dd>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <%- include('../../partials/main/footer') %>
+</body>
+    
+<script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-masker/1.1.0/vanilla-masker.min.js"></script>
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+<script type='text/javascript' src='/js/animation/vanilla-tilt.js'></script>
+<script type='text/javascript' src='/js/checkout/checkout-min.js' name-checkout="<%= plan.nameCheckout %>"></script>
+
+</html>

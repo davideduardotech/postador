@@ -1,0 +1,582 @@
+<%- include('../../partials/head', {title: "Criar nova publicação" }) %>
+
+<body class="bg-gray-100">
+  <%- include('../../partials/app/sidebar') %>
+
+  <div class="xl:ml-64 pb-14">
+    <%- include('../../partials/app/nav', {user: user, title: "Nova publicação"}) %>
+
+    <main class="px-10 py-3 fade-in">
+      <div class="hidden relative z-10 fade-in" id="popup-preview" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-25 transition-opacity"></div>
+
+        <div class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20 mt-20">
+          <div class="mx-auto max-w-lg transform divide-y divide-gray-200 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
+            <div class="flex justify-between py-3 px-6">
+              <h2 class="text-purple font-semibold text-lg">Pré-visualizar</h2>
+              <button onclick="closePreview()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M14.3075 11.7231L20.3075 5.67693C20.5844 5.4 20.5844 4.98462 20.3075 4.7077L19.3844 3.73847C19.1075 3.46154 18.6921 3.46154 18.4151 3.73847L12.369 9.78462C12.1844 9.96923 11.9075 9.96923 11.7228 9.78462L5.67668 3.69231C5.39976 3.41539 4.98438 3.41539 4.70745 3.69231L3.73822 4.66154C3.4613 4.93847 3.4613 5.35385 3.73822 5.63077L9.78438 11.6769C9.96899 11.8615 9.96899 12.1385 9.78438 12.3231L3.69207 18.4154C3.41514 18.6923 3.41514 19.1077 3.69207 19.3846L4.6613 20.3538C4.93822 20.6308 5.35361 20.6308 5.63053 20.3538L11.6767 14.3077C11.8613 14.1231 12.1382 14.1231 12.3228 14.3077L18.369 20.3538C18.6459 20.6308 19.0613 20.6308 19.3382 20.3538L20.3075 19.3846C20.5844 19.1077 20.5844 18.6923 20.3075 18.4154L14.3075 12.3692C14.1228 12.1846 14.1228 11.9077 14.3075 11.7231Z"
+                    fill="#752A7A" />
+                </svg>
+              </button>
+            </div>
+
+            <div class="flex flex-col divide-y divide-gray-200">
+              <div id="img-preview-area" class="min-w-0 hidden flex-auto scroll-py-4 overflow-y-auto px-6 py-4">
+                <div class="flex flex-col mb-2">
+                  <h2 class="text-lg font-semibold text-purple">Imagem selecionada:</h2>
+                  <img id="img-preview-src" class="w-60 mt-2 rounded-lg">
+                </div>
+              </div>
+
+              <div id="link-preview-area" class="min-w-0 hidden flex-auto scroll-py-4 overflow-y-auto px-6 py-4">
+                <div class="flex flex-col mb-2 p-3 bg-gray-200 rounded-lg border-gray">
+                  <h2 class="text-sm font-semibold text-gray-800">Link importado:</h2>
+                  <p id="link-preview-content" class="text-md font-medium"></p>
+                </div>
+              </div>
+
+              <div class="min-w-0 flex-auto scroll-py-4 overflow-y-auto px-6 py-4">
+                <div class="flex mb-2">
+                  <h2 class="text-lg font-semibold text-purple">Conteúdo da publicação:</h2>
+                </div>
+
+                <p id="content-preview" class="text-gray-700 text-md font-medium"></p>
+              </div>
+
+              <div class="min-w-0 flex-auto scroll-py-4 overflow-y-auto px-6 py-4">
+                <div class="flex mb-2">
+                  <h2 class="text-lg font-bold text-purple">Agendar publicação:</h2>
+                </div>
+
+                <div class="flex mt-2">
+                  <div class="flex items-center">
+                    <input name="schedule" id="schedule-true" value="yes" tabindex="1" onclick="openSchedule()"
+                      type="radio" checked class="h-4 w-4 border-gray-300 text-purple">
+                    <label for="schedule-true"
+                      class="ml-3 block text-sm font-medium leading-6 text-gray-900">Agendar</label>
+                  </div>
+
+                  <div class="flex items-center ml-6">
+                    <input name="schedule" id="schedule-false" value="no" tabindex="2" onclick="closeSchedule()"
+                      type="radio" checked class="h-4 w-4 border-gray-300 text-purple">
+                    <label for="schedule-false"
+                      class="ml-3 block text-sm font-medium leading-6 text-gray-900">Publicar agora</label>
+                  </div>
+                </div>
+
+                <div id="schedule" class="hidden mt-2 -space-y-px rounded-md bg-white shadow-sm">
+                  <div class="flex -space-x-px">
+                    <div class="w-1/2 min-w-0 flex-1">
+                      <input type="date" id="day"
+                        class="relative block w-full rounded-none rounded-l-lg border-2 border-purple px-2 bg-transparent py-1 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    </div>
+
+                    <div class="min-w-0 flex-1">
+                      <input type="time" id="hour"
+                        class="relative block w-full rounded-none rounded-r-lg border-2 border-purple px-2 bg-transparent py-1 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="px-6 py-4">
+                <h2 class="text-lg font-semibold text-purple">Intervalo de publicações: (Segundos)</h2>
+                <input type="number" id="interval"
+                  class="relative block w-full rounded-lg border-2 border-purple px-2 bg-transparent py-1 text-gray-900 text-sm leading-6 mt-1"
+                  placeholder="60">
+              </div>
+            </div>
+
+            <div class="pb-3 px-6">
+              <button onclick="savePost()"
+                class="w-full py-2.5 bg-purple text-white text-sm rounded-lg mt-4">Confirmar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hidden relative z-10 fade-in" id="popup-select" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-25 transition-opacity"></div>
+
+        <div class="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20 mt-20">
+          <div
+            class="mx-auto max-w-lg transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
+            <div class="flex justify-between py-3 px-6">
+              <h2 class="text-purple font-semibold text-lg">Selecionar páginas e grupos:</h2>
+              <button onclick="closeSelectPopup()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M14.3075 11.7231L20.3075 5.67693C20.5844 5.4 20.5844 4.98462 20.3075 4.7077L19.3844 3.73847C19.1075 3.46154 18.6921 3.46154 18.4151 3.73847L12.369 9.78462C12.1844 9.96923 11.9075 9.96923 11.7228 9.78462L5.67668 3.69231C5.39976 3.41539 4.98438 3.41539 4.70745 3.69231L3.73822 4.66154C3.4613 4.93847 3.4613 5.35385 3.73822 5.63077L9.78438 11.6769C9.96899 11.8615 9.96899 12.1385 9.78438 12.3231L3.69207 18.4154C3.41514 18.6923 3.41514 19.1077 3.69207 19.3846L4.6613 20.3538C4.93822 20.6308 5.35361 20.6308 5.63053 20.3538L11.6767 14.3077C11.8613 14.1231 12.1382 14.1231 12.3228 14.3077L18.369 20.3538C18.6459 20.6308 19.0613 20.6308 19.3382 20.3538L20.3075 19.3846C20.5844 19.1077 20.5844 18.6923 20.3075 18.4154L14.3075 12.3692C14.1228 12.1846 14.1228 11.9077 14.3075 11.7231Z"
+                    fill="#752A7A" />
+                </svg>
+              </button>
+            </div>
+
+            <div class="fade-in">
+              <% if (user.pages.length > 0 || user.groups.length > 0) { %>
+                <div class="grid grid-cols-4 gap-x-4 px-6 mt-4">
+                  <button id="button-select-pages" onclick="openSelect('select-pages')" class="bg-purple rounded-full font-semibold text-sm py-0.5 text-white">Páginas</button>
+                  <button id="button-select-groups" onclick="openSelect('select-groups')" class="rounded-full font-semibold text-sm py-0.5 text-purple">Grupos</button>
+                  <button id="button-select-instagram" onclick="openSelect('select-instagram')" class="rounded-full font-semibold text-sm py-0.5 text-purple">Instagram</button>
+                  <button id="button-select-sets" onclick="openSelect('select-sets')" class="rounded-full font-semibold text-sm py-0.5 text-purple">Conjuntos</button>
+                </div>
+
+                <div class="flex flex-col">
+                  <!-- PAGES -->
+                  <div id="select-pages" class="min-w-0 flex-auto scroll-py-4 overflow-y-auto px-6 mt-10">
+                    <% if (user.pages.length > 0) { %>
+                      <div class="flex items-center justify-between mb-2">
+                        <h2 class="text-lg font-semibold">Páginas importadas:</h2>
+                        
+                        <% if (user.isAdmin || plan.selectAll) { %>
+                          <button id="select-all-pages" onclick="selectAll('<%= JSON.stringify(pagesAll) %>', 'pages')" class="rounded-full font-semibold text-xs py-1 px-1.5 text-purple badge-purple border border-purple">Selecionar todas</button>
+                          <button id="unselect-all-pages" onclick="unselectAll('<%= JSON.stringify(pagesAll) %>', 'pages')" class="rounded-full font-semibold text-xs py-1 px-1.5 text-red-700 bg-red-100 border border-red-700 hidden">Desmarcar</button>
+                        <% } %>
+                      </div>
+
+                      <ul class="-mx-2 text-sm text-gray-700 overflow-y-auto h-96" id="options" role="listbox">
+                        <% user.pages.forEach(function(item) { %>
+                          <li class="page flex justify-between items-center cursor-default select-none rounded-md px-2 py-1">
+                            <div class="flex items-center">
+                              <% if (item.photo) { %>
+                                <img src="<%= item.photo %>" class="w-8 h-8 flex-none rounded-full">
+                              <% } else { %>
+                                <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <g clip-path="url(#clip0_111_100)">
+                                    <path
+                                      d="M14.9212 4.71216C12.3376 4.71216 10.2432 7.15741 10.2432 10.1738C10.2432 12.2657 11.2506 14.0826 12.7299 15L11.0145 15.795L6.44948 17.9122C6.00848 18.1327 5.78838 18.5066 5.78838 19.0359C5.78838 20.7117 5.78838 22.3875 5.78838 24.0634C5.82465 24.692 6.2018 25.2778 6.81328 25.2878H23.0538C23.7519 25.2271 24.105 24.6648 24.1119 24.0634C24.1119 22.3876 24.1119 20.7117 24.1119 19.0359C24.1119 18.5066 23.8918 18.1327 23.4508 17.9122L19.0511 15.795L17.2227 14.9287C18.6413 13.9907 19.5992 12.2131 19.5992 10.1738C19.5992 7.15741 17.5047 4.71216 14.9212 4.71216ZM7.37558 6.63276C6.26375 6.67498 5.3826 7.15608 4.71315 7.92266C3.97265 8.84561 3.61165 9.94141 3.60467 11.0315C3.65015 12.6435 4.3714 14.1695 5.6554 14.9677L0.529075 17.3499C0.17625 17.4822 0 17.7909 0 18.276V22.3109C0.02755 22.8461 0.3054 23.2958 0.826375 23.3035H4.23348V19.0359C4.28985 17.8949 4.82565 16.9726 5.78838 16.5226L9.19455 14.9022C9.45915 14.7478 9.71283 14.538 9.95538 14.2734C8.55098 12.1065 8.35595 9.51108 9.26105 7.22833C8.67237 6.86806 8.0108 6.63653 7.37558 6.63276ZM22.5902 6.63276C21.8632 6.64798 21.1912 6.91573 20.6393 7.29386C21.5197 9.59728 21.2768 12.1943 19.9772 14.2069C20.2639 14.5376 20.5623 14.7913 20.871 14.9677L24.1452 16.5226C25.1426 17.0696 25.6569 18 25.6668 19.0359V23.3036H29.1727C29.7492 23.2538 29.995 22.7939 30 22.311V18.276C30 17.835 29.8238 17.5263 29.4709 17.3499L24.4102 14.9344C25.7226 13.9667 26.3816 12.5164 26.3944 11.0315C26.3595 9.85621 26.0004 8.76491 25.2859 7.92266C24.5392 7.11268 23.6132 6.64133 22.5902 6.63276Z"
+                                      fill="#752A7A"/>
+                                  </g>
+                                  <defs>
+                                    <clipPath id="clip0_111_100">
+                                      <rect width="30" height="30" fill="white" />
+                                    </clipPath>
+                                  </defs>
+                                </svg>
+                              <% } %>
+
+                              <span class="ml-3 flex-auto truncate font-semibold">
+                                <%= item.name %>
+                              </span>
+                            </div>
+
+                            <div class="flex items-center">
+                              <button class="add-page" id="add-page<%= item.idPage %>" onclick="addPage('<%= item.idPage %>', '<%= item.idAccount %>', '<%= item.photo %>')">
+                                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <circle cx="11" cy="11" r="11" fill="#752A7A"/>
+                                  <path d="M11 7V15.25" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                  <path d="M6.875 11.125H15.125" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                              </button>
+
+                              <button class="del-page hidden" id="del-page<%= item.idPage %>" onclick="delPage('<%= item.idPage %>', '<%= item.photo %>')">
+                                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <circle cx="11" cy="11" r="11" fill="#A30000"/>
+                                  <path d="M13.9173 8.20874L8.08265 14.0414Z" fill="#A30000"/>
+                                  <path d="M13.9173 8.20874L8.08265 14.0414" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                  <path d="M8.08368 8.20776L13.9163 14.0424Z" fill="#A30000"/>
+                                  <path d="M8.08368 8.20776L13.9163 14.0424" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                              </button>
+                            </div>
+                          </li>
+                        <% }) %>
+                      </ul>
+                    <% } else { %>
+                      <p class="text-sm font-semibold mb-8">Nenhuma encontrada</p>
+                    <% } %>
+                  </div>
+                  
+                  <!-- GROUPS -->
+                  <div id="select-groups" class="min-w-0 flex-auto scroll-py-4 overflow-y-auto px-6 mt-10 hidden">
+                    <% if (user.groups.length > 0) { %>
+                      <div class="flex items-center justify-between mb-2">
+                        <h2 class="text-lg font-semibold">Grupos importados:</h2>
+                        
+                        <% if (user.isAdmin || plan.selectAll) { %>
+                          <button id="select-all-groups" onclick="selectAll('<%= JSON.stringify(groupsAll) %>', 'groups')" class="rounded-full font-semibold text-xs py-1 px-1.5 text-purple badge-purple border border-purple">Selecionar todos</button>
+                          <button id="unselect-all-groups" onclick="unselectAll('<%= JSON.stringify(groupsAll) %>', 'groups')" class="rounded-full font-semibold text-xs py-1 px-1.5 text-red-700 bg-red-100 border border-red-700 hidden">Desmarcar</button>
+                        <% } %>
+                      </div>
+
+                      <ul class="-mx-2 text-sm text-gray-700 overflow-y-auto h-96 border-b border-gray-300" id="options" role="listbox">
+                        <% user.groups.forEach(function(item) { %>
+                          <li class="group flex justify-between items-center cursor-default select-none rounded-md px-2 py-1" id="option-1">
+                            <div class="flex items-center">
+                              <% if (item.photo) { %>
+                                <img src="<%= item.photo %>" class="w-8 h-8 flex-none rounded-full">
+                              <% } else { %>
+                                <svg width="30" height="30" viewBox="0 0 30 30" fill="none"
+                                  xmlns="http://www.w3.org/2000/svg">
+                                  <g clip-path="url(#clip0_111_100)">
+                                    <path
+                                      d="M14.9212 4.71216C12.3376 4.71216 10.2432 7.15741 10.2432 10.1738C10.2432 12.2657 11.2506 14.0826 12.7299 15L11.0145 15.795L6.44948 17.9122C6.00848 18.1327 5.78838 18.5066 5.78838 19.0359C5.78838 20.7117 5.78838 22.3875 5.78838 24.0634C5.82465 24.692 6.2018 25.2778 6.81328 25.2878H23.0538C23.7519 25.2271 24.105 24.6648 24.1119 24.0634C24.1119 22.3876 24.1119 20.7117 24.1119 19.0359C24.1119 18.5066 23.8918 18.1327 23.4508 17.9122L19.0511 15.795L17.2227 14.9287C18.6413 13.9907 19.5992 12.2131 19.5992 10.1738C19.5992 7.15741 17.5047 4.71216 14.9212 4.71216ZM7.37558 6.63276C6.26375 6.67498 5.3826 7.15608 4.71315 7.92266C3.97265 8.84561 3.61165 9.94141 3.60467 11.0315C3.65015 12.6435 4.3714 14.1695 5.6554 14.9677L0.529075 17.3499C0.17625 17.4822 0 17.7909 0 18.276V22.3109C0.02755 22.8461 0.3054 23.2958 0.826375 23.3035H4.23348V19.0359C4.28985 17.8949 4.82565 16.9726 5.78838 16.5226L9.19455 14.9022C9.45915 14.7478 9.71283 14.538 9.95538 14.2734C8.55098 12.1065 8.35595 9.51108 9.26105 7.22833C8.67237 6.86806 8.0108 6.63653 7.37558 6.63276ZM22.5902 6.63276C21.8632 6.64798 21.1912 6.91573 20.6393 7.29386C21.5197 9.59728 21.2768 12.1943 19.9772 14.2069C20.2639 14.5376 20.5623 14.7913 20.871 14.9677L24.1452 16.5226C25.1426 17.0696 25.6569 18 25.6668 19.0359V23.3036H29.1727C29.7492 23.2538 29.995 22.7939 30 22.311V18.276C30 17.835 29.8238 17.5263 29.4709 17.3499L24.4102 14.9344C25.7226 13.9667 26.3816 12.5164 26.3944 11.0315C26.3595 9.85621 26.0004 8.76491 25.2859 7.92266C24.5392 7.11268 23.6132 6.64133 22.5902 6.63276Z"
+                                      fill="#752A7A" />
+                                  </g>
+                                  <defs>
+                                    <clipPath id="clip0_111_100">
+                                      <rect width="30" height="30" fill="white" />
+                                    </clipPath>
+                                  </defs>
+                                </svg>
+                              <% } %>
+
+                              <span class="ml-3 flex-auto truncate font-semibold">
+                                <%= item.name %>
+                              </span>
+                            </div>
+
+                            <div class="flex items-center">
+                              <button class="add-group" id="add-group<%= item.idGroup %>" onclick="addGroup('<%= item.idGroup %>', '<%= item.idAccount %>', '<%= item.photo %>')">
+                                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <circle cx="11" cy="11" r="11" fill="#752A7A"/>
+                                  <path d="M11 7V15.25" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                  <path d="M6.875 11.125H15.125" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                              </button>
+
+                              <button class="del-group hidden" id="del-group<%= item.idGroup %>" onclick="delGroup('<%= item.idGroup %>', '<%= item.photo %>')">
+                                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <circle cx="11" cy="11" r="11" fill="#A30000"/>
+                                  <path d="M13.9173 8.20874L8.08265 14.0414Z" fill="#A30000"/>
+                                  <path d="M13.9173 8.20874L8.08265 14.0414" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                  <path d="M8.08368 8.20776L13.9163 14.0424Z" fill="#A30000"/>
+                                  <path d="M8.08368 8.20776L13.9163 14.0424" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                              </button>
+                            </div>
+                          </li>
+                        <% }) %>
+                      </ul>
+                    <% } else { %>
+                      <p class="text-sm font-semibold mb-8">Nenhum encontrado</p>
+                    <% } %>
+                  </div>
+
+                  <!-- INSTAGRAM -->
+                  <div id="select-instagram" class="min-w-0 flex-auto scroll-py-4 overflow-y-auto px-6 mt-10 hidden">
+                    <% if (user.accountsIg.length > 0) { %>
+                      <div class="flex items-center justify-between mb-2">
+                        <h2 class="text-lg font-semibold">Contas do Instagram:</h2>
+                        
+                        <% if (user.isAdmin || plan.selectAll) { %>
+                          <button id="select-all-instagram" onclick="selectAll('<%= JSON.stringify(user.accountsIg) %>', 'instagram')" class="rounded-full font-semibold text-xs py-1 px-1.5 text-purple badge-purple border border-purple">Selecionar todas</button>
+                          <button id="unselect-all-instagram" onclick="unselectAll('<%= JSON.stringify(user.accountsIg) %>', 'instagram')" class="rounded-full font-semibold text-xs py-1 px-1.5 text-red-700 bg-red-100 border border-red-700 hidden">Desmarcar</button>
+                        <% } %>
+                      </div>
+
+                      <ul class="-mx-2 text-sm text-gray-700 overflow-y-auto h-96" id="options" role="listbox">
+                        <% user.accountsIg.forEach(function(item) { %>
+                          <li class="page flex justify-between items-center cursor-default select-none rounded-md px-2 py-1">
+                            <div class="flex items-center">
+                              <% if (item.photo) { %>
+                                <img src="<%= item.photo %>" class="w-8 h-8 flex-none rounded-full">
+                              <% } else { %>
+                                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <g clip-path="url(#clip0_156_22)">
+                                  <path d="M16.4996 0H5.49987C2.47521 0 0 2.47521 0 5.49987V16.5001C0 19.524 2.47521 22 5.49987 22H16.4996C19.5243 22 21.9995 19.524 21.9995 16.5001V5.49987C21.9995 2.47521 19.5243 0 16.4996 0ZM20.1661 16.5001C20.1661 18.5213 18.5219 20.1666 16.4996 20.1666H5.49987C3.4784 20.1666 1.83338 18.5213 1.83338 16.5001V5.49987C1.83338 3.47813 3.4784 1.83338 5.49987 1.83338H16.4996C18.5219 1.83338 20.1661 3.47813 20.1661 5.49987V16.5001Z" fill="#752A7A"/>
+                                  <path d="M16.959 6.41644C17.7183 6.41644 18.3339 5.80084 18.3339 5.04147C18.3339 4.2821 17.7183 3.6665 16.959 3.6665C16.1996 3.6665 15.584 4.2821 15.584 5.04147C15.584 5.80084 16.1996 6.41644 16.959 6.41644Z" fill="#752A7A"/>
+                                  <path d="M10.9999 5.49988C7.96173 5.49988 5.5 7.96187 5.5 10.9997C5.5 14.0365 7.96173 16.5001 10.9999 16.5001C14.0371 16.5001 16.4997 14.0365 16.4997 10.9997C16.4997 7.96187 14.0371 5.49988 10.9999 5.49988ZM10.9999 14.6668C8.97507 14.6668 7.33338 13.0251 7.33338 10.9997C7.33338 8.97441 8.97507 7.33326 10.9999 7.33326C13.0247 7.33326 14.6664 8.97441 14.6664 10.9997C14.6664 13.0251 13.0247 14.6668 10.9999 14.6668Z" fill="#752A7A"/>
+                                  </g>
+                                  <defs>
+                                  <clipPath id="clip0_156_22">
+                                  <rect width="22" height="22" fill="white"/>
+                                  </clipPath>
+                                  </defs>
+                                </svg>                                
+                              <% } %>
+
+                              <div class="flex flex-col">
+                                <span class="ml-3 truncate font-semibold"><%= item.name %></span>
+                                <span class="ml-3 text-xs text-gray-600 truncate font-semibold">@<%= item.username %></span>
+                              </div>
+                            </div>
+
+                            <div class="flex items-center">
+                              <button class="add-account-instagram" id="add-account-instagram<%= item.idAccount %>" onclick="addAccountInstagram('<%= item.idAccount %>', '<%= item.photo %>')">
+                                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <circle cx="11" cy="11" r="11" fill="#752A7A"/>
+                                  <path d="M11 7V15.25" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                  <path d="M6.875 11.125H15.125" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                              </button>
+
+                              <button class="del-account-instagram hidden" id="del-account-instagram<%= item.idAccount %>" onclick="delAccountInstagram('<%= item.idAccount %>', '<%= item.photo %>')">
+                                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <circle cx="11" cy="11" r="11" fill="#A30000"/>
+                                  <path d="M13.9173 8.20874L8.08265 14.0414Z" fill="#A30000"/>
+                                  <path d="M13.9173 8.20874L8.08265 14.0414" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                  <path d="M8.08368 8.20776L13.9163 14.0424Z" fill="#A30000"/>
+                                  <path d="M8.08368 8.20776L13.9163 14.0424" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                              </button>
+                            </div>
+                          </li>
+                        <% }) %>
+                      </ul>
+                    <% } else { %>
+                      <p class="text-sm font-semibold mb-8">Nenhuma encontrada</p>
+                    <% } %>
+                  </div>
+
+                  <!-- SETS -->
+                  <div id="select-sets" class="min-w-0 flex-auto scroll-py-4 overflow-y-auto px-6 mt-6 hidden">
+                    <div class="flex justify-between mb-2">
+                      <h2 class="text-lg font-semibold">Conjuntos de grupos:</h2>
+                    </div>
+
+                    <% if (user.groupsSets.length > 0) { %>
+                      <% groupsSets.forEach((set) => { %>
+                        <div class="flex items-center justify-between">
+                          <h2 class="text-md font-semibold text-purple"><%= set.name %></h2>
+
+                          <% if (user.isAdmin || plan.selectAll) { %>
+                            <button id="select-all-set-groups-<%= set.name %>" onclick="selectAll('<%= JSON.stringify(set.groups) %>', 'set-groups', '<%= set.name %>')" class="rounded-full font-semibold text-xs py-1 px-1.5 text-purple badge-purple border border-purple">Selecionar todos</button>
+                            <button id="unselect-all-set-groups-<%= set.name %>" onclick="unselectAll('<%= JSON.stringify(set.groups) %>', 'set-groups', '<%= set.name %>')" class="rounded-full font-semibold text-xs py-1 px-1.5 text-red-700 bg-red-100 border border-red-700 hidden">Desmarcar</button>
+                          <% } %>
+                        </div>
+
+                        <ul class="-mx-2 text-sm text-gray-700 overflow-y-auto h-48 mt-2 mb-6" id="options" role="listbox">
+                          <% set.groups.forEach((item) => { %>
+                            <li class="group flex justify-between items-center cursor-default select-none rounded-md px-2 py-1" id="option-1">
+                              <div class="flex items-center">
+                                <% if (item.photo) { %>
+                                  <img src="<%= item.photo %>" class="w-8 h-8 flex-none rounded-full">
+                                <% } else { %>
+                                  <svg width="30" height="30" viewBox="0 0 30 30" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#clip0_111_100)">
+                                      <path
+                                        d="M14.9212 4.71216C12.3376 4.71216 10.2432 7.15741 10.2432 10.1738C10.2432 12.2657 11.2506 14.0826 12.7299 15L11.0145 15.795L6.44948 17.9122C6.00848 18.1327 5.78838 18.5066 5.78838 19.0359C5.78838 20.7117 5.78838 22.3875 5.78838 24.0634C5.82465 24.692 6.2018 25.2778 6.81328 25.2878H23.0538C23.7519 25.2271 24.105 24.6648 24.1119 24.0634C24.1119 22.3876 24.1119 20.7117 24.1119 19.0359C24.1119 18.5066 23.8918 18.1327 23.4508 17.9122L19.0511 15.795L17.2227 14.9287C18.6413 13.9907 19.5992 12.2131 19.5992 10.1738C19.5992 7.15741 17.5047 4.71216 14.9212 4.71216ZM7.37558 6.63276C6.26375 6.67498 5.3826 7.15608 4.71315 7.92266C3.97265 8.84561 3.61165 9.94141 3.60467 11.0315C3.65015 12.6435 4.3714 14.1695 5.6554 14.9677L0.529075 17.3499C0.17625 17.4822 0 17.7909 0 18.276V22.3109C0.02755 22.8461 0.3054 23.2958 0.826375 23.3035H4.23348V19.0359C4.28985 17.8949 4.82565 16.9726 5.78838 16.5226L9.19455 14.9022C9.45915 14.7478 9.71283 14.538 9.95538 14.2734C8.55098 12.1065 8.35595 9.51108 9.26105 7.22833C8.67237 6.86806 8.0108 6.63653 7.37558 6.63276ZM22.5902 6.63276C21.8632 6.64798 21.1912 6.91573 20.6393 7.29386C21.5197 9.59728 21.2768 12.1943 19.9772 14.2069C20.2639 14.5376 20.5623 14.7913 20.871 14.9677L24.1452 16.5226C25.1426 17.0696 25.6569 18 25.6668 19.0359V23.3036H29.1727C29.7492 23.2538 29.995 22.7939 30 22.311V18.276C30 17.835 29.8238 17.5263 29.4709 17.3499L24.4102 14.9344C25.7226 13.9667 26.3816 12.5164 26.3944 11.0315C26.3595 9.85621 26.0004 8.76491 25.2859 7.92266C24.5392 7.11268 23.6132 6.64133 22.5902 6.63276Z"
+                                        fill="#752A7A" />
+                                    </g>
+                                    <defs>
+                                      <clipPath id="clip0_111_100">
+                                        <rect width="30" height="30" fill="white" />
+                                      </clipPath>
+                                    </defs>
+                                  </svg>
+                                <% } %>
+
+                                <span class="ml-3 flex-auto truncate font-semibold">
+                                  <%= item.name %>
+                                </span>
+                              </div>
+
+                              <div class="flex items-center">
+                                <button class="add-group-set" id="add-group<%= item.idGroup %>-set" onclick="addGroup('<%= item.idGroup %>', '<%= item.idAccount %>', '<%= item.photo %>')">
+                                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="11" cy="11" r="11" fill="#752A7A"/>
+                                    <path d="M11 7V15.25" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M6.875 11.125H15.125" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                  </svg>
+                                </button>
+
+                                <button class="del-group-set hidden" id="del-group<%= item.idGroup %>-set" onclick="delGroup('<%= item.idGroup %>', '<%= item.photo %>')">
+                                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="11" cy="11" r="11" fill="#A30000"/>
+                                    <path d="M13.9173 8.20874L8.08265 14.0414Z" fill="#A30000"/>
+                                    <path d="M13.9173 8.20874L8.08265 14.0414" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M8.08368 8.20776L13.9163 14.0424Z" fill="#A30000"/>
+                                    <path d="M8.08368 8.20776L13.9163 14.0424" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                  </svg>
+                                </button>
+                              </div>
+                            </li>
+                          <% }) %>
+                        </ul>
+                      <% }) %>
+                    <% } else { %>
+                      <p class="text-sm font-semibold mb-8">Nenhum encontrado</p>
+                    <% } %>
+
+                    <div class="flex justify-between mb-2 mt-4">
+                      <h2 class="text-lg font-semibold">Conjuntos de páginas:</h2>
+                    </div>
+
+                    <% if (user.pagesSets.length > 0) { %>
+                      <% pagesSets.forEach((set) => { %>
+                        <div class="flex items-center justify-between">
+                          <h2 class="text-md font-semibold text-purple"><%= set.name %></h2>
+
+                          <% if (user.isAdmin || plan.selectAll) { %>
+                            <button id="select-all-set-pages-<%= set.name %>" onclick="selectAll('<%= JSON.stringify(set.pages) %>', 'set-pages', '<%= set.name %>')" class="rounded-full font-semibold text-xs py-1 px-1.5 text-purple badge-purple border border-purple">Selecionar todas</button>
+                            <button id="unselect-all-set-pages-<%= set.name %>" onclick="unselectAll('<%= JSON.stringify(set.pages) %>', 'set-pages', '<%= set.name %>')" class="rounded-full font-semibold text-xs py-1 px-1.5 text-red-700 bg-red-100 border border-red-700 hidden">Desmarcar</button>
+                          <% } %>
+                        </div>
+
+                        <ul class="-mx-2 text-sm text-gray-700 overflow-y-auto h-48 mt-2 mb-6" id="options" role="listbox">
+                          <% set.pages.forEach((item) => { %>
+                            <li class="page flex justify-between items-center cursor-default select-none rounded-md px-2 py-1">
+                              <div class="flex items-center">
+                                <% if (item.photo) { %>
+                                  <img src="<%= item.photo %>" class="w-8 h-8 flex-none rounded-full">
+                                <% } else { %>
+                                  <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#clip0_111_100)">
+                                      <path
+                                        d="M14.9212 4.71216C12.3376 4.71216 10.2432 7.15741 10.2432 10.1738C10.2432 12.2657 11.2506 14.0826 12.7299 15L11.0145 15.795L6.44948 17.9122C6.00848 18.1327 5.78838 18.5066 5.78838 19.0359C5.78838 20.7117 5.78838 22.3875 5.78838 24.0634C5.82465 24.692 6.2018 25.2778 6.81328 25.2878H23.0538C23.7519 25.2271 24.105 24.6648 24.1119 24.0634C24.1119 22.3876 24.1119 20.7117 24.1119 19.0359C24.1119 18.5066 23.8918 18.1327 23.4508 17.9122L19.0511 15.795L17.2227 14.9287C18.6413 13.9907 19.5992 12.2131 19.5992 10.1738C19.5992 7.15741 17.5047 4.71216 14.9212 4.71216ZM7.37558 6.63276C6.26375 6.67498 5.3826 7.15608 4.71315 7.92266C3.97265 8.84561 3.61165 9.94141 3.60467 11.0315C3.65015 12.6435 4.3714 14.1695 5.6554 14.9677L0.529075 17.3499C0.17625 17.4822 0 17.7909 0 18.276V22.3109C0.02755 22.8461 0.3054 23.2958 0.826375 23.3035H4.23348V19.0359C4.28985 17.8949 4.82565 16.9726 5.78838 16.5226L9.19455 14.9022C9.45915 14.7478 9.71283 14.538 9.95538 14.2734C8.55098 12.1065 8.35595 9.51108 9.26105 7.22833C8.67237 6.86806 8.0108 6.63653 7.37558 6.63276ZM22.5902 6.63276C21.8632 6.64798 21.1912 6.91573 20.6393 7.29386C21.5197 9.59728 21.2768 12.1943 19.9772 14.2069C20.2639 14.5376 20.5623 14.7913 20.871 14.9677L24.1452 16.5226C25.1426 17.0696 25.6569 18 25.6668 19.0359V23.3036H29.1727C29.7492 23.2538 29.995 22.7939 30 22.311V18.276C30 17.835 29.8238 17.5263 29.4709 17.3499L24.4102 14.9344C25.7226 13.9667 26.3816 12.5164 26.3944 11.0315C26.3595 9.85621 26.0004 8.76491 25.2859 7.92266C24.5392 7.11268 23.6132 6.64133 22.5902 6.63276Z"
+                                        fill="#752A7A"/>
+                                    </g>
+                                    <defs>
+                                      <clipPath id="clip0_111_100">
+                                        <rect width="30" height="30" fill="white" />
+                                      </clipPath>
+                                    </defs>
+                                  </svg>
+                                <% } %>
+  
+                                <span class="ml-3 flex-auto truncate font-semibold">
+                                  <%= item.name %>
+                                </span>
+                              </div>
+  
+                              <div class="flex items-center">
+                                <button class="add-page-set" id="add-page<%= item.idPage %>-set" onclick="addPage('<%= item.idPage %>', '<%= item.idAccount %>', '<%= item.photo %>')">
+                                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="11" cy="11" r="11" fill="#752A7A"/>
+                                    <path d="M11 7V15.25" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M6.875 11.125H15.125" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                  </svg>
+                                </button>
+  
+                                <button class="del-page-set hidden" id="del-page<%= item.idPage %>-set" onclick="delPage('<%= item.idPage %>', '<%= item.photo %>')">
+                                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="11" cy="11" r="11" fill="#A30000"/>
+                                    <path d="M13.9173 8.20874L8.08265 14.0414Z" fill="#A30000"/>
+                                    <path d="M13.9173 8.20874L8.08265 14.0414" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M8.08368 8.20776L13.9163 14.0424Z" fill="#A30000"/>
+                                    <path d="M8.08368 8.20776L13.9163 14.0424" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                  </svg>
+                                </button>
+                              </div>
+                            </li>
+                          <% }) %>
+                        </ul>
+                      <% }) %>
+                    <% } else { %>
+                      <p class="text-sm font-semibold mb-8">Nenhum encontrado</p>
+                    <% } %>
+                  </div>
+                </div>
+              <% } else { %>
+                <div class="px-6 py-14 text-center text-sm sm:px-14">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mx-auto h-6 w-6 text-gray-600">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                  </svg>
+                  <p class="mt-4 font-semibold text-purple">Nenhum grupo ou página encontrada</p>
+                  <p class="mt-2 text-gray-500">Para fazer uma publicação, você precisará importar grupos ou páginas primeiro.</p>
+                </div>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow p-4 px-5 mt-4">
+        <div class="flex justify-between items-center border-b pb-3">
+          <div>
+            <h2 class="text-md md:text-xl text-purple font-semibold">Criar nova publicação:</h2>
+          </div>
+
+          <div class="flex items-center">
+            <div id="selected-items" class="flex space-x-1 mr-2 w-48 overflow-x-auto"></div>
+
+            <div class="flex items-center border rounded-full pr-2 pl-1 py-1">
+              <% if (user.pages.length > 0) { %>
+                <img class="w-8 h-8 rounded-full" src="<%= user.pages[0].photo %>">
+              <% } %>
+
+              <% if (user.groups.length > 0) { %>
+                <img class="w-8 h-8 rounded-full -ml-1.5" src="<%= user.groups[0].photo %>">
+              <% } %>
+
+              <button onclick="openSelectPopup()" class="ml-2">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_155_8)">
+                  <path d="M10 0C4.47686 0 0 4.47686 0 10C0 15.5231 4.47686 20 10 20C15.5231 20 20 15.5225 20 10C20 4.47752 15.5231 0 10 0ZM15.3343 8.04938L10.5488 12.835C10.3988 12.985 10.1953 13.0469 10 13.0469C9.80469 13.0469 9.6 12.985 9.45 12.835L4.66438 8.04938C4.42 7.805 4.42 7.41 4.66438 7.16562C4.90876 6.92124 5.30438 6.92124 5.5481 7.16562L10 11.6162L14.4506 7.16562C14.695 6.92124 15.0906 6.92124 15.3343 7.16562C15.5788 7.40938 15.5788 7.805 15.3343 8.04938Z" fill="#752A7A"/>
+                  </g>
+                  <defs>
+                  <clipPath id="clip0_155_8">
+                  <rect width="20" height="20" fill="white"/>
+                  </clipPath>
+                  </defs>
+                </svg>                  
+              </button>            
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6">
+          <label for="content"
+            class="block text-md font-medium leading-6 text-gray-900 font-semibold">Conteúdo da
+            publicação</label>
+          <div class="mt-2">
+            <textarea rows="5" id="content"
+              class="block w-full border-2 border-gray-300 rounded-lg p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              placeholder="Esreva o conteúdo da sua publicação"></textarea>
+          </div>
+        </div>
+
+        <div id="link-selected-area" class="hidden mt-4 py-2.5">
+          <div class="flex items-center gap-x-2">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_158_44)">
+              <path d="M10.204 18.2052L8.42667 19.9825C7.20912 21.2001 5.23507 21.2001 4.01746 19.9825C2.79991 18.765 2.79991 16.7909 4.01746 15.5734L8.87221 10.7186C10.0898 9.50105 12.0638 9.50105 13.2814 10.7186C13.7295 11.1667 14.0124 11.7174 14.1307 12.295C14.1325 12.2932 14.1344 12.2916 14.1362 12.2897L16.5209 9.90503C16.2398 9.39739 15.8889 8.93169 15.4785 8.52152V8.52148C13.0514 6.0944 9.10211 6.0944 6.67504 8.52148L1.82034 13.3762C-0.606779 15.8033 -0.606779 19.7525 1.82034 22.1796C4.24741 24.6067 8.19663 24.6067 10.6238 22.1796L14.2096 18.5938C13.7845 18.6653 13.3542 18.7012 12.9232 18.7011C11.9786 18.7011 11.0605 18.5308 10.204 18.2052Z" fill="#752A7A"/>
+              <path d="M22.1801 1.82034C19.753 -0.60678 15.8038 -0.60678 13.3767 1.82034L9.79082 5.40621C10.2159 5.33469 10.6462 5.29879 11.0772 5.29888C12.0219 5.29888 12.94 5.46927 13.7965 5.79481L15.5738 4.01746C16.7914 2.79991 18.7654 2.79991 19.983 4.01746C21.2005 5.23502 21.2005 7.20907 19.983 8.42663L15.1283 13.2814C13.9107 14.4989 11.9367 14.4989 10.7191 13.2813C10.271 12.8332 9.98804 12.2826 9.86977 11.705L9.86426 11.7102L7.47949 14.095C7.76059 14.6026 8.11149 15.0683 8.52194 15.4785C10.949 17.9055 14.8983 17.9055 17.3253 15.4785L22.1801 10.6237C24.6072 8.19664 24.6072 4.24741 22.1801 1.82034Z" fill="#752A7A"/>
+              </g>
+              <defs>
+              <clipPath id="clip0_158_44">
+              <rect width="24" height="24" fill="white"/>
+              </clipPath>
+              </defs>
+            </svg>                                          
+            <span id="link-selected-content" class="font-medium text-md text-purple"></span>
+          </div>
+        </div>
+
+        <div id="media-selected-area" class="w-full flex items-center flex-wrap gap-x-4 mt-2 py-2.5 hidden"></div>
+
+        <div id="select-media" class="flex items-center gap-x-4 mt-4 py-2.5">
+          <label for="image-input" class="flex cursor-pointer items-center gap-x-2">
+            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M25.3125 3.75H4.6875C3.94181 3.75074 3.22687 4.0473 2.69958 4.57458C2.1723 5.10187 1.87574 5.81681 1.875 6.5625V23.4375C1.87574 24.1832 2.1723 24.8981 2.69958 25.4254C3.22687 25.9527 3.94181 26.2493 4.6875 26.25H25.3125C26.0582 26.2493 26.7731 25.9527 27.3004 25.4254C27.8277 24.8981 28.1243 24.1832 28.125 23.4375V6.5625C28.1243 5.81681 27.8277 5.10187 27.3004 4.57458C26.7731 4.0473 26.0582 3.75074 25.3125 3.75ZM4.6875 24.375C4.4842 24.3732 4.28713 24.3046 4.12668 24.1798C3.96624 24.0549 3.85133 23.8807 3.79969 23.6841L7.89 18.2297C7.9709 18.1227 8.07374 18.0343 8.19161 17.9703C8.30948 17.9063 8.43966 17.8682 8.57344 17.8586C8.70722 17.849 8.8415 17.8681 8.9673 17.9147C9.09309 17.9612 9.20748 18.0341 9.30281 18.1284L12.3619 21.1875L9.85687 24.375H4.6875ZM26.25 23.4375C26.25 23.6861 26.1512 23.9246 25.9754 24.1004C25.7996 24.2762 25.5611 24.375 25.3125 24.375H12.2419L20.0569 14.4281C20.1394 14.3249 20.2427 14.2401 20.36 14.1793C20.4774 14.1185 20.6062 14.083 20.7382 14.0751C20.8701 14.0673 21.0022 14.0872 21.126 14.1336C21.2497 14.1801 21.3624 14.252 21.4566 14.3447L26.25 19.1381V23.4375ZM26.25 16.4869L22.7812 13.0191C22.4989 12.7404 22.161 12.5243 21.7897 12.3848C21.4183 12.2452 21.0217 12.1853 20.6257 12.209C20.2297 12.2327 19.8431 12.3394 19.4911 12.5223C19.139 12.7051 18.8293 12.96 18.5822 13.2703L13.5281 19.7025L10.6284 16.8028C10.3366 16.5158 9.98599 16.2955 9.60081 16.157C9.21564 16.0184 8.80502 15.965 8.39723 16.0004C7.98943 16.0358 7.59414 16.1591 7.23857 16.3619C6.883 16.5646 6.57559 16.842 6.3375 17.175L3.75 20.625V6.5625C3.75025 6.31394 3.8491 6.07562 4.02486 5.89986C4.20062 5.7241 4.43894 5.62525 4.6875 5.625H25.3125C25.5611 5.625 25.7996 5.72377 25.9754 5.89959C26.1512 6.0754 26.25 6.31386 26.25 6.5625V16.4869Z" fill="#752A7A"/>
+              <path d="M11.25 7.5C10.6937 7.5 10.15 7.66495 9.68746 7.97399C9.22495 8.28303 8.86446 8.72229 8.65159 9.2362C8.43872 9.75012 8.38302 10.3156 8.49154 10.8612C8.60006 11.4068 8.86793 11.9079 9.26126 12.3012C9.6546 12.6946 10.1557 12.9624 10.7013 13.071C11.2469 13.1795 11.8124 13.1238 12.3263 12.9109C12.8402 12.698 13.2795 12.3376 13.5885 11.875C13.8976 11.4125 14.0625 10.8688 14.0625 10.3125C14.0618 9.56681 13.7652 8.85187 13.2379 8.32458C12.7106 7.7973 11.9957 7.50074 11.25 7.5ZM11.25 11.25C11.0646 11.25 10.8833 11.195 10.7292 11.092C10.575 10.989 10.4548 10.8426 10.3839 10.6713C10.3129 10.5 10.2943 10.3115 10.3305 10.1296C10.3667 9.94775 10.456 9.7807 10.5871 9.64959C10.7182 9.51848 10.8852 9.42919 11.0671 9.39301C11.249 9.35684 11.4375 9.37541 11.6088 9.44636C11.7801 9.51732 11.9265 9.63748 12.0295 9.79165C12.1325 9.94582 12.1875 10.1271 12.1875 10.3125C12.1873 10.5611 12.0884 10.7994 11.9126 10.9751C11.7369 11.1509 11.4986 11.2498 11.25 11.25Z" fill="#752A7A"/>
+            </svg>
+            <span class="font-semibold text-sm text-gray-600">Adicionar imagem</span>
+            <input type="file" name="image-input" id="image-input" class="hidden" accept="image/*">
+          </label>
+
+          <div class="h-6 w-px bg-gray-400" aria-hidden="true"></div>
+
+          <label for="video-input" class="flex items-center gap-x-2">
+            <svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12.6875 13.7768C12.6872 13.7443 12.6957 13.7124 12.7119 13.6842C12.7282 13.6561 12.7517 13.6328 12.78 13.6168C12.8083 13.6008 12.8404 13.5927 12.8729 13.5933C12.9053 13.5938 12.9371 13.6031 12.9648 13.6201L16.2237 15.5748C16.2509 15.5911 16.2735 15.6141 16.2891 15.6417C16.3048 15.6692 16.313 15.7004 16.313 15.7321C16.313 15.7638 16.3048 15.7949 16.2891 15.8225C16.2735 15.8501 16.2509 15.8731 16.2237 15.8893L12.9648 17.8441C12.9369 17.8607 12.9052 17.8697 12.8727 17.8702C12.8403 17.8707 12.8083 17.8626 12.7799 17.8468C12.7518 17.8308 12.7284 17.8076 12.7122 17.7795C12.6959 17.7515 12.6874 17.7197 12.6875 17.6873V13.7768ZM11.8873 19.4237C12.5126 19.778 13.2811 19.7681 13.8973 19.3983L17.1562 17.4435C17.4516 17.2661 17.6961 17.0152 17.8658 16.7153C18.0355 16.4154 18.1247 16.0767 18.1247 15.7321C18.1247 15.3875 18.0355 15.0488 17.8658 14.7488C17.6961 14.4489 17.4516 14.1981 17.1562 14.0206L13.8973 12.0658C13.5945 11.8843 13.2489 11.7862 12.8959 11.7815C12.5428 11.7769 12.1948 11.866 11.8873 12.0396C11.5801 12.2139 11.3247 12.4665 11.1468 12.7717C10.969 13.0768 10.8752 13.4237 10.875 13.7768V17.6873C10.875 18.406 11.262 19.0693 11.8873 19.4237Z" fill="#752A7A"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M24.2748 24.4688H4.72519C4.58068 24.4689 4.43756 24.4405 4.30402 24.3852C4.17049 24.33 4.04916 24.249 3.94697 24.1468C3.84479 24.0446 3.76375 23.9233 3.7085 23.7897C3.65326 23.6562 3.62488 23.5131 3.625 23.3686V9.96875H25.375V23.3686C25.375 23.9767 24.8829 24.4688 24.2748 24.4688ZM4.72519 4.53125H24.2748C24.8829 4.53125 25.375 5.02334 25.375 5.63144V8.15625H3.625V5.63144C3.625 5.02334 4.11709 4.53125 4.72519 4.53125ZM24.2748 2.71875H4.72519C3.95269 2.71875 3.21184 3.02562 2.66561 3.57186C2.11937 4.11809 1.8125 4.85894 1.8125 5.63144V23.3686C1.8125 24.1411 2.11937 24.8819 2.66561 25.4281C3.21184 25.9744 3.95269 26.2812 4.72519 26.2812H24.2748C25.0473 26.2812 25.7882 25.9744 26.3344 25.4281C26.8806 24.8819 27.1875 24.1411 27.1875 23.3686V5.63144C27.1875 5.24894 27.1122 4.87018 26.9658 4.5168C26.8194 4.16342 26.6049 3.84232 26.3344 3.57186C26.0639 3.30139 25.7428 3.08684 25.3895 2.94047C25.0361 2.79409 24.6573 2.71875 24.2748 2.71875Z" fill="#752A7A"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M6.34375 7.25H8.15625C8.3966 7.25 8.62711 7.15452 8.79707 6.98457C8.96702 6.81461 9.0625 6.5841 9.0625 6.34375C9.0625 6.1034 8.96702 5.87289 8.79707 5.70293C8.62711 5.53298 8.3966 5.4375 8.15625 5.4375H6.34375C6.1034 5.4375 5.87289 5.53298 5.70293 5.70293C5.53298 5.87289 5.4375 6.1034 5.4375 6.34375C5.4375 6.5841 5.53298 6.81461 5.70293 6.98457C5.87289 7.15452 6.1034 7.25 6.34375 7.25ZM18.125 20.8438H10.875C10.6346 20.8438 10.4041 20.9392 10.2342 21.1092C10.0642 21.2791 9.96875 21.5096 9.96875 21.75C9.96875 21.9904 10.0642 22.2209 10.2342 22.3908C10.4041 22.5608 10.6346 22.6562 10.875 22.6562H18.125C18.3654 22.6562 18.5959 22.5608 18.7658 22.3908C18.9358 22.2209 19.0312 21.9904 19.0312 21.75C19.0312 21.5096 18.9358 21.2791 18.7658 21.1092C18.5959 20.9392 18.3654 20.8438 18.125 20.8438Z" fill="#752A7A"/>
+            </svg>              
+            <span class="font-semibold text-sm text-gray-600">Adicionar vídeo</span>
+            <input type="file" name="video-input" id="video-input" class="hidden" accept="video/*">
+          </label>
+        </div>
+
+        <div>
+          <button class="w-full py-3 bg-purple text-white text-sm rounded-lg mt-4"
+            onclick="openPreviewPost()">Próxima etapa</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="fixed bottom-0 inset-x-0 border-t-orange">
+    <%- include('../../partials/app/footer') %>
+  </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/app/create-post.js"></script>
+
+</html>

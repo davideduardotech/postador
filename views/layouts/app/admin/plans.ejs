@@ -1,0 +1,340 @@
+<%- include('../../../partials/head', {title: "Planos" }) %>
+
+<body class="bg-gray-100">
+  <%- include('../../../partials/app/sidebar') %>
+
+  <div class="xl:ml-64 pb-14">
+    <%- include('../../../partials/app/nav', {user: user, title: "Planos"}) %>
+
+    <main class="px-8 md:px-12 py-4 pb-20 fade-in">
+      <div class="z-50 fixed top-0 left-0 right-0 bottom-0 flex items-center w-full h-full p-4 bg-gray-800 bg-opacity-50 fade-in hidden" id="popup-update-plan">
+        <div class="max-w-xl bg-white w-full mx-auto rounded-xl fire-sans">
+          <div class="flex justify-between items-center px-6 py-3 border-b border-gray-200">
+            <div class="text-lg font-semibold">Editar plano</div>
+            <button onclick="closeUpdatePlan()" class="fill-current font-4xl font-bold">×</button>
+          </div>
+
+          <div class="p-6 flex-grow h-96 overflow-y-auto">
+            <div class="flex flex-wrap flex-col">
+              <div class="grid grid-cols-2 gap-x-3 mt-2">
+                <div>
+                  <label for="title" class="font-medium text-sm">Titulo</label>
+                  <div class="mt-1.5">
+                    <input id="title" name="title" type="text" placeholder="Titulo do plano" class="block w-full text-sm rounded-lg px-2 py-1.5 border border-gray-300 placeholder:text-gray-400 sm:leading-6">
+                  </div>
+                </div>
+
+                <div>
+                  <label for="value-month" class="font-medium text-sm">Valor por mês</label>
+                  <div class="mt-1.5">
+                    <input id="value-month" name="value-month" type="text" placeholder="Valor do plano" class="block w-full text-sm rounded-lg px-2 py-1.5 border border-gray-300 placeholder:text-gray-400 sm:leading-6">
+                  </div>
+                </div>
+              </div>
+  
+              <div class="mt-6">
+                <label for="description" class="font-medium text-sm">Descrição</label>
+                <div class="mt-1.5">
+                  <textarea id="description" name="description" placeholder="Descrição do plano" class="block w-full text-sm rounded-lg px-2 py-1.5 border border-gray-300 placeholder:text-gray-400 sm:leading-6"></textarea>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <label for="marked" class="font-medium text-sm">Marcar como melhor opção</label>
+                <div class="mt-1.5">
+                  <select id="marked" name="marked" class="block w-full text-sm rounded-lg px-1.5 py-2 border border-gray-300 placeholder:text-gray-400 sm:leading-6">
+                    <option value="true">Sim</option>
+                    <option value="false">Não</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-x-3 mt-6">
+                <div>
+                  <label for="quantity-accounts" class="font-medium text-sm">Qtd. de perfis</label>
+                  <div class="mt-1.5">
+                    <input id="quantity-accounts" name="quantity-accounts" type="number" placeholder="Qtd." class="block w-full text-sm rounded-lg px-2 py-1.5 border border-gray-300 placeholder:text-gray-400 sm:leading-6">
+                  </div>
+                </div>
+
+                <div>
+                  <label for="quantity-groups" class="font-medium text-sm">Qtd. de grupos</label>
+                  <div class="mt-1.5">
+                    <input id="quantity-groups" name="quantity-groups" type="number" placeholder="Qtd." class="block w-full text-sm rounded-lg px-2 py-1.5 border border-gray-300 placeholder:text-gray-400 sm:leading-6">
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-x-3 mt-6">
+                <div>
+                  <label for="quantity-pages" class="font-medium text-sm">Qtd. de páginas</label>
+                  <div class="mt-1.5">
+                    <input id="quantity-pages" name="quantity-pages" type="number" placeholder="Qtd." class="block w-full text-sm rounded-lg px-2 py-1.5 border border-gray-300 placeholder:text-gray-400 sm:leading-6">
+                  </div>
+                </div>
+
+                <div>
+                  <label for="quantity-schedule" class="font-medium text-sm">Qtd. de posts pendentes</label>
+                  <div class="mt-1.5">
+                    <input id="quantity-schedule" name="quantity-schedule" type="number" placeholder="Qtd." class="block w-full text-sm rounded-lg px-2 py-1.5 border border-gray-300 placeholder:text-gray-400 sm:leading-6">
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-x-3 mt-6">
+                <div>
+                  <label for="quantity-reply-posts" class="font-medium text-sm">Qtd. de posts com comentários automáticos</label>
+                  <div class="mt-1.5">
+                    <input id="quantity-reply-posts" name="quantity-reply-posts" type="number" placeholder="Qtd." class="block w-full text-sm rounded-lg px-2 py-1.5 border border-gray-300 placeholder:text-gray-400 sm:leading-6">
+                  </div>
+                </div>
+
+                <div>
+                  <label for="quantity-comments" class="font-medium text-sm">Qtd. de comentários respondidos</label>
+                  <div class="mt-1.5">
+                    <input id="quantity-comments" name="quantity-comments" type="number" placeholder="Qtd." class="block w-full text-sm rounded-lg px-2 py-1.5 border border-gray-300 placeholder:text-gray-400 sm:leading-6">
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-x-3 mt-6">
+                <div>
+                  <label for="quantity-sets" class="font-medium text-sm">Qtd. de conjuntos</label>
+                  <div class="mt-1.5">
+                    <input id="quantity-sets" name="quantity-sets" type="number" placeholder="Qtd." class="block w-full text-sm rounded-lg px-2 py-1.5 border border-gray-300 placeholder:text-gray-400 sm:leading-6">
+                  </div>
+                </div>
+
+                <div>
+                  <label for="select-all" class="font-medium text-sm">Selecionar todos</label>
+                  <div class="mt-1.5">
+                    <select id="select-all" name="select-all" class="block w-full text-sm rounded-lg px-1.5 py-2 border border-gray-300 placeholder:text-gray-400 sm:leading-6">
+                      <option value="true">Sim</option>
+                      <option value="false">Não</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-x-3 mt-6">
+                <div>
+                  <label for="standard-answers" class="font-medium text-sm">Respostas padrões</label>
+                  <div class="mt-1.5">
+                    <select id="standard-answers" name="standard-answers" class="block w-full text-sm rounded-lg px-1.5 py-2 border border-gray-300 placeholder:text-gray-400 sm:leading-6">
+                      <option value="true">Sim</option>
+                      <option value="false">Não</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="px-6 py-3 border-t dark:border-gray-800 gap-x-2 flex justify-end">
+            <button onclick="closeUpdatePlan()" class="py-2 px-4 inline-block text-center rounded-lg leading-5 text-gray-800 bg-gray-100 border border-gray-200 hover:text-gray-900 hover:bg-gray-200 hover:ring-0 hover:border-gray-200 focus:bg-gray-200 focus:border-gray-200 focus:outline-none focus:ring-0 ltr:mr-2 rtl:ml-2">Fechar</button>
+            <button onclick="updatePlan()" class="py-2 px-4 inline-block text-center rounded-lg leading-5 text-gray-100 bg-purple font-medium hover:text-white">Atualizar</button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="flex mt-4">
+          <div class="flex space-x-4 items-center">
+            <h2 class="text-xl font-semibold text-gray-900">Planos</h2>
+            <div class="h-6 w-px bg-gray-400" aria-hidden="true"></div>
+            <span class="text-md text-gray-900"><%= plans.length %> encontrados</span>
+          </div>
+        </div>
+        
+        <% if (plans.length > 0) { %>
+          <div class="mt-8">
+            <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              <% plans.forEach(function(plan) { %>
+                <li class="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow border">
+                  <div class="px-6">
+                    <div class="mt-6">
+                      <div>
+                        <div class="flex items-center truncate text-xl font-medium text-purple">                       
+                          <%= plan.title %>
+
+                          <% if (plan.marked) { %>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ml-1.5 text-purple">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+                            </svg>
+                          <% } %> 
+                        </div>
+                        <span class="text-sm"><%= plan.description %></span>
+                      </div>
+
+                      <p class="mt-4 flex items-baseline gap-x-1">
+                        <span class="text-2xl font-bold tracking-tight text-gray-900">R$<%= plan.valueMonth %></span>
+                        <span class="text-sm font-semibold leading-6 text-gray-600">/mês</span>
+                      </p>
+                      
+                      <ul role="list" class="mt-6 mb-8 space-y-3 text-sm leading-6 text-gray-600">
+                        <li class="flex gap-x-3">
+                          <svg class="h-6 w-5 flex-none" viewBox="0 0 20 20" fill="#752a7a"
+                            aria-hidden="true">
+                            <path fill-rule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                              clip-rule="evenodd" />
+                          </svg>
+                          Publique no Facebook e Instagram
+                        </li>
+  
+                        <li class="flex gap-x-3">
+                          <svg class="h-6 w-5 flex-none" viewBox="0 0 20 20" fill="#752a7a"
+                            aria-hidden="true">
+                            <path fill-rule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                              clip-rule="evenodd" />
+                          </svg>
+                          Importe até <%= plan.quantityAccounts %> perfis
+                        </li>
+  
+                        <li class="flex gap-x-3">
+                          <svg class="h-6 w-5 flex-none" viewBox="0 0 20 20" fill="#752a7a"
+                            aria-hidden="true">
+                            <path fill-rule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                              clip-rule="evenodd" />
+                          </svg>
+                          Importe até <%= plan.quantityGroups %> grupos
+                        </li>
+  
+                        <li class="flex gap-x-3">
+                          <svg class="h-6 w-5 flex-none" viewBox="0 0 20 20" fill="#752a7a"
+                            aria-hidden="true">
+                            <path fill-rule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                              clip-rule="evenodd" />
+                          </svg>
+                          Importe até <%= plan.quantityPages %> páginas
+                        </li>
+  
+                        <li class="flex gap-x-3">
+                          <svg class="h-6 w-5 flex-none" viewBox="0 0 20 20" fill="#752a7a"
+                            aria-hidden="true">
+                            <path fill-rule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                              clip-rule="evenodd" />
+                          </svg>
+                          Agende até <%= plan.quantitySchedule %> publicações simultaneamente
+                        </li>
+  
+                        <li class="flex gap-x-3">
+                          <svg class="h-6 w-5 flex-none" viewBox="0 0 20 20" fill="#752a7a"
+                            aria-hidden="true">
+                            <path fill-rule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                              clip-rule="evenodd" />
+                          </svg>
+                          Ative até <%= plan.quantityComments %> robôs de comentários automáticos
+                        </li>
+  
+                        <li class="flex gap-x-3">
+                          <svg class="h-6 w-5 flex-none" viewBox="0 0 20 20" fill="#752a7a"
+                            aria-hidden="true">
+                            <path fill-rule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                              clip-rule="evenodd" />
+                          </svg>
+                          Crie até <%= plan.quantitySets %> conjuntos para grupos e páginas
+                        </li>
+  
+                        <li class="flex gap-x-3">
+                          <svg class="h-6 w-5 flex-none" viewBox="0 0 20 20" fill="#752a7a"
+                            aria-hidden="true">
+                            <path fill-rule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                              clip-rule="evenodd" />
+                          </svg>
+                          7 dias de garantia
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="-mt-px flex divide-x divide-gray-200">
+                      <div class="flex w-0 flex-1">
+                        <button onclick="openUpdatePlan('<%= JSON.stringify(plan) %>')" class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-2 rounded-bl-lg border border-transparent py-4 text-sm font-semibold color-purple">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                          </svg>                                                                          
+                          Editar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              <% }) %>
+            </ul>
+          </div>
+        <% } else { %>
+          <div class="flex flex-col items-center py-44 h-full">
+            <svg class="h-72" width="887" height="653" viewBox="0 0 887 653" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_386_2)">
+              <path d="M754.058 650.253V577.913C754.058 577.913 782.249 629.199 754.058 650.253Z" fill="#F1F1F1"/>
+              <path d="M755.799 650.241L702.51 601.319C702.51 601.319 759.355 615.235 755.799 650.241Z" fill="#F1F1F1"/>
+              <path d="M191.188 0H63.729L0 110.382L63.729 220.765H191.188L254.917 110.382L191.188 0Z" fill="#E6E6E6"/>
+              <path d="M70.8826 208.375H184.035L240.611 110.382L184.035 12.3898H70.8826L14.3066 110.382L70.8826 208.375Z" fill="white"/>
+              <path d="M69.516 86.37C72.3989 86.37 74.736 84.0329 74.736 81.15C74.736 78.267 72.3989 75.9299 69.516 75.9299C66.633 75.9299 64.2959 78.267 64.2959 81.15C64.2959 84.0329 66.633 86.37 69.516 86.37Z" fill="#E2E2E2"/>
+              <path d="M69.516 115.602C72.3989 115.602 74.736 113.265 74.736 110.382C74.736 107.499 72.3989 105.162 69.516 105.162C66.633 105.162 64.2959 107.499 64.2959 110.382C64.2959 113.265 66.633 115.602 69.516 115.602Z" fill="#E2E2E2"/>
+              <path d="M69.516 144.835C72.3989 144.835 74.736 142.498 74.736 139.615C74.736 136.732 72.3989 134.395 69.516 134.395C66.633 134.395 64.2959 136.732 64.2959 139.615C64.2959 142.498 66.633 144.835 69.516 144.835Z" fill="#E2E2E2"/>
+              <path d="M190.621 76.974H91.4404V85.326H190.621V76.974Z" fill="#E2E2E2"/>
+              <path d="M190.621 106.206H91.4404V114.558H190.621V106.206Z" fill="#E2E2E2"/>
+              <path d="M190.621 135.439H91.4404V143.791H190.621V135.439Z" fill="#E2E2E2"/>
+              <path d="M822.386 0H694.927L631.198 110.382L694.927 220.765H822.386L886.115 110.382L822.386 0Z" fill="#E6E6E6"/>
+              <path d="M702.08 208.375H815.232L871.808 110.382L815.232 12.3898H702.08L645.504 110.382L702.08 208.375Z" fill="white"/>
+              <path d="M700.714 86.37C703.597 86.37 705.934 84.0329 705.934 81.15C705.934 78.267 703.597 75.9299 700.714 75.9299C697.831 75.9299 695.494 78.267 695.494 81.15C695.494 84.0329 697.831 86.37 700.714 86.37Z" fill="#E2E2E2"/>
+              <path d="M700.714 115.602C703.597 115.602 705.934 113.265 705.934 110.382C705.934 107.499 703.597 105.162 700.714 105.162C697.831 105.162 695.494 107.499 695.494 110.382C695.494 113.265 697.831 115.602 700.714 115.602Z" fill="#E2E2E2"/>
+              <path d="M700.714 144.835C703.597 144.835 705.934 142.498 705.934 139.615C705.934 136.732 703.597 134.395 700.714 134.395C697.831 134.395 695.494 136.732 695.494 139.615C695.494 142.498 697.831 144.835 700.714 144.835Z" fill="#E2E2E2"/>
+              <path d="M821.819 76.974H722.638V85.326H821.819V76.974Z" fill="#E2E2E2"/>
+              <path d="M821.819 106.206H722.638V114.558H821.819V106.206Z" fill="#E2E2E2"/>
+              <path d="M821.819 135.439H722.638V143.791H821.819V135.439Z" fill="#E2E2E2"/>
+              <path d="M506.167 1.07199H379.946L316.836 110.382L379.946 219.693H506.167L569.279 110.382L506.167 1.07199Z" fill="#E6E6E6"/>
+              <path d="M387.03 207.423H499.084L555.11 110.382L499.084 13.3415H387.03L331.004 110.382L387.03 207.423Z" fill="white"/>
+              <path d="M385.677 86.6032C388.532 86.6032 390.847 84.2888 390.847 81.4339C390.847 78.5789 388.532 76.2645 385.677 76.2645C382.822 76.2645 380.508 78.5789 380.508 81.4339C380.508 84.2888 382.822 86.6032 385.677 86.6032Z" fill="#6C63FF"/>
+              <path d="M385.677 115.552C388.532 115.552 390.847 113.237 390.847 110.382C390.847 107.527 388.532 105.213 385.677 105.213C382.822 105.213 380.508 107.527 380.508 110.382C380.508 113.237 382.822 115.552 385.677 115.552Z" fill="#6C63FF"/>
+              <path d="M385.677 144.5C388.532 144.5 390.847 142.186 390.847 139.331C390.847 136.476 388.532 134.161 385.677 134.161C382.822 134.161 380.508 136.476 380.508 139.331C380.508 142.186 382.822 144.5 385.677 144.5Z" fill="#6C63FF"/>
+              <path d="M505.607 77.2984H407.389V85.5694H505.607V77.2984Z" fill="#6C63FF"/>
+              <path d="M505.607 106.247H407.389V114.518H505.607V106.247Z" fill="#6C63FF"/>
+              <path d="M505.607 135.195H407.389V143.466H505.607V135.195Z" fill="#6C63FF"/>
+              <path d="M550.665 639.737L538.405 639.736L532.573 592.448L550.667 592.449L550.665 639.737Z" fill="#9F616A"/>
+              <path d="M553.792 651.621L514.261 651.619V651.119C514.261 647.039 515.882 643.125 518.768 640.24C521.653 637.354 525.567 635.733 529.647 635.733L553.792 635.734L553.792 651.621Z" fill="#2F2E41"/>
+              <path d="M664.665 639.737L652.405 639.736L646.573 592.448L664.667 592.449L664.665 639.737Z" fill="#9F616A"/>
+              <path d="M667.792 651.621L628.261 651.619V651.119C628.261 647.039 629.882 643.125 632.768 640.24C635.653 637.354 639.567 635.733 643.647 635.733L667.792 635.734L667.792 651.621Z" fill="#2F2E41"/>
+              <path d="M545.779 399.762C545.779 399.762 535.488 427.693 536.958 439.454C538.428 451.215 526.668 533.539 528.138 540.89C529.608 548.24 526.667 584.992 528.138 590.872C529.608 596.753 524.012 603.776 526.952 609.657C529.892 615.537 534.018 627.624 534.018 627.624L553.129 626.154L556.069 609.983C556.069 609.983 564.89 608.513 563.419 599.693C561.949 590.872 570.77 532.069 570.77 532.069L595.761 449.745L631.043 524.719C631.043 524.719 632.513 577.642 636.923 583.522C641.334 589.402 632.513 605.573 636.923 611.453C641.334 617.334 645.744 627.624 645.744 627.624H667.795V615.864C667.795 615.864 681.026 608.513 667.795 586.462L658.855 454.035L650.034 393.762L545.779 399.762Z" fill="#2F2E41"/>
+              <path d="M600.581 214.913C615.745 214.913 628.038 202.62 628.038 187.456C628.038 172.292 615.745 159.998 600.581 159.998C585.416 159.998 573.123 172.292 573.123 187.456C573.123 202.62 585.416 214.913 600.581 214.913Z" fill="#A0616A"/>
+              <path d="M577.214 185.562C579.152 190.512 581.089 195.462 583.027 200.412C585.409 206.498 588.137 213.009 593.72 216.405C600.613 220.598 609.819 218.553 616.487 214.011C622.485 209.926 627.089 204.103 629.68 197.324C632.272 190.546 632.727 183.137 630.985 176.092C629.243 169.048 625.387 162.705 619.935 157.916C614.482 153.127 607.695 150.121 600.485 149.302L600.209 154.272L594.109 149.16C593.658 149.934 593.038 150.596 592.294 151.095C591.551 151.595 590.704 151.92 589.817 152.045C588.93 152.171 588.026 152.094 587.173 151.82C586.32 151.546 585.54 151.082 584.892 150.463C586.494 153.785 584.645 157.835 581.975 160.379C578.694 163.505 569.311 167.261 569.7 172.848C569.96 176.576 575.702 181.698 577.214 185.562Z" fill="#2F2E41"/>
+              <path d="M676.162 440.378C677.108 438.966 677.733 437.364 677.993 435.684C678.253 434.005 678.142 432.289 677.667 430.657C677.192 429.025 676.365 427.517 675.244 426.239C674.123 424.961 672.736 423.945 671.18 423.261L671.729 396.699L655.668 392.429L655.42 429.95C654.445 432.641 654.491 435.595 655.549 438.254C656.606 440.913 658.603 443.092 661.159 444.377C663.716 445.662 666.655 445.965 669.42 445.228C672.186 444.491 674.584 442.766 676.162 440.378Z" fill="#9F616A"/>
+              <path d="M620.977 231.883C620.977 231.883 599.7 221.245 579.605 228.337C559.51 235.43 548.871 243.704 548.871 243.704L561.874 312.265L544.143 404.466C544.143 404.466 635.162 397.374 643.437 404.466C651.711 411.559 651.711 396.192 651.711 396.192L644.619 308.718L657.622 253.161L620.977 231.883Z" fill="#3F3D56"/>
+              <path d="M531.173 441.951C532.478 440.862 533.528 439.499 534.249 437.96C534.97 436.421 535.345 434.743 535.347 433.043C535.349 431.343 534.979 429.664 534.262 428.123C533.545 426.582 532.499 425.217 531.197 424.124L539.181 398.784L524.966 390.176L514.193 426.119C512.502 428.428 511.717 431.276 511.985 434.125C512.254 436.974 513.558 439.626 515.651 441.577C517.744 443.528 520.48 444.644 523.341 444.713C526.202 444.782 528.989 443.799 531.173 441.951Z" fill="#9F616A"/>
+              <path d="M557.145 243.704H548.87C548.87 243.704 535.867 251.979 535.867 263.799C535.867 275.62 516.954 413.923 516.954 413.923L537.049 417.469L554.781 320.539L567.783 294.533L557.145 243.704Z" fill="#3F3D56"/>
+              <path d="M635.162 253.161H657.622C657.622 253.161 664.714 260.253 668.26 276.802C671.806 293.351 675.353 358.365 675.353 358.365L672.989 417.469H655.257L652.893 340.634L641.073 290.987L635.162 253.161Z" fill="#3F3D56"/>
+              <path d="M804.841 652.382H423.841C423.576 652.382 423.321 652.277 423.134 652.09C422.946 651.902 422.841 651.648 422.841 651.382C422.841 651.117 422.946 650.863 423.134 650.675C423.321 650.488 423.576 650.382 423.841 650.382H804.841C805.106 650.382 805.36 650.488 805.548 650.675C805.735 650.863 805.841 651.117 805.841 651.382C805.841 651.648 805.735 651.902 805.548 652.09C805.36 652.277 805.106 652.382 804.841 652.382Z" fill="#CBCBCB"/>
+              </g>
+              <defs>
+              <clipPath id="clip0_386_2">
+              <rect width="886.115" height="652.383" fill="white"/>
+              </clipPath>
+              </defs>
+              </svg>
+                        
+            <h2 class="font-semibold text-xl mt-10">Nenhum plano encontrado.</h2>
+            <p class="text-md text-gray-600">Os planos aparecerão nessa área.</p>
+          </div>
+        <% } %>
+      </div>
+    </main>
+  </div>
+
+  <div class="fixed bottom-0 inset-x-0 border-t-orange">
+    <%- include('../../../partials/app/footer') %>
+  </div>
+</body>
+
+<script src="/js/admin/plans.js"></script>
+
+</html>

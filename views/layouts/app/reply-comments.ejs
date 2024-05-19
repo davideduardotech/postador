@@ -1,0 +1,447 @@
+<%- include('../../partials/head', {title: "Comentários automáticos" }) %>
+
+<body class="bg-gray-100">
+  <%- include('../../partials/app/sidebar') %>
+
+  <div class="xl:ml-64 pb-14">
+    <%- include('../../partials/app/nav', {user: user, title: "Comentários automáticos"}) %>
+
+    <main class="px-8 py-4 fade-in">
+      <div class="fixed inset-0 z-50 flex items-center justify-center flex-wrap py-20 bg-neutral-500 bg-opacity-80 overflow-y-auto hidden" id="popup-active-reply">
+        <div class="container px-4 mx-auto">
+          <div class="pb-5 max-w-lg mx-auto bg-white rounded-xl shadow-3xl">
+            <div class="px-5 pb-3.5">
+              <div class="flex flex-wrap items-center justify-between border-b">
+                <div class="w-auto">
+                  <h3 class="font-heading pt-4 pb-2.5 text-lg font-semibold">Ativar comentários</h3>
+                </div>
+                <div class="w-auto">
+                  <button onclick="closeActiveReply()" class="text-neutral-300 hover:text-neutral-400">
+                    <svg width="19" height="18" viewbox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4.46967 12.9697C4.17678 13.2626 4.17678 13.7374 4.46967 14.0303C4.76256 14.3232 5.23744 14.3232 5.53033 14.0303L4.46967 12.9697ZM14.5303 5.03033C14.8232 4.73744 14.8232 4.26256 14.5303 3.96967C14.2374 3.67678 13.7626 3.67678 13.4697 3.96967L14.5303 5.03033ZM5.53033 3.96967C5.23744 3.67678 4.76256 3.67678 4.46967 3.96967C4.17678 4.26256 4.17678 4.73744 4.46967 5.03033L5.53033 3.96967ZM13.4697 14.0303C13.7626 14.3232 14.2374 14.3232 14.5303 14.0303C14.8232 13.7374 14.8232 13.2626 14.5303 12.9697L13.4697 14.0303ZM5.53033 14.0303L14.5303 5.03033L13.4697 3.96967L4.46967 12.9697L5.53033 14.0303ZM4.46967 5.03033L13.4697 14.0303L14.5303 12.9697L5.53033 3.96967L4.46967 5.03033Z" fill="currentColor"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <% if (user.isAdmin || plan.standardAnswers) { %>
+              <div class="flex items-center gap-x-4 px-5 mb-10">
+                <button id="button-create-answers" onclick="openSelect('create-answers')" class="bg-purple rounded-full font-semibold text-sm text-white px-2 py-1">Criar respostas</button>
+                <button id="button-select-standard" onclick="openSelect('select-standard')" class="rounded-full font-semibold text-sm text-purple px-2 py-1">Respostas criadas</button>
+              </div>
+            <% } %>
+
+            <div class="fade-in px-5" id="create-answers">
+              <div>
+                <label for="content" class="block text-md font-medium leading-6 text-gray-900 inter mt-2">Opções de respostas:</label>
+                <div class="mt-4" id="options-post">
+                  <div class="flex items-center mt-2">
+                    <h2 class="mr-2 font-semibold inter">1.</h2>
+                    <textarea rows="1" name="content" id="content" class="block w-full rounded-lg p-1.5 option-post text-sm text-gray-900 border-purple shadow-sm" placeholder="Obrigado por comentar em nossa publicação..."></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex mt-6 cursor-pointer" onclick="newOption('post')">          
+                <div class="relative flex items-center">
+                  <div class="flex h-6 items-center">
+                    <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M7.5 15.5C11.6421 15.5 15 12.1421 15 8C15 3.85786 11.6421 0.5 7.5 0.5C3.35786 0.5 0 3.85786 0 8C0 12.1421 3.35786 15.5 7.5 15.5ZM6.80429 7.48215V5.05966H8.67095V7.48215H11.0888V9.34881H8.67095V11.7667H6.80429V9.34881H4.38179V7.48215H6.80429Z" fill="#752A7A"/>
+                    </svg>                               
+                  </div>
+                  <div class="ml-3 text-sm leading-6">
+                    <p class="block text-sm font-medium leading-6 text-gray-900 inter">Adicionar nova opção</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-10">
+                <h2 for="link" class="block text-md font-medium leading-6 text-gray-900 inter">Limite de comentários:</h2>
+                <% if (user.plan == "Plano Avançado" || user.plan == "Administrador") { %>
+                  <p class="block w-full rounded-lg inter py-1.5 mt-2 pl-2 ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6 border-purple color-purple font-semibold">Comentários ilimitados</p>
+                  <div class="bg-green-50 py-3 px-4 mt-2 rounded-md">
+                    <div class="flex">
+                      <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+                        </svg>
+                      </div>
+                      <div class="ml-3">
+                        <p class="text-sm text-green-700 inter">
+                          Seu plano oferece comentários ilimitados.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                <% } else if (user.plan == "Plano PRO") { %>
+                  <p class="block w-full rounded-lg inter py-1.5 mt-2 pl-2 ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6 border-purple color-purple font-semibold">5000 comentários</p>
+                  <div class="border-l-yellow bg-yellow-50 py-3 px-4 mt-2 rounded-md">
+                    <div class="flex">
+                      <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                        </svg>
+                      </div>
+                      <div class="ml-3">
+                        <p class="text-sm text-yellow-700 inter">
+                          Faça upgrade para responder comentários ilimitados.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                <% } else if (user.plan == "Plano Básico") { %>
+                  <p class="block w-full rounded-lg inter py-1.5 mt-2 pl-2 ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6 border-purple color-purple font-semibold">1000 comentários</p>
+                  <div class="border-l-yellow bg-yellow-50 py-3 px-4 mt-2 rounded-md">
+                    <div class="flex">
+                      <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                        </svg>
+                      </div>
+                      <div class="ml-3">
+                        <p class="text-sm text-yellow-700 inter">
+                          Faça upgrade para responder comentários ilimitados.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                <% } %>
+              </div>
+
+              <div>
+                <button class="w-full py-2.5 inter bg-purple text-white text-sm rounded-lg mt-4" onclick="activeReply()">Ativar comentários</button>
+              </div>
+            </div>
+
+            <div class="fade-in px-5 hidden" id="select-standard">
+              <ul class="h-76 overflow-y-auto fade-in">
+                <% user.standardAnswers.forEach(item => { %>
+                  <li class="py-4 border-b">
+                    <div class="flex justify-between items-center">
+                      <h2 class="text-md font-semibold"><%= item.name %></h2>
+
+                      <button class="text-sm text-purple font-semibold" onclick="activeReply('standard', '<%= item.name %>')">Selecionar</button>
+                    </div>
+
+                    <ul class="mt-2">
+                      <% item.contents.forEach((content, index) => { %>
+                        <li class="text-sm font-medium text-gray-700"><%= index + 1 %> - <%= content %></li>
+                      <% }) %>
+                    </ul>
+                  </li>
+                <% }) %>
+              </ul>
+
+              <div class="mt-10">
+                <h2 for="link" class="block text-md font-medium leading-6 text-gray-900 inter">Limite de comentários:</h2>
+                <% if (user.plan == "Plano Avançado" || user.plan == "Administrador") { %>
+                  <p class="block w-full rounded-lg inter py-1.5 mt-2 pl-2 ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6 border-purple color-purple font-semibold">Comentários ilimitados</p>
+                  <div class="bg-green-50 py-3 px-4 mt-2 rounded-md">
+                    <div class="flex">
+                      <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+                        </svg>
+                      </div>
+                      <div class="ml-3">
+                        <p class="text-sm text-green-700 inter">
+                          Seu plano oferece comentários ilimitados.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                <% } else if (user.plan == "Plano PRO") { %>
+                  <p class="block w-full rounded-lg inter py-1.5 mt-2 pl-2 ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6 border-purple color-purple font-semibold">5000 comentários</p>
+                  <div class="border-l-yellow bg-yellow-50 py-3 px-4 mt-2 rounded-md">
+                    <div class="flex">
+                      <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                        </svg>
+                      </div>
+                      <div class="ml-3">
+                        <p class="text-sm text-yellow-700 inter">
+                          Faça upgrade para responder comentários ilimitados.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                <% } else if (user.plan == "Plano Básico") { %>
+                  <p class="block w-full rounded-lg inter py-1.5 mt-2 pl-2 ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6 border-purple color-purple font-semibold">1000 comentários</p>
+                  <div class="border-l-yellow bg-yellow-50 py-3 px-4 mt-2 rounded-md">
+                    <div class="flex">
+                      <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                        </svg>
+                      </div>
+                      <div class="ml-3">
+                        <p class="text-sm text-yellow-700 inter">
+                          Faça upgrade para responder comentários ilimitados.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="z-50 fixed top-0 left-0 right-0 bottom-0 flex items-center w-full h-full p-4 bg-gray-800 bg-opacity-80 overflow-y-auto hidden" id="popup-disable-reply">
+        <div class="container px-4 mx-auto">
+          <div class="py-10 px-6 text-center max-w-lg mx-auto bg-white border rounded-xl shadow-3xl">
+            <div class="flex justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-red-700">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 9.563C9 9.252 9.252 9 9.563 9h4.874c.311 0 .563.252.563.563v4.874c0 .311-.252.563-.563.563H9.564A.562.562 0 019 14.437V9.564z" />
+              </svg>
+            </div>
+            <h3 class="font-heading mb-2 text-xl font-semibold mt-6">Desativar robô de comentários?</h3>
+            <p class="mb-6 text-neutral-500">Os comentários já respondidos serão registrados e não receberão novas respostas durante a próxima interação nesta publicação.</p>
+            <div class="flex flex-wrap justify-center -m-1">
+              <div class="w-auto p-1">
+                <button onclick="closeDisableReply()" class="inline-flex px-5 py-2.5 text-sm font-medium border border-neutral-200 hover:border-neutral-300 rounded-lg">Cancelar</button>
+              </div>
+
+              <div class="w-auto p-1">
+                <button onclick="disableReply()" class="inline-flex px-5 py-2.5 text-sm text-neutral-50 font-medium bg-red-700 rounded-lg transition duration-300">Desativar</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <% if (user.isAdmin || plan.standardAnswers) { %>
+        <div class="fixed inset-0 z-50 flex items-center justify-center flex-wrap py-20 bg-neutral-500 bg-opacity-80 overflow-y-auto hidden" id="popup-standard-answers">
+          <div class="container px-4 mx-auto">
+            <div class="pb-5 max-w-lg mx-auto bg-white rounded-xl shadow-3xl">
+              <div class="px-5 pb-3.5">
+                <div class="flex flex-wrap items-center justify-between border-b">
+                  <div class="w-auto">
+                    <h3 class="font-heading pt-4 pb-2.5 text-lg font-semibold">Respostas padrões</h3>
+                  </div>
+                  <div class="w-auto">
+                    <button onclick="closeStandardAnswers()" class="text-neutral-300 hover:text-neutral-400">
+                      <svg width="19" height="18" viewbox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.46967 12.9697C4.17678 13.2626 4.17678 13.7374 4.46967 14.0303C4.76256 14.3232 5.23744 14.3232 5.53033 14.0303L4.46967 12.9697ZM14.5303 5.03033C14.8232 4.73744 14.8232 4.26256 14.5303 3.96967C14.2374 3.67678 13.7626 3.67678 13.4697 3.96967L14.5303 5.03033ZM5.53033 3.96967C5.23744 3.67678 4.76256 3.67678 4.46967 3.96967C4.17678 4.26256 4.17678 4.73744 4.46967 5.03033L5.53033 3.96967ZM13.4697 14.0303C13.7626 14.3232 14.2374 14.3232 14.5303 14.0303C14.8232 13.7374 14.8232 13.2626 14.5303 12.9697L13.4697 14.0303ZM5.53033 14.0303L14.5303 5.03033L13.4697 3.96967L4.46967 12.9697L5.53033 14.0303ZM4.46967 5.03033L13.4697 14.0303L14.5303 12.9697L5.53033 3.96967L4.46967 5.03033Z" fill="currentColor"></path>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-x-4 px-5">
+                <button id="button-create-standard" onclick="openSelect('create-standard')" class="bg-purple rounded-full font-semibold text-sm text-white px-2 py-1">Criar respostas</button>
+                <button id="button-created-standard" onclick="openSelect('created-standard')" class="rounded-full font-semibold text-sm text-purple px-2 py-1">Respostas criadas</button>
+              </div>
+
+              <div id="create-standard" class="mt-10">
+                <div class="fade-in px-5">
+                  <div>
+                    <label for="name-standard" class="block text-md font-medium leading-6 text-gray-900 inter mt-2">Nome da resposta:</label>
+                    <input name="name-standard" id="name-standard" class="block w-full rounded-lg p-1.5 text-sm text-gray-900 border-purple shadow-sm mt-1.5" placeholder="Insira um nome">
+                  </div>
+
+                  <div class="mt-10">
+                    <label class="block text-md font-medium leading-6 text-gray-900 inter">Opções de respostas:</label>
+                    <div class="mt-3" id="options-standard">
+                      <div class="flex items-center mt-2">
+                        <h2 class="mr-2 font-semibold inter">1.</h2>
+                        <textarea rows="1" name="content" id="content" class="block w-full rounded-lg p-1.5 option-standard text-sm text-gray-900 border-purple shadow-sm" placeholder="Agradecemos o comentário"></textarea>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex mt-6 cursor-pointer" onclick="newOption('standard')">          
+                    <div class="relative flex items-center">
+                      <div class="flex h-6 items-center">
+                        <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M7.5 15.5C11.6421 15.5 15 12.1421 15 8C15 3.85786 11.6421 0.5 7.5 0.5C3.35786 0.5 0 3.85786 0 8C0 12.1421 3.35786 15.5 7.5 15.5ZM6.80429 7.48215V5.05966H8.67095V7.48215H11.0888V9.34881H8.67095V11.7667H6.80429V9.34881H4.38179V7.48215H6.80429Z" fill="#752A7A"/>
+                        </svg>                               
+                      </div>
+                      <div class="ml-3 text-sm leading-6">
+                        <p class="block text-sm font-medium leading-6 text-gray-900 inter">Adicionar nova opção</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="px-5 mt-2">
+                  <button class="w-full py-2.5 inter bg-purple text-white text-sm rounded-lg mt-4" onclick="createStandardAnswers()">Criar resposta(s)</button>
+                </div>
+              </div>
+
+              <div id="created-standard" class="mt-10 hidden">
+                <ul class="h-96 overflow-y-auto fade-in px-5">
+                  <% user.standardAnswers.forEach(item => { %>
+                    <li class="py-4 border-b">
+                      <div class="flex justify-between items-center">
+                        <h2 class="text-md font-semibold"><%= item.name %></h2>
+
+                        <button onclick="deleteStandardAnswers('<%= item.name %>')">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-red-700">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                          </svg>
+                        </button>
+                      </div>
+
+                      <ul class="mt-2">
+                        <% item.contents.forEach((content, index) => { %>
+                          <li class="text-sm font-medium text-gray-700"><%= index + 1 %> - <%= content %></li>
+                        <% }) %>
+                      </ul>
+                    </li>
+                  <% }) %>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% } %>
+
+      <% if (posts.length > 0) { %>
+        <div class="py-4 px-3 overflow-hidden">
+          <div class="pt-4 bg-gray-50 border border-gray-300 rounded-xl">
+            <div class="px-6">
+              <div class="flex flex-wrap justify-between items-center gap-y-4 pb-8 py-1">
+                <h3 class="font-heading text-lg text-neutral-600 font-semibold">Ativar comentários automáticos</h3>
+
+                <div class="flex flex-wrap items-center gap-y-4 gap-x-8">
+                  <div id="actions" class="flex items-center gap-y-4 gap-x-8 hidden">
+                    <button onclick="openActiveReply()" class="flex items-center gap-x-1 text-green-600 font-semibold text-sm">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
+                      </svg>                                                            
+                      Ativar todos
+                    </button>
+                  </div>
+
+                  <% if (user.isAdmin || plan.standardAnswers) { %>
+                    <button onclick="openStandardAnswers()" class="flex items-center text-purple font-semibold text-sm">                                                                             
+                      Respostas padrões
+                    </button>
+                  <% } %>
+                </div>
+              </div>
+
+              <div class="w-full overflow-x-auto">
+                <table class="w-full min-w-max">
+                  <thead>
+                    <tr class="text-left">
+                      <th class="p-0 border-b border-neutral-100">
+                        <div class="flex items-center pb-3.5 gap-x-2">
+                          <span class="text-sm text-gray-400 font-medium">Tipo de publicação</span>
+                        </div>
+                      </th>
+                      <th class="p-0 border-b border-neutral-100">
+                        <div class="pb-3.5"><span class="text-sm text-gray-400 font-medium">Conteúdo da publicação</span></div>
+                      </th>
+                      <th class="p-0 border-b border-neutral-100">
+                        <div class="pb-3.5"><span class="text-sm text-gray-400 font-medium">Status</span></div>
+                      </th>
+                      <th class="p-0 border-b border-neutral-100">
+                        <div class="pb-3.5"><span class="text-sm text-gray-400 font-medium">Respondidos</span></div>
+                      </th>
+                      <th class="p-0 border-b border-neutral-100">
+                        <div class="pb-3.5"><span class="text-sm text-gray-400 font-medium">Ações</span></div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% posts.forEach(post => { %>
+                      <tr>
+                        <td class="py-1.5 pr-4 border-b border-neutral-100">
+                          <div class="flex items-center">
+                            <input class="mark-post mr-4" type="checkbox" value="<%= post._id %>">
+
+                            <% if (post.typePost == "media") { %>
+                              <div class="flex items-center gap-x-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                  <path stroke-linecap="round" stroke="#752A7A" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                                </svg>                                  
+                                <span class="text-sm font-medium">Mídia</span>
+                              </div>
+                            <% } else if (post.typePost == "text-link") { %>
+                              <div class="flex items-center gap-x-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                  <path stroke-linecap="round" stroke="#752A7A" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
+                                </svg>                                     
+                                <span class="text-sm font-medium">Link</span>
+                              </div>
+                            <% } %>
+                          </div>
+                        </td>
+                        <td class="py-1.5 pr-4 border-b border-neutral-100">
+                          <span class="text-sm"><%= post.content.slice(0, 50) %>...</span>
+                        </td>
+                        <td class="py-1.5 pr-4 border-b border-neutral-100">
+                          <div class="flex items-center gap-x-2 h-16">
+                            <% if (post.replyCommentsStatus) { %>
+                              <div class="flex-none rounded-full p-1 text-green-500 bg-green-200">
+                                <div class="h-1.5 w-1.5 rounded-full bg-current"></div>
+                              </div>
+                              <span class="text-sm leading-5 font-semibold text-green-600">Ativo</span>
+                            <% } else { %>
+                              <div class="flex-none rounded-full p-1 text-red-500 bg-red-200">
+                                <div class="h-1.5 w-1.5 rounded-full bg-current"></div>
+                              </div>
+                              <span class="text-sm leading-5 font-semibold text-red-600">Desativado</span>
+                            <% } %>
+                          </div>
+                        </td>
+                        <td class="py-1.5 pr-4 border-b border-neutral-100">
+                          <% if (post.answered != "disabled") { %>
+                            <span class="text-sm"><%= post.answered %> respondidos</span>
+                          <% } else { %>
+                            <span class="text-sm">Não ativado</span>
+                          <% } %>
+                        </td>
+                        <td class="py-1.5 w-12 pr-4 border-b border-neutral-100">
+                          <div class="flex">
+                            <% if (!post.replyCommentsStatus) { %>
+                              <button onclick="openActiveReply('<%= post._id %>')" class="flex items-center py-1 gap-x-1 text-green-600 font-semibold text-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
+                                </svg>                                                            
+                                Ativar
+                              </button>
+                            <% } else { %>
+                              <button onclick="openDisableReply('<%= post._id %>')" class="flex items-center py-1 gap-x-1 text-red-700 font-semibold text-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 9.563C9 9.252 9.252 9 9.563 9h4.874c.311 0 .563.252.563.563v4.874c0 .311-.252.563-.563.563H9.564A.562.562 0 019 14.437V9.564z" />
+                                </svg>
+                                Desativar
+                              </button>
+                            <% } %>
+                          </div>
+                        </td>
+                      </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% } else { %>
+        <div class="flex flex-col items-center py-24 md:py-44 h-full">
+          <svg class="h-48 md:h-64" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 868.9803 474.6702" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M212.96892,644.94753c-18.51744,15.78973-22.36087,41.687-22.36087,41.687s26.17921.29707,44.69665-15.49269,22.36087-41.687,22.36087-41.687S231.48637,629.15783,212.96892,644.94753Z" transform="translate(-165.50985 -212.6649)" fill="#f2f2f2"/><path d="M221.52563,651.22973c-7.88774,23.02161-30.565,36.10537-30.565,36.10537s-9.88865-24.24161-2.00091-47.26322,30.56494-36.10536,30.56494-36.10536S229.41338,628.20813,221.52563,651.22973Z" transform="translate(-165.50985 -212.6649)" fill="#f2f2f2"/><path d="M414.81075,310.62528c-4.18994-5.429-10.11133-10.45227-10.48633-17.15155-.34375-6.14447,4.2378-12.245,2.30567-18.12342-1.48584-4.51983-6.38721-7.24707-11.17676-8.69128a43.43919,43.43919,0,0,0-27.91553,1.07471l.48486-.34192c-5.45214-1.94214-11.82519.0628-16.11474,3.7763-4.29,3.71344-6.83936,8.86072-8.81738,14.01886-1.97852,5.15815-3.51123,10.505-6.25977,15.34076-2.749,4.83582-6.95752,9.23358-12.51025,10.90485,1.85888,3.70795,7.66992,4.98,11.07812,2.425a14.01368,14.01368,0,0,0,2.33106-2.40985q3.40943-4.146,6.81933-8.29194c2.33887,4.15979-1.15527,9.90113,1.71973,13.7522,1.48242,1.986,4.18994,2.74017,6.70459,3.28113a121.27714,121.27714,0,0,0,59.33105-2.20068c1.5503-.45685,3.26075-1.086,3.90381-2.4892C416.95089,313.8793,415.91231,312.05289,414.81075,310.62528Z" transform="translate(-165.50985 -212.6649)" fill="#2f2e41"/><path d="M470.53815,331.812a10.52739,10.52739,0,0,0-.2393,1.64013l-42.95744,24.782L416.9,352.22322,405.76883,366.7955,423.21917,379.233a8,8,0,0,0,9.59819-.23384l44.29652-34.94583a10.4971,10.4971,0,1,0-6.57573-12.24133Z" transform="translate(-165.50985 -212.6649)" fill="#ffb7b7"/><path d="M425.90529,359.40791l-13.88374,17.994a4.5,4.5,0,0,1-6.80392.37268l-15.71732-16.32121A12.49742,12.49742,0,0,1,404.827,341.7092l19.713,11.02278a4.5,4.5,0,0,1,1.36538,6.67593Z" transform="translate(-165.50985 -212.6649)" fill="#752a7a"/><polygon points="241.288 460.267 253.548 460.266 259.38 412.978 241.286 412.979 241.288 460.267" fill="#ffb7b7"/><path d="M403.67036,668.92892l24.144-.001h.001a15.3873,15.3873,0,0,1,15.38647,15.38623v.5l-39.53076.00147Z" transform="translate(-165.50985 -212.6649)" fill="#2f2e41"/><polygon points="157.288 460.267 169.548 460.266 175.38 412.978 157.286 412.979 157.288 460.267" fill="#ffb7b7"/><path d="M319.67036,668.92892l24.144-.001h.001a15.3873,15.3873,0,0,1,15.38647,15.38623v.5l-39.53076.00147Z" transform="translate(-165.50985 -212.6649)" fill="#2f2e41"/><circle cx="378.3738" cy="301.62837" r="21.18784" transform="translate(-128.2503 432.16527) rotate(-83.7356)" fill="#ffb7b7"/><path d="M390.77111,333.39136l12.48227,6.18372s13.94651,24.237,5.94651,47.237c-3.8841,11.16678,7.05349,46.763,7.05349,46.763s16.94651,161.237,17,211c-21.05349,3.237-41.05349,7.237-42.05349-2.763s-11.94651-128.237-11.94651-128.237-15.05349,131.237-27.05349,133.237-36-1-36-1,19.05349-192.237,32.05349-204.237l2-10-.05349-89.763,14.97759-7.14766Z" transform="translate(-165.50985 -212.6649)" fill="#2f2e41"/><path d="M346.11823,469.66164a10.74266,10.74266,0,0,0,3.29112-16.1405l14.51672-96.76189-18.96578-.91048-11.31613,96.36138a10.80091,10.80091,0,0,0,12.47407,17.45149Z" transform="translate(-165.50985 -212.6649)" fill="#ffb7b7"/><path d="M363.514,381.00414l-22.68238-1.432a4.5,4.5,0,0,1-4.11751-5.42941l4.72623-22.1603a12.49741,12.49741,0,0,1,24.94035,1.648l1.901,22.50531a4.5,4.5,0,0,1-4.76764,4.86845Z" transform="translate(-165.50985 -212.6649)" fill="#752a7a"/><path d="M990.39582,289.249H488.80218a13.806,13.806,0,0,0-13.806,13.806V582.53364a13.806,13.806,0,0,0,13.806,13.806H990.39582a13.806,13.806,0,0,0,13.806-13.806V303.055a13.806,13.806,0,0,0-13.806-13.806Z" transform="translate(-165.50985 -212.6649)" fill="#3f3d56"/><rect x="327.99594" y="100.98308" width="492.18639" height="277.64361" fill="#fff"/><circle cx="573.66845" cy="88.36291" r="5.04805" fill="#fff"/><polygon points="679.425 378.627 327.996 378.627 327.996 100.983 679.425 378.627" fill="#f2f2f2" style="isolation:isolate"/><path d="M1018.02127,586.24353H969.987v-3.46086a.68617.68617,0,0,0-.68614-.68619h-16.469a.68618.68618,0,0,0-.68624.68614v3.46091H941.85279v-3.46086a.68618.68618,0,0,0-.68619-.68619H924.69772a.68618.68618,0,0,0-.6862.68619h0v3.46086h-10.293v-3.46086a.68618.68618,0,0,0-.6862-.68619H896.56338a.68618.68618,0,0,0-.6862.68619h0v3.46086h-10.293v-3.46086a.68618.68618,0,0,0-.68619-.68619H868.42909a.68617.68617,0,0,0-.6862.68614v3.46091h-10.293v-3.46086a.68618.68618,0,0,0-.6862-.68619H840.2948a.68618.68618,0,0,0-.6862.68619h0v3.46086H829.31553v-3.46086a.68618.68618,0,0,0-.68619-.68619H812.16046a.68618.68618,0,0,0-.6862.68619h0v3.46086h-10.293v-3.46086a.68618.68618,0,0,0-.6862-.68619H671.48891a.68618.68618,0,0,0-.6862.68619h0v3.46086H660.50964v-3.46086a.68618.68618,0,0,0-.6862-.68619H643.35462a.68618.68618,0,0,0-.6862.68619h0v3.46086H632.37535v-3.46086a.68617.68617,0,0,0-.68615-.68619H615.22028a.68618.68618,0,0,0-.6862.68619h0v3.46086H604.241v-3.46086a.68618.68618,0,0,0-.6862-.68619H587.08594a.68618.68618,0,0,0-.6862.68619h0v3.46086h-10.293v-3.46086a.68618.68618,0,0,0-.6862-.68619H558.95165a.68618.68618,0,0,0-.6862.68619h0v3.46086H547.97238v-3.46086a.68618.68618,0,0,0-.6862-.68619H530.81731a.68619.68619,0,0,0-.6862.68614v3.46091h-10.293v-3.46086a.68618.68618,0,0,0-.68617-.68619H502.683a.6862.6862,0,0,0-.6862.68619h0v3.46086H470.43146a16.46886,16.46886,0,0,0-16.46885,16.46887v7.44683a16.46885,16.46885,0,0,0,16.46885,16.46883h547.58981a16.46888,16.46888,0,0,0,16.46888-16.46883V602.7124A16.46885,16.46885,0,0,0,1018.02127,586.24353Z" transform="translate(-165.50985 -212.6649)" fill="#3f3d56"/><path d="M749.06641,554.88582a12.08948,12.08948,0,0,1-.55394,1.14324,14.6271,14.6271,0,0,1-4.433,4.987,14.56389,14.56389,0,0,1-22.94594-11.9105V546.755h1.99475A50.94173,50.94173,0,0,0,749.06641,554.88582Z" transform="translate(-165.50985 -212.6649)" fill="#3f3d56"/><path d="M777.5304,547.44323v1.66232a14.55908,14.55908,0,0,1-27.34415,6.97014,12.16026,12.16026,0,0,1-.57729-1.17239c.42578.01168.84557.01752,1.27164.01752A51.01779,51.01779,0,0,0,777.5304,547.44323Z" transform="translate(-165.50985 -212.6649)" fill="#3f3d56"/><path d="M797.15156,371.65583c-.43746-.06415-.88061-.105-1.32405-.13414a48.98222,48.98222,0,0,1,.97431,36.57714c.44315-.05247.88061-.12246,1.31807-.20413a18.37443,18.37443,0,0,0-.96833-36.23887Z" transform="translate(-165.50985 -212.6649)" fill="#3f3d56"/><path d="M705.9334,371.52169c-.44344.02915-.88659.07-1.32405.13414a18.37448,18.37448,0,0,0-.96832,36.23887c.43745.08167.87491.15166,1.31806.20413a48.98583,48.98583,0,0,1,.97431-36.57714Z" transform="translate(-165.50985 -212.6649)" fill="#3f3d56"/><path d="M797.15156,371.65583a50.15582,50.15582,0,1,0,3.89068,19.36473A50.22821,50.22821,0,0,0,797.15156,371.65583Zm-.34974,36.443a48.98222,48.98222,0,1,1,3.07387-17.07827A49.06652,49.06652,0,0,1,796.80182,408.09883Z" transform="translate(-165.50985 -212.6649)" fill="#3f3d56"/><path d="M776.5447,379.6467H725.2165a10.20731,10.20731,0,0,0,0,20.41462h51.3282a10.20731,10.20731,0,0,0,0-20.41462Z" transform="translate(-165.50985 -212.6649)" fill="#3f3d56"/><path d="M796.80182,478.18517q-.28025-.51623-.57758-1.01489c-.00569-.01168-.01167-.01752-.01737-.02916a52.4736,52.4736,0,1,0-47.6944,78.88794c.55394.02915,1.11386.04663,1.67378.04663.23354.01168.46081.01168.69435.01168a52.10841,52.10841,0,0,0,26.6498-7.2851A52.84318,52.84318,0,0,0,797.91,526.9003c.00569-.01167.01168-.01751.01737-.02919.17515-.35.34433-.70574.5135-1.06737a52.41937,52.41937,0,0,0-1.639-47.61857Zm.50154,47.29774q-.25376.54251-.52489,1.06741a51.68613,51.68613,0,0,1-19.24807,20.89291,51.01779,51.01779,0,0,1-26.6498,7.47759c-.42607,0-.84586-.00584-1.27164-.01752q-.27128,0-.54255-.01748a51.32636,51.32636,0,1,1,45.97391-77.41807c.0057.01164.01168.01748.01737.02916.20421.33247.40243.67074.58926,1.00905a51.263,51.263,0,0,1,1.65641,46.97695Z" transform="translate(-165.50985 -212.6649)" fill="#3f3d56"/><path d="M791.22568,479.73667A6.06692,6.06692,0,0,0,787.726,478.611H764.78578a6.02524,6.02524,0,1,0,0,12.05048H787.726a5.95878,5.95878,0,0,0,1.21895-.1225,6.61944,6.61944,0,0,0,1.16655-.36747,6.02282,6.02282,0,0,0,1.11415-10.43479Z" transform="translate(-165.50985 -212.6649)" fill="#3f3d56"/><circle cx="600.80328" cy="271.97097" r="3.05895" fill="#f1f1f1"/><circle cx="610.74487" cy="271.97097" r="3.05895" fill="#f1f1f1"/><circle cx="620.68647" cy="271.97097" r="3.05895" fill="#752a7a"/><path d="M901.40674,383.8181c-7.955,4.7708-22.128,10.74873-36.61127,4.60532l-9.36232-3.9713,18.76142-21.03134a89.60221,89.60221,0,1,1,27.21217,20.39732Z" transform="translate(-165.50985 -212.6649)" fill="#fff"/><path d="M901.45553,384.95169c-7.64392,4.4878-22.20508,10.68994-37.05054,4.39209l-10.647-4.51611,19.09448-21.4043a90.60242,90.60242,0,1,1,128.58,6.91406h0a90.19848,90.19848,0,0,1-99.97692,14.61426Zm104.74011-141.24951A88.60227,88.60227,0,1,0,874.93526,362.74906l.60425.6665-18.43115,20.66113L865.186,387.503c14.33753,6.082,28.52527-.23584,35.70643-4.54248l.46423-.27881.48706.23682a88.6021,88.6021,0,0,0,104.35193-139.21631Z" transform="translate(-165.50985 -212.6649)" fill="#752a7a"/><path d="M1016.20873,302.66717a82.46016,82.46016,0,0,0-75.16848-82.13206c2.40185-.2104,4.83137-.32424,7.28779-.32424a82.4563,82.4563,0,0,1,0,164.91257c-2.45272,0-4.87807-.11531-7.27628-.32526A82.4602,82.4602,0,0,0,1016.20873,302.66717Z" transform="translate(-165.50985 -212.6649)" opacity="0.1" style="isolation:isolate"/><rect x="727.77166" y="73.55937" width="58.91966" height="5.47153" fill="#752a7a"/><rect x="727.77166" y="92.48718" width="102.69201" height="5.47153" fill="#752a7a"/><rect x="727.77166" y="111.41497" width="102.59147" height="5.47153" fill="#752a7a"/><path d="M547.50985,685.85892h-381a1,1,0,0,1,0-2h381a1,1,0,0,1,0,2Z" transform="translate(-165.50985 -212.6649)" fill="#cbcbcb"/><path d="M400.58028,287.85538c-.82568-3.74536-3.50732-6.84851-6.59668-9.12116a27.0167,27.0167,0,0,0-34.53711,2.10022,17.64907,17.64907,0,0,0-5.334,8.5492,10.48615,10.48615,0,0,0,2.23486,9.54809l.42334.26514c-.38379-1.628.88086-3.25476,2.3916-3.973a19.10971,19.10971,0,0,1,4.87842-1.09381,17.935,17.935,0,0,0,12.15674-8.57837,20.25436,20.25436,0,0,0,11.60742,12.09656c2.80029,1.09509,10.4917,2.601,13.15772,1.21063C404.36348,297.08554,401.406,291.6008,400.58028,287.85538Z" transform="translate(-165.50985 -212.6649)" fill="#2f2e41"/></svg>                                    
+          <h2 class="font-semibold text-xl mt-10">Nenhuma publicação encontrada.</h2>
+          <p class="text-md text-gray-600 text-center">Você deve realizar uma publicação para ativar os comentários automáticos.</p>
+        </div>
+      <% } %>
+    </main>
+  </div>
+
+  <div class="fixed bottom-0 inset-x-0 border-t-orange">
+    <%- include('../../partials/app/footer') %>
+  </div>
+</body>
+
+<script src="/js/app/reply-comments.js" data-quantity-reply="<%= (user.isAdmin) ? 100000 : plan.quantityReplyPosts %>" data-quantity-active="<%= quantityActive %>" data-user="<%= user.isAdmin %>"></script>
+
+</html>

@@ -1,0 +1,205 @@
+<%- include('../../partials/head', {title: "Dashboard do usuário" }) %>
+
+<body class="bg-gray-100">
+  <%- include('../../partials/app/sidebar') %>
+
+  <div class="xl:ml-64 pb-14">
+    <%- include('../../partials/app/nav', {user: user, title: "Dashboard do usuário"}) %>
+
+    <main class="px-8 py-4 fade-in">
+      <div class="z-50 fixed top-0 left-0 right-0 bottom-0 flex items-center w-full h-full p-4 bg-gray-800 bg-opacity-80 overflow-y-auto hidden" id="popup-delete-post">
+        <div class="container px-4 mx-auto">
+          <div class="pt-10 px-6 pb-12 text-center max-w-lg mx-auto bg-white border rounded-xl shadow-3xl">
+            <svg class="mb-4 mx-auto" width="28" height="28" viewbox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22.9141 8.2201C22.9436 7.80694 22.6326 7.44808 22.2195 7.41857C21.8063 7.38906 21.4474 7.70007 21.4179 8.11323L22.9141 8.2201ZM21.1541 22.3329L20.406 22.2795L21.1541 22.3329ZM6.84456 22.3329L7.59265 22.2795L6.84456 22.3329ZM6.58078 8.11323C6.55126 7.70007 6.19241 7.38906 5.77925 7.41857C5.36609 7.44808 5.05508 7.80694 5.08459 8.2201L6.58078 8.11323ZM12.416 12.8333C12.416 12.4191 12.0802 12.0833 11.666 12.0833C11.2518 12.0833 10.916 12.4191 10.916 12.8333H12.416ZM10.916 19.8333C10.916 20.2475 11.2518 20.5833 11.666 20.5833C12.0802 20.5833 12.416 20.2475 12.416 19.8333H10.916ZM17.0827 12.8333C17.0827 12.4191 16.7469 12.0833 16.3327 12.0833C15.9185 12.0833 15.5827 12.4191 15.5827 12.8333H17.0827ZM15.5827 19.8333C15.5827 20.2475 15.9185 20.5833 16.3327 20.5833C16.7469 20.5833 17.0827 20.2475 17.0827 19.8333H15.5827ZM16.7493 8.16667C16.7493 8.58088 17.0851 8.91667 17.4993 8.91667C17.9136 8.91667 18.2493 8.58088 18.2493 8.16667H16.7493ZM9.74935 8.16667C9.74935 8.58088 10.0851 8.91667 10.4993 8.91667C10.9136 8.91667 11.2493 8.58088 11.2493 8.16667H9.74935ZM4.66602 7.41667C4.2518 7.41667 3.91602 7.75245 3.91602 8.16667C3.91602 8.58088 4.2518 8.91667 4.66602 8.91667V7.41667ZM23.3327 8.91667C23.7469 8.91667 24.0827 8.58088 24.0827 8.16667C24.0827 7.75245 23.7469 7.41667 23.3327 7.41667V8.91667ZM21.4179 8.11323L20.406 22.2795L21.9022 22.3863L22.9141 8.2201L21.4179 8.11323ZM18.8267 23.75H9.17196V25.25H18.8267V23.75ZM7.59265 22.2795L6.58078 8.11323L5.08459 8.2201L6.09646 22.3863L7.59265 22.2795ZM9.17196 23.75C8.34128 23.75 7.65183 23.108 7.59265 22.2795L6.09646 22.3863C6.21171 23.9999 7.55432 25.25 9.17196 25.25V23.75ZM20.406 22.2795C20.3469 23.108 19.6574 23.75 18.8267 23.75V25.25C20.4444 25.25 21.787 23.9999 21.9022 22.3863L20.406 22.2795ZM10.916 12.8333V19.8333H12.416V12.8333H10.916ZM15.5827 12.8333V19.8333H17.0827V12.8333H15.5827ZM11.666 4.25H16.3327V2.75H11.666V4.25ZM16.7493 4.66667V8.16667H18.2493V4.66667H16.7493ZM11.2493 8.16667V4.66667H9.74935V8.16667H11.2493ZM16.3327 4.25C16.5628 4.25 16.7493 4.43655 16.7493 4.66667H18.2493C18.2493 3.60812 17.3912 2.75 16.3327 2.75V4.25ZM11.666 2.75C10.6075 2.75 9.74935 3.60812 9.74935 4.66667H11.2493C11.2493 4.43655 11.4359 4.25 11.666 4.25V2.75ZM4.66602 8.91667H23.3327V7.41667H4.66602V8.91667Z" fill="#7F8995"></path>
+            </svg>
+            <h3 class="font-heading mb-2 text-xl font-semibold">Excluir publicação?</h3>
+            <p class="mb-6 text-neutral-500">Todos os dados vinculados à publicação serão removidos.</p>
+            <div class="flex flex-wrap justify-center -m-1">
+              <div class="w-auto p-1">
+                <button onclick="closeDeletePost()" class="inline-flex px-5 py-2.5 text-sm font-medium border border-neutral-200 hover:border-neutral-300 rounded-lg">Cancel</button>
+              </div>
+
+              <div class="w-auto p-1">
+                <button onclick="deletePost()" class="inline-flex px-5 py-2.5 text-sm text-neutral-50 font-medium bg-red-700 rounded-lg transition duration-300">Excluir</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="overflow-hidden">
+        <div class="flex flex-wrap">
+          <div class="w-full sm:w-1/2 md:w-1/4 p-3">
+            <div class="p-5 h-full border border-gray-300 bg-gray-50 rounded-xl">
+              <div class="flex items-center justify-center mb-7 w-12 h-12 bg-white border rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#752A7A" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 010 3.46" />
+                </svg>                
+              </div>
+              <h3 class="font-heading mb-2 text-xl tracking-tight font-bold"><%= countPosts %> publicações</h3>
+              <p class="text-sm text-neutral-400 font-medium">Total de publicações</p>
+            </div>
+          </div>
+          <div class="w-full sm:w-1/2 md:w-1/4 p-3">
+            <div class="p-5 h-full border border-gray-300 bg-gray-50 rounded-xl">
+              <div class="flex items-center justify-center mb-7 w-12 h-12 bg-white border rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#752A7A" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                </svg>                
+              </div>
+              <h3 class="font-heading mb-2 text-xl tracking-tight font-bold"><%= user.accountsFb.length + user.accountsIg.length %> contas</h3>
+              <p class="text-sm text-neutral-400 font-medium">Total de contas importadas</p>
+            </div>
+          </div>
+          <div class="w-full sm:w-1/2 md:w-1/4 p-3">
+            <div class="p-5 h-full border border-gray-300 bg-gray-50 rounded-xl">
+              <div class="flex items-center justify-center mb-7 w-12 h-12 bg-white border rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#752A7A" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                </svg>                
+              </div>
+              <h3 class="font-heading mb-2 text-xl tracking-tight font-bold"><%= user.groups.length %> grupos</h3>
+              <p class="text-sm text-neutral-400 font-medium">Total de grupos</p>
+            </div>
+          </div>
+          <div class="w-full sm:w-1/2 md:w-1/4 p-3">
+            <div class="p-5 h-full border border-gray-300 bg-gray-50 rounded-xl">
+              <div class="flex items-center justify-center mb-7 w-12 h-12 bg-white border rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#752A7A" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v1.5M3 21v-6m0 0l2.77-.693a9 9 0 016.208.682l.108.054a9 9 0 006.086.71l3.114-.732a48.524 48.524 0 01-.005-10.499l-3.11.732a9 9 0 01-6.085-.711l-.108-.054a9 9 0 00-6.208-.682L3 4.5M3 15V4.5" />
+                </svg>                
+              </div>
+              <h3 class="font-heading mb-2 text-xl tracking-tight font-bold"><%= user.pages.length %> páginas</h3>
+              <p class="text-sm text-neutral-400 font-medium">Total de páginas</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-4 px-3 overflow-hidden">
+        <div class="pt-5 bg-gray-50 border border-gray-300 rounded-xl">
+          <div class="px-6">
+            <h3 class="font-heading pb-8 text-lg text-neutral-600 font-semibold">Últimas publicações</h3>
+            <div class="w-full overflow-x-auto">
+              <table class="w-full min-w-max">
+                <thead>
+                  <tr class="text-left">
+                    <th class="p-0 border-b border-neutral-100">
+                      <div class="pb-3.5"><span class="text-sm text-gray-400 font-medium">Tipo de publicação</span></div>
+                    </th>
+                    <th class="p-0 border-b border-neutral-100">
+                      <div class="pb-3.5"><span class="text-sm text-gray-400 font-medium">Conteúdo da publicação</span></div>
+                    </th>
+                    <th class="p-0 border-b border-neutral-100">
+                      <div class="pb-3.5"><span class="text-sm text-gray-400 font-medium">Grupos/Páginas</span></div>
+                    </th>
+                    <th class="p-0 border-b border-neutral-100">
+                      <div class="pb-3.5"><span class="text-sm text-gray-400 font-medium">Data da criação</span></div>
+                    </th>
+                    <th class="p-0 border-b border-neutral-100">
+                      <div class="pb-3.5"><span class="text-sm text-gray-400 font-medium">Status</span></div>
+                    </th>
+                    <th class="p-0 border-b border-neutral-100">
+                      <div class="pb-3.5"></div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% lastPosts.forEach(post => { %>
+                    <tr>
+                      <td class="py-1.5 pr-4 border-b border-neutral-100">
+                        <div class="flex items-center px-6">
+                          <% if (post.typePost == "media") { %>
+                            <div class="flex items-center gap-x-3">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke="#752A7A" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                              </svg>                                  
+                              <span class="text-sm font-medium">Mídia</span>
+                            </div>
+                          <% } else if (post.typePost == "text-link") { %>
+                            <div class="flex items-center gap-x-3">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke="#752A7A" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
+                              </svg>                                     
+                              <span class="text-sm font-medium">Link</span>
+                            </div>
+                          <% } %>
+                        </div>
+                      </td>
+                      <td class="py-1.5 pr-4 border-b border-neutral-100">
+                        <span class="text-sm"><%= post.content.slice(0, 50) %>...</span>
+                      </td>
+                      <td class="py-1.5 pr-4 border-b border-neutral-100">
+                        <div class="flex items-center gap-x-0.5">
+                          <% post.groups.forEach(group => { %>
+                            <img class="w-8 h-8 rounded-full" src="<%= group.photo %>"></img>
+                          <% }) %>
+    
+                          <% post.pages.forEach(page => { %>
+                            <img class="w-8 h-8 rounded-full" src="<%= page.photo %>"></img>
+                          <% }) %>
+    
+                          <% post.accountsInstagram.forEach(account => { %>
+                            <img class="w-8 h-8 rounded-full" src="<%= account.photo %>"></img>
+                          <% }) %>
+                        </div>
+                      </td>
+                      <td class="py-1.5 pr-4 border-b border-neutral-100">
+                        <span class="text-sm"><%= post.createdAtFormatted %></span>
+                      </td>
+                      <td class="py-1.5 pr-4 border-b border-neutral-100">
+                        <div class="flex items-center gap-x-2 h-16">
+                          <% if (post.isPublished) { %>
+                            <div class="flex-none rounded-full p-1 text-green-500 bg-green-200">
+                              <div class="h-1.5 w-1.5 rounded-full bg-current"></div>
+                            </div>
+                            <span class="text-sm leading-5 font-semibold text-green-600">Publicado</span>
+                          <% } else { %>
+                            <div class="flex-none rounded-full p-1 text-blue-500 bg-blue-200">
+                              <div class="h-1.5 w-1.5 rounded-full bg-current"></div>
+                            </div>
+                            <span class="text-sm leading-5 font-semibold text-blue-600">Agendado - <%= post.scheduleDateFormatted %></span>
+                          <% } %>
+                        </div>
+                      </td>
+                      <td class="py-1.5 w-12 pr-4 border-b border-neutral-100">
+                        <div class="flex">
+                          <a class="bg-gray-100 py-1 px-1.5 rounded-l-lg shadow" href="/app/view-post/<%= post._id %>">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-700">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                            </svg>
+                          </a>
+
+                          <a class="bg-gray-100 py-1 px-1.5 shadow" href="/app/update-post/<%= post._id %>">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-700">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                            </svg>                            
+                          </a>
+
+                          <button onclick="openDeletePost('<%= post._id %>')" class="bg-gray-100 py-1 px-1.5 rounded-r-lg shadow">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-red-700">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                            </svg>                            
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="fixed bottom-0 inset-x-0 border-t-orange">
+    <%- include('../../partials/app/footer') %>
+  </div>
+</body>
+
+<script src="/js/app/posts.js"></script>
+
+</html>

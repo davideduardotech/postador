@@ -1,0 +1,8 @@
+[
+    {"code": 400100, "message": "Campo inválido. Consulte a referência do endpoint para obter a lista de campos disponíveis e tente novamente."},
+    {"code": 40033, "message": "Objeto não encontrado ou permissões insuficientes para acessá-lo."},
+    {"code": 400190, "message": "Token de acesso inválido. Reimporte a conta e tente novamente."},
+    {"code": 4031349210, "message": "Limite de solicitações atingido. Aguarde e tente novamente mais tarde."},
+    {"code": 40310, "message": "Permissões insuficientes para realizar a ação desejada."},
+    {"code": 403200, "message": "Erro de permissão. Verifique se o proprietário concedeu as permissões necessárias."}
+]  

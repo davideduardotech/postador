@@ -1,0 +1,102 @@
+.alerts{
+    position: fixed;
+    z-index: 999;
+    top: 50px;
+    right: 0;
+    display: flex;
+    flex-direction: column-reverse; /* Para empilhar os alertas de baixo para cima */
+    align-items: flex-end; /* Alinha os alertas à direita */
+}
+
+
+/* animação | @plubee */
+.alert-plubee.show-with-animation{
+    animation: show_slide 1s ease forwards;
+}
+@keyframes show_slide {
+    0%{
+        transform: translateX(100%); 
+    }
+    40%{
+        transform: translateX(-10%); 
+    }
+    80%{
+        transform: translateX(0%); 
+    }
+    100%{
+        transform: translateX(-10%); 
+    }
+}
+
+.alert-plubee.hidden-with-animation{
+    animation: hidden_animation_slide 1s ease forwards;
+}
+@keyframes hidden_animation_slide {
+    0%{
+        transform: translateX(-10%); 
+    }
+    40%{
+        transform: translateX(0%); 
+    }
+    80%{
+        transform: translateX(-10%); 
+    }
+    100%{
+        transform: translateX(100%); 
+    }
+}
+
+
+/* alert danger | @plubee */
+.alert-plubee{
+    background: #fff;
+    margin-top: 10px;
+    padding: 20px 40px;
+    min-width: 420px;
+    overflow: hidden;
+    border-radius: 4px;
+    border-left: 8px solid #752A7A;
+    /*box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;*/
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    /*box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;*/
+}
+.alert-plubee .icon{
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #752A7A;
+    font-size: 30px;
+}
+.alert-plubee .msg{
+    padding: 0 20px;
+    font-size: 18px;
+    color: #752A7A;
+
+    max-width: 310px; /* Defina o valor desejado para o limite máximo de largura */
+    display: block; /* Para garantir que o max-width funcione corretamente */
+    overflow: hidden; /* Para esconder qualquer conteúdo que ultrapasse o limite máximo */
+    text-overflow: ellipsis; /* Adiciona reticências (...) ao final do texto que ultrapassa o limite máximo */
+    white-space: wrap; /* Impede que o texto quebre para a próxima linha */
+}
+.alert-plubee .close-btn{
+    background: #752A7A;
+    padding: 20px 18px;
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    height: 100%;
+    transform: translateY(-50%);
+    cursor: pointer; 
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.alert-plubee .close-btn .fa-times{
+    color: #fff;
+    font-size: 22px;
+    line-height: 40px;
+}

@@ -1,0 +1,274 @@
+<%- include('../../../partials/head', {title: "Usuários" }) %>
+
+<body class="bg-gray-100">
+  <%- include('../../../partials/app/sidebar') %>
+
+  <div class="xl:ml-64 pb-14">
+    <%- include('../../../partials/app/nav', {user: user, title: "Usuários"}) %>
+
+    <main class="px-8 md:px-12 py-4 pb-20 fade-in">
+      <div class="z-50 fixed top-0 left-0 right-0 bottom-0 flex items-center w-full h-full p-4 bg-gray-800 bg-opacity-50 fade-in hidden" id="popup-new-user">
+        <div class="max-w-xl bg-white w-full mx-auto rounded-xl fire-sans">
+          <div class="flex justify-between items-center px-6 py-3 border-b border-gray-200">
+            <div class="text-lg font-semibold">Adicionar novo usuário</div>
+            <button onclick="closeNewUser()" class="fill-current font-4xl font-bold">×</button>
+          </div>
+
+          <div class="p-6 flex-grow h-80 overflow-y-auto">
+            <div class="flex flex-wrap flex-col">
+              <div class="grid grid-cols-2 gap-x-2">
+                <div>
+                  <label for="name-new-user" class="font-medium text-sm">Nome</label>
+                  <div class="mt-1.5">
+                    <input id="name-new-user" name="name-new-user" type="text" placeholder="Nome do usuário" class="block w-full text-sm rounded-lg px-2 py-1.5 border border-gray-300 placeholder:text-gray-400 sm:leading-6">
+                  </div>
+                </div>
+
+                <div>
+                  <label for="cpf-new-user" class="font-medium text-sm">CPF</label>
+                  <div class="mt-1.5">
+                    <input id="cpf-new-user" name="cpf-new-user" type="text" placeholder="CPF do usuário" class="block w-full text-sm rounded-lg px-2 py-1.5 border border-gray-300 placeholder:text-gray-400 sm:leading-6">
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-x-2 mt-6">
+                <div>
+                  <label for="phone-new-user" class="font-medium text-sm">Telefone</label>
+                  <div class="mt-1.5">
+                    <input id="phone-new-user" name="phone-new-user" type="text" placeholder="Telefone do usuário" class="block w-full text-sm rounded-lg px-2 py-1.5 border border-gray-300 placeholder:text-gray-400 sm:leading-6">
+                  </div>
+                </div>
+
+                <div>
+                  <label for="email-new-user" class="font-medium text-sm">Email</label>
+                  <div class="mt-1.5">
+                    <input id="email-new-user" name="email-new-user" type="text" placeholder="Email do usuário" class="block w-full text-sm rounded-lg px-2 py-1.5 border border-gray-300 placeholder:text-gray-400 sm:leading-6">
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-x-2 mt-6">
+                <div>
+                  <label for="password-new-user" class="font-medium text-sm">Senha</label>
+                  <div class="mt-1.5">
+                    <input id="password-new-user" name="password-new-user" type="text" placeholder="Senha do usuário" class="block w-full text-sm rounded-lg px-2 py-1.5 border border-gray-300 placeholder:text-gray-400 sm:leading-6">
+                  </div>
+                </div>
+
+                <div>
+                  <label for="type-new-user" class="font-medium text-sm">Tipo de usuário</label>
+                  <div class="mt-1.5">
+                    <select id="type-new-user" name="type-new-user" class="block w-full text-sm rounded-lg px-1.5 py-2 border border-gray-300 placeholder:text-gray-400 sm:leading-6">
+                      <% plans.forEach(plan => { %>
+                        <option value="<%= plan.title %>"><%= plan.title %></option>
+                      <% }) %>
+                      <option value="Administrador">Administrador</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="px-6 py-3 border-t dark:border-gray-800 gap-x-2 flex justify-end">
+            <button onclick="closeNewUser()" class="py-2 px-4 inline-block text-center rounded-lg leading-5 text-gray-800 bg-gray-100 border border-gray-200 hover:text-gray-900 hover:bg-gray-200 hover:ring-0 hover:border-gray-200 focus:bg-gray-200 focus:border-gray-200 focus:outline-none focus:ring-0 ltr:mr-2 rtl:ml-2">Fechar</button>
+            <button onclick="saveUser()" class="py-2 px-4 inline-block text-center rounded-lg leading-5 text-gray-100 bg-purple font-medium hover:text-white">Adicionar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="z-50 fixed top-0 left-0 right-0 bottom-0 flex items-center w-full h-full p-4 bg-gray-800 bg-opacity-50 fade-in hidden" id="popup-update-user">
+        <div class="max-w-xl bg-white w-full mx-auto rounded-xl fire-sans">
+          <div class="flex justify-between items-center px-6 py-3 border-b border-gray-200">
+            <div class="text-lg font-bold">Atualizar usuário</div>
+            <button onclick="closeUpdateUser()" class="fill-current font-4xl font-bold">×</button>
+          </div>
+
+          <div class="p-6 flex-grow h-80 overflow-y-auto">
+            <div class="flex flex-wrap flex-col">
+              <div class="grid grid-cols-2 gap-x-2">
+                <div>
+                  <label for="name-update-user" class="font-medium text-sm">Nome</label>
+                  <div class="mt-1.5">
+                    <input id="name-update-user" name="name-update-user" type="text" placeholder="Nome do usuário" class="block w-full text-sm rounded-lg px-2 py-1.5 border border-gray-300 placeholder:text-gray-400 sm:leading-6">
+                  </div>
+                </div>
+    
+                <div>
+                  <label for="cpf-update-user" class="font-medium text-sm">CPF</label>
+                  <div class="mt-1.5">
+                    <input id="cpf-update-user" name="cpf-update-user" type="text" placeholder="CPF do usuário" class="block w-full text-sm rounded-lg px-2 py-1.5 border border-gray-300 placeholder:text-gray-400 sm:leading-6">
+                  </div>
+                </div>
+              </div>
+    
+              <div class="grid grid-cols-2 gap-x-2 mt-6">
+                <div>
+                  <label for="phone-update-user" class="font-medium text-sm">Telefone</label>
+                  <div class="mt-1.5">
+                    <input id="phone-update-user" name="phone-update-user" type="text" placeholder="Telefone do usuário" class="block w-full text-sm rounded-lg px-2 py-1.5 border border-gray-300 placeholder:text-gray-400 sm:leading-6">
+                  </div>
+                </div>
+    
+                <div>
+                  <label for="email-update-user" class="font-medium text-sm">Email</label>
+                  <div class="mt-1.5">
+                    <input id="email-update-user" name="email-update-user" type="text" placeholder="Email do usuário" class="block w-full text-sm rounded-lg px-2 py-1.5 border border-gray-300 placeholder:text-gray-400 sm:leading-6">
+                  </div>
+                </div>
+              </div>
+    
+              <div class="grid grid-cols-2 gap-x-2 mt-6">
+                <div>
+                  <label for="password-update-user" class="font-medium text-sm">Senha</label>
+                  <div class="mt-1.5">
+                    <input id="password-update-user" name="password-update-user" type="text" placeholder="Insira um valor para atualizar" class="block w-full text-sm rounded-lg px-2 py-1.5 border border-gray-300 placeholder:text-gray-400 sm:leading-6">
+                  </div>
+                </div>
+    
+                <div>
+                  <label for="type-update-user" class="font-medium text-sm">Tipo de usuário</label>
+                  <div class="mt-1.5">
+                    <select id="type-update-user" name="type-update-user" class="block w-full text-sm rounded-lg px-1.5 py-2 border border-gray-300 placeholder:text-gray-400 sm:leading-6">
+                      <% plans.forEach(plan => { %>
+                        <option value="<%= plan.title %>"><%= plan.title %></option>
+                      <% }) %>
+                      <option value="Administrador">Administrador</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="px-6 py-3 border-t dark:border-gray-800 gap-x-2 flex justify-end">
+            <button onclick="closeUpdateUser()" class="py-2 px-4 inline-block text-center rounded-lg leading-5 text-gray-800 bg-gray-100 border border-gray-200 hover:text-gray-900 hover:bg-gray-200 hover:ring-0 hover:border-gray-200 focus:bg-gray-200 focus:border-gray-200 focus:outline-none focus:ring-0 ltr:mr-2 rtl:ml-2">Fechar</button>
+            <button onclick="updateUser()" class="py-2 px-4 inline-block text-center rounded-lg leading-5 text-gray-100 bg-purple font-medium hover:text-white">Atualizar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="z-50 fixed top-0 left-0 right-0 bottom-0 flex items-center w-full h-full p-4 bg-gray-800 bg-opacity-80 overflow-y-auto hidden" id="popup-delete-user">
+        <div class="container px-4 mx-auto">
+          <div class="pt-10 px-6 pb-12 text-center max-w-lg mx-auto bg-white border rounded-xl shadow-3xl">
+            <svg class="mb-4 mx-auto" width="28" height="28" viewbox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22.9141 8.2201C22.9436 7.80694 22.6326 7.44808 22.2195 7.41857C21.8063 7.38906 21.4474 7.70007 21.4179 8.11323L22.9141 8.2201ZM21.1541 22.3329L20.406 22.2795L21.1541 22.3329ZM6.84456 22.3329L7.59265 22.2795L6.84456 22.3329ZM6.58078 8.11323C6.55126 7.70007 6.19241 7.38906 5.77925 7.41857C5.36609 7.44808 5.05508 7.80694 5.08459 8.2201L6.58078 8.11323ZM12.416 12.8333C12.416 12.4191 12.0802 12.0833 11.666 12.0833C11.2518 12.0833 10.916 12.4191 10.916 12.8333H12.416ZM10.916 19.8333C10.916 20.2475 11.2518 20.5833 11.666 20.5833C12.0802 20.5833 12.416 20.2475 12.416 19.8333H10.916ZM17.0827 12.8333C17.0827 12.4191 16.7469 12.0833 16.3327 12.0833C15.9185 12.0833 15.5827 12.4191 15.5827 12.8333H17.0827ZM15.5827 19.8333C15.5827 20.2475 15.9185 20.5833 16.3327 20.5833C16.7469 20.5833 17.0827 20.2475 17.0827 19.8333H15.5827ZM16.7493 8.16667C16.7493 8.58088 17.0851 8.91667 17.4993 8.91667C17.9136 8.91667 18.2493 8.58088 18.2493 8.16667H16.7493ZM9.74935 8.16667C9.74935 8.58088 10.0851 8.91667 10.4993 8.91667C10.9136 8.91667 11.2493 8.58088 11.2493 8.16667H9.74935ZM4.66602 7.41667C4.2518 7.41667 3.91602 7.75245 3.91602 8.16667C3.91602 8.58088 4.2518 8.91667 4.66602 8.91667V7.41667ZM23.3327 8.91667C23.7469 8.91667 24.0827 8.58088 24.0827 8.16667C24.0827 7.75245 23.7469 7.41667 23.3327 7.41667V8.91667ZM21.4179 8.11323L20.406 22.2795L21.9022 22.3863L22.9141 8.2201L21.4179 8.11323ZM18.8267 23.75H9.17196V25.25H18.8267V23.75ZM7.59265 22.2795L6.58078 8.11323L5.08459 8.2201L6.09646 22.3863L7.59265 22.2795ZM9.17196 23.75C8.34128 23.75 7.65183 23.108 7.59265 22.2795L6.09646 22.3863C6.21171 23.9999 7.55432 25.25 9.17196 25.25V23.75ZM20.406 22.2795C20.3469 23.108 19.6574 23.75 18.8267 23.75V25.25C20.4444 25.25 21.787 23.9999 21.9022 22.3863L20.406 22.2795ZM10.916 12.8333V19.8333H12.416V12.8333H10.916ZM15.5827 12.8333V19.8333H17.0827V12.8333H15.5827ZM11.666 4.25H16.3327V2.75H11.666V4.25ZM16.7493 4.66667V8.16667H18.2493V4.66667H16.7493ZM11.2493 8.16667V4.66667H9.74935V8.16667H11.2493ZM16.3327 4.25C16.5628 4.25 16.7493 4.43655 16.7493 4.66667H18.2493C18.2493 3.60812 17.3912 2.75 16.3327 2.75V4.25ZM11.666 2.75C10.6075 2.75 9.74935 3.60812 9.74935 4.66667H11.2493C11.2493 4.43655 11.4359 4.25 11.666 4.25V2.75ZM4.66602 8.91667H23.3327V7.41667H4.66602V8.91667Z" fill="#7F8995"></path>
+            </svg>
+            <h3 class="font-heading mb-2 text-xl font-semibold">Excluir usuário?</h3>
+            <p class="mb-6 text-neutral-500">Todos os dados vinculados ao usuário serão removidos. (Exceto pagamentos)</p>
+            <div class="flex flex-wrap justify-center -m-1">
+              <div class="w-auto p-1">
+                <button onclick="closeDeleteUser()" class="inline-flex px-5 py-2.5 text-sm font-medium border border-neutral-200 hover:border-neutral-300 rounded-lg">Cancelar</button>
+              </div>
+
+              <div class="w-auto p-1">
+                <button onclick="deleteUser()" class="inline-flex px-5 py-2.5 text-sm text-neutral-50 font-medium bg-red-700 rounded-lg transition duration-300">Excluir</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="flex flex-wrap gap-y-4 justify-between items-center mt-4">
+          <div class="flex space-x-4 items-center">
+            <h2 class="text-xl font-semibold text-gray-900">Usuários</h2>
+            <div class="h-6 w-px bg-gray-400" aria-hidden="true"></div>
+            <span class="text-md text-gray-900"><%= users.length %> encontrados</span>
+          </div>
+  
+          <div class="flex items-center space-x-4">
+            <button onclick="openNewUser()" class="text-purple hover:text-white border-2 border-purple bg-transparent hover:bg-purple font-medium rounded-full text-sm px-5 py-2 transition ease-in-out duration-200">Adicionar usuário</button>
+          </div>
+        </div>
+
+        <div class="py-6 bg-gray-50 border border-gray-300 rounded-xl mt-5">
+          <div class="px-6">
+            <div class="w-full overflow-x-auto">
+              <table class="w-full min-w-max">
+                <thead>
+                  <tr class="text-left">
+                    <th class="p-0 border-b border-neutral-100">
+                      <div class="pb-3.5"><span class="text-sm text-gray-400 font-medium">Usuário</span></div>
+                    </th>
+                    <th class="p-0 border-b border-neutral-100">
+                      <div class="pb-3.5"><span class="text-sm text-gray-400 font-medium">Plano</span></div>
+                    </th>
+                    <th class="p-0 border-b border-neutral-100">
+                      <div class="pb-3.5"><span class="text-sm text-gray-400 font-medium">Email</span></div>
+                    </th>
+                    <th class="p-0 border-b border-neutral-100">
+                      <div class="pb-3.5"><span class="text-sm text-gray-400 font-medium">Telefone</span></div>
+                    </th>
+                    <th class="p-0 border-b border-neutral-100">
+                      <div class="pb-3.5"><span class="text-sm text-gray-400 font-medium">Data de criação</span></div>
+                    </th>
+                    <th class="p-0 border-b border-neutral-100">
+                      <div class="pb-3.5"><span class="text-sm text-gray-400 font-medium">Ações</span></div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% users.forEach(user => { %>
+                    <tr>
+                      <td class="py-1.5 pr-4 border-b border-neutral-100">
+                        <div class="flex items-center gap-x-4">
+                          <% if (user.avatar.length > 0) { %>
+                            <img class="h-10 w-10 mr-3 rounded-full object-cover" src="/img/avatars/<%= user.avatar %>" alt="">
+                          <% } else { %>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-10 w-10 text-purple mr-3">
+                              <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
+                            </svg>                                                                      
+                          <% } %>
+                          
+                          <span class="text-sm"><%= user.name %></span>
+                        </div>
+                      </td>
+                      <td class="py-1.5 pr-4 border-b border-neutral-100">
+                        <span class="text-sm"><%= user.plan %></span>
+                      </td>
+                      <td class="py-1.5 pr-4 border-b border-neutral-100">
+                        <span class="text-sm"><%= user.email %></span>
+                      </td>
+                      <td class="py-1.5 pr-4 border-b border-neutral-100">
+                        <span class="text-sm"><%= user.phone %></span>
+                      </td>
+                      <td class="py-1.5 pr-4 border-b border-neutral-100">
+                        <span class="text-sm"><%= user.createdAtFormatted %></span>
+                      </td>
+                      <td class="py-1.5 w-12 pr-4 border-b border-neutral-100">
+                        <div class="flex">
+                          <button onclick="openUpdateUser('<%= user._id %>', '<%= user.name %>', '<%= user.cpf %>', '<%= user.phone %>', '<%= user.email %>', '<%= user.plan %>')" class="bg-gray-100 py-1 px-1.5 shadow">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-700">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                            </svg>                            
+                          </button>
+
+                          <button onclick="openDeleteUser('<%= user._id %>')" class="bg-gray-100 py-1 px-1.5 rounded-r-lg shadow">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-red-700">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                            </svg>                            
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="fixed bottom-0 inset-x-0 border-t-orange">
+    <%- include('../../../partials/app/footer') %>
+  </div>
+</body>
+
+<script src="/js/admin/users.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-masker/1.1.0/vanilla-masker.min.js"></script>
+
+</html>

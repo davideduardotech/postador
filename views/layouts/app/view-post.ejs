@@ -1,0 +1,251 @@
+<%- include('../../partials/head', {title: "Visualizar publicação" }) %>
+
+<body class="bg-gray-100">
+  <%- include('../../partials/app/sidebar') %>
+
+  <div class="xl:ml-64 pb-14">
+    <%- include('../../partials/app/nav', {user: user, title: "Visualizar publicação"}) %>
+
+    <main class="px-12 py-4 fade-in">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-4">
+        <div class="bg-white rounded-lg shadow-md lg:col-span-1 p-4">
+          <ul class="space-y-4">
+            <li class="flex items-center gap-x-3">
+              <div class="flex items-center justify-center w-14 h-14 rounded-lg bg-gray-50 border border-gray-200">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#752A7A" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                </svg>                
+              </div>
+
+              <div>
+                <h2 class="font-medium text-lg text-gray-900"><%= post.groups.length %> grupos</h2>
+                <span class="text-sm">Total de grupos</span>
+              </div>
+            </li>
+
+            <li class="flex items-center gap-x-3">
+              <div class="flex items-center justify-center w-14 h-14 rounded-lg bg-gray-50 border border-gray-200">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#752A7A" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v1.5M3 21v-6m0 0l2.77-.693a9 9 0 016.208.682l.108.054a9 9 0 006.086.71l3.114-.732a48.524 48.524 0 01-.005-10.499l-3.11.732a9 9 0 01-6.085-.711l-.108-.054a9 9 0 00-6.208-.682L3 4.5M3 15V4.5" />
+                </svg>                                
+              </div>
+
+              <div>
+                <h2 class="font-medium text-lg text-gray-900"><%= post.pages.length %> páginas</h2>
+                <span class="text-sm">Total de páginas</span>
+              </div>
+            </li>
+
+            <li class="flex items-center gap-x-3">
+              <div class="flex items-center justify-center w-14 h-14 rounded-lg bg-gray-50 border border-gray-200">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="w-7 h-7"><path d="M 16.5 5 C 10.16639 5 5 10.16639 5 16.5 L 5 31.5 C 5 37.832757 10.166209 43 16.5 43 L 31.5 43 C 37.832938 43 43 37.832938 43 31.5 L 43 16.5 C 43 10.166209 37.832757 5 31.5 5 L 16.5 5 z M 16.5 8 L 31.5 8 C 36.211243 8 40 11.787791 40 16.5 L 40 31.5 C 40 36.211062 36.211062 40 31.5 40 L 16.5 40 C 11.787791 40 8 36.211243 8 31.5 L 8 16.5 C 8 11.78761 11.78761 8 16.5 8 z M 34 12 C 32.895 12 32 12.895 32 14 C 32 15.105 32.895 16 34 16 C 35.105 16 36 15.105 36 14 C 36 12.895 35.105 12 34 12 z M 24 14 C 18.495178 14 14 18.495178 14 24 C 14 29.504822 18.495178 34 24 34 C 29.504822 34 34 29.504822 34 24 C 34 18.495178 29.504822 14 24 14 z M 24 17 C 27.883178 17 31 20.116822 31 24 C 31 27.883178 27.883178 31 24 31 C 20.116822 31 17 27.883178 17 24 C 17 20.116822 20.116822 17 24 17 z" fill="#752A7A"/></svg>
+              </div>
+
+              <div>
+                <h2 class="font-medium text-lg text-gray-900"><%= post.accountsInstagram.length %> contas</h2>
+                <span class="text-sm">Total de contas</span>
+              </div>
+            </li>
+            
+            <li class="flex items-center gap-x-3">
+              <div class="flex items-center justify-center w-14 h-14 rounded-lg bg-gray-50 border border-gray-200">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#752A7A" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>                                                                                                                      
+              </div>
+
+              <div>
+                <h2 class="font-medium text-lg text-gray-900"><%= post.createdAtFormatted %></h2>
+                <span class="text-sm">Data da publicação</span>
+              </div>
+            </li>
+
+            <% if (post.isPublished) { %>
+              <li class="bg-green-100 rounded-md flex justify-center py-1.5 items-center gap-x-3">                      
+                <span class="font-medium">Publicado</span>                       
+              </li>
+            <% } else { %>
+              <li class="bg-blue-100 rounded-md flex justify-center py-1.5 items-center gap-x-3">                      
+                <span class="font-medium">Agendado - <%= post.scheduleDateFormatted %></span>                       
+              </li>
+            <% } %>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md lg:col-span-2">
+          <div class="py-3 px-4 border-b border-gray-300">
+            <h2 class="font-semibold text-lg text-gray-800">Detalhes da publicação</h2>
+          </div>
+
+          <div class="p-4">
+            <p class="text-sm"><%= post.content %></p>
+                    
+            <% if (post.typePost == "media") { %>
+              <% if (post.isPublished) { %>
+                <img class="h-16 rounded-lg mt-4" src="<%= post.media %>">
+              <% } else { %>
+                <img class="h-16 rounded-lg mt-4" src="/img/posts/<%= post.media %>">
+              <% } %>
+            <% } else if (post.typePost == "text-link") { %>
+              <div class="flex flex-wrap items-center gap-x-3 mt-6">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-purple">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                </svg>                                        
+                <a href="<%= post.link %>" target="_blank" class="flex font-xs text-purple underline">Clique para acessar o link</a>                        
+              </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <div class="border border-gray-300 rounded-lg w-full overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="py-3.5 px-4 text-sm font-semibold text-left rtl:text-right text-gray-700">
+                  Foto
+                </th>
+
+                <th scope="col" class="px-4 py-3.5 text-sm font-semibold text-left rtl:text-right text-gray-700">
+                  Nome
+                </th>
+
+                <th scope="col" class="px-4 py-3.5 text-sm font-semibold text-left rtl:text-right text-gray-700">
+                  Tipo
+                </th>
+
+                <th scope="col" class="px-4 py-3.5 text-sm font-semibold text-left rtl:text-right text-gray-700">
+                  Intervalo
+                </th>
+
+                <th scope="col" class="px-4 py-3.5 text-sm font-semibold text-left rtl:text-right text-gray-700">
+                  Horário
+                </th>
+
+                <th scope="col" class="px-4 py-3.5 text-sm font-semibold text-left rtl:text-right text-gray-700">
+                  Status
+                </th>
+
+                <th scope="col" class="px-4 py-3.5 text-sm font-semibold text-left rtl:text-right text-gray-700">
+                  Mensagem
+                </th>
+
+                <th scope="col" class="relative py-3.5 px-4">
+                  <span class="sr-only">Actions</span>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody class="bg-white divide-y divide-gray-200">
+              <% post.results.forEach(item => { %>
+                <tr>
+                  <td class="px-4 py-4 text-sm font-medium text-purple whitespace-nowrap">
+                    <% if (item.photo) { %>
+                      <img class="w-8 h-8 rounded-full" src="<%= item.photo %>"></img>
+                    <% } else { %>
+                      <% if (item.type == "group") { %>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-purple">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                        </svg>
+                      <% } else if (item.type == "page") { %>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-purple">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v1.5M3 21v-6m0 0l2.77-.693a9 9 0 016.208.682l.108.054a9 9 0 006.086.71l3.114-.732a48.524 48.524 0 01-.005-10.499l-3.11.732a9 9 0 01-6.085-.711l-.108-.054a9 9 0 00-6.208-.682L3 4.5M3 15V4.5" />
+                        </svg>
+                      <% } else if (item.type == "account-instagram") { %>
+                        <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <g clip-path="url(#clip0_234_2)">
+                          <path d="M14.2497 0H4.74988C2.13768 0 0 2.13768 0 4.74988V14.2501C0 16.8616 2.13768 19 4.74988 19H14.2497C16.8619 19 18.9995 16.8616 18.9995 14.2501V4.74988C18.9995 2.13768 16.8619 0 14.2497 0ZM17.4162 14.2501C17.4162 15.9957 15.9962 17.4166 14.2497 17.4166H4.74988C3.00407 17.4166 1.58337 15.9957 1.58337 14.2501V4.74988C1.58337 3.00384 3.00407 1.58337 4.74988 1.58337H14.2497C15.9962 1.58337 17.4162 3.00384 17.4162 4.74988V14.2501Z" fill="#4F46E5"/>
+                          <path d="M14.6465 5.54145C15.3023 5.54145 15.8339 5.0098 15.8339 4.35397C15.8339 3.69815 15.3023 3.1665 14.6465 3.1665C13.9906 3.1665 13.459 3.69815 13.459 4.35397C13.459 5.0098 13.9906 5.54145 14.6465 5.54145Z" fill="#4F46E5"/>
+                          <path d="M9.49988 4.75C6.87604 4.75 4.75 6.87627 4.75 9.49988C4.75 12.1225 6.87604 14.2502 9.49988 14.2502C12.123 14.2502 14.2498 12.1225 14.2498 9.49988C14.2498 6.87627 12.123 4.75 9.49988 4.75ZM9.49988 12.6669C7.75119 12.6669 6.33337 11.249 6.33337 9.49988C6.33337 7.75073 7.75119 6.33337 9.49988 6.33337C11.2486 6.33337 12.6664 7.75073 12.6664 9.49988C12.6664 11.249 11.2486 12.6669 9.49988 12.6669Z" fill="#4F46E5"/>
+                          </g>
+                          <defs>
+                          <clipPath id="clip0_234_2">
+                          <rect width="19" height="19" fill="white"/>
+                          </clipPath>
+                          </defs>
+                        </svg>
+                      <% } %>
+                    <% } %>
+                  </td>
+
+                  <td class="px-4 py-4 text-sm font-semibold text-gray-600 whitespace-nowrap">
+                    <% if (item.type == "group") { %>
+                      <a class="underline text-purple" href="https://www.facebook.com/<%= item.idGroup %>" target="_blank"><%= item.name %></a>
+                    <% } else if (item.type == "page") { %>
+                      <a class="underline text-purple" href="https://www.facebook.com/<%= item.idPage %>" target="_blank"><%= item.name %></a>
+                    <% } else if (item.type == "account-instagram") { %>
+                      <a class="underline text-purple" href="https://www.facebook.com/<%= item.idAccount %>" target="_blank"><%= item.name %></a>
+                    <% } %>
+                  </td>
+
+                  <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                    <% if (item.type == "group") { %>
+                      Grupo
+                    <% } else if (item.type == "page") { %>
+                      Página
+                    <% } else if (item.type == "account-instagram") { %>
+                      Instagram
+                    <% } %>
+                  </td>
+
+                  <td class="px-4 py-4 text-sm text-gray-600 whitespace-nowrap">
+                    <%= post.interval %> segundos
+                  </td>
+                  
+                  <td class="px-4 py-4 text-sm font-medium text-black whitespace-nowrap">
+                    <%= (item.hour != undefined) ? item.hour : "Não disponível" %>
+                  </td>
+
+                  <td class="px-4 py-4 text-sm text-gray-600 whitespace-nowrap">
+                    <% if (item.status == "published") { %>
+                      <div class="inline-flex items-center py-1 rounded-full gap-x-2 text-green-600">
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5">
+                          <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+
+                        <p class="text-sm font-semibold">Publicado</p>
+                      </div>
+                    <% } else if (item.status == "error") { %>
+                      <div class="inline-flex items-center py-1 rounded-full gap-x-2 text-red-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>                        
+  
+                        <p class="text-sm font-semibold">Erro</p>
+                      </div>
+                    <% } %>
+                  </td>
+
+                  <td class="px-4 py-4 text-sm text-gray-600 whitespace-nowrap">
+                    <% if (item.status == "published") { %>
+                      <p class="text-sm font-semibold">Publicado com sucesso</p>
+                    <% } else if (item.status == "error") { %>
+                      <p class="text-sm font-semibold text-red-600"><%= item.message %></p>
+                    <% } %>
+                  </td>
+                  
+                  <td class="px-4 py-4 text-sm whitespace-nowrap">
+                    <% if (item.status == "published") { %>
+                      <a href="https://www.facebook.com/<%= item.id %>" target="_blank" class="flex items-center gap-x-2 underline">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#752A7A" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                        </svg>                        
+                        Conferir
+                      </a>
+                    <% } %>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="fixed bottom-0 inset-x-0 border-t-orange">
+    <%- include('../../partials/app/footer') %>
+  </div>
+</body>
+</html>

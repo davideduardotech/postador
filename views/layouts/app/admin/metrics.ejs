@@ -1,0 +1,176 @@
+<%- include('../../../partials/head', {title: "Métricas" }) %>
+
+<body class="bg-gray-100">
+  <%- include('../../../partials/app/sidebar') %>
+
+  <div class="xl:ml-64 pb-14">
+    <%- include('../../../partials/app/nav', {user: user, title: "Métricas"}) %>
+
+    <main class="px-6 py-4 fade-in">
+      <div class="mx-auto py-2 sm:px-2">
+        <div class="flex flex-wrap flex-row">
+          <div class="flex-shrink max-w-full px-4 w-full">   
+            <h2 class="text-xl fire-sans font-semibold text-gray-900">Métricas da plataforma</h2>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap flex-row mt-5">
+          <div class="flex-shrink max-w-full w-full">
+            <div class="flex flex-wrap flex-row">
+              <!-- target widget -->
+              <div class="flex-shrink max-w-full px-4 w-full sm:w-1/2 lg:w-1/4 mb-6">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg h-full p-6 relative overflow-hidden">
+                  <h3 class="text-base font-bold mb-2">Vendas</h3>
+                  <h2 class="text-3xl font-bold mb-4" id="quantity-finances"></h2>
+                  <!-- target -->
+                  <div class="flex flex-row w-full">
+                    <div class="flex items-center" title="Target">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="mr-2 bi bi-calendar-check text-purple" viewBox="0 0 16 16">
+                        <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"></path>
+                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                      </svg> Mês atual
+                    </div>
+                  </div>
+
+                  <!-- bg circle -->
+                  <div class="absolute ltr:-right-16 rtl:-left-16 -top-16">
+                    <div class="bg-indigo-500 opacity-10 w-36 h-36 rounded-full shadow-lg shadow-indigo-500/10"></div>
+                  </div>
+                  <div class="absolute ltr:-right-4 rtl:-left-4 -top-24">
+                    <div class="bg-indigo-500 opacity-10 w-36 h-36 rounded-full shadow-lg shadow-indigo-500/10"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- target widget -->
+              <div class="flex-shrink max-w-full px-4 w-full sm:w-1/2 lg:w-1/4 mb-6">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg h-full p-6 relative overflow-hidden">
+                  <h3 class="text-base font-bold mb-2">Receita</h3>
+                  <h2 class="text-3xl font-bold mb-4" id="quantity-revenue"></h2>
+                  <!-- target -->
+                  <div class="flex flex-row w-full">
+                    <div class="flex items-center" title="Target">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="mr-2 bi bi-calendar-check text-purple" viewBox="0 0 16 16">
+                        <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"></path>
+                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                      </svg> Mês atual
+                    </div>
+                  </div>
+
+                  <!-- bg circle -->
+                  <div class="absolute ltr:-right-16 rtl:-left-16 -top-16">
+                    <div class="bg-yellow-500 opacity-10 w-36 h-36 rounded-full shadow-lg shadow-indigo-500/10"></div>
+                  </div>
+                  <div class="absolute ltr:-right-4 rtl:-left-4 -top-24">
+                    <div class="bg-yellow-500 opacity-10 w-36 h-36 rounded-full shadow-lg shadow-indigo-500/10"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- target widget -->
+              <div class="flex-shrink max-w-full px-4 w-full sm:w-1/2 lg:w-1/4 mb-6">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg h-full p-6 relative overflow-hidden">
+                  <h3 class="text-base font-bold mb-2">Publicações</h3>
+                  <h2 class="text-3xl font-bold mb-4" id="quantity-posts"></h2>
+                  <!-- target -->
+                  <div class="flex flex-row justify-between w-full">
+                    <div class="flex items-center" title="Target">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="mr-2 bi bi-calendar-check text-purple" viewBox="0 0 16 16">
+                        <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"></path>
+                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"></path>
+                      </svg> Ano atual
+                    </div>
+                  </div>
+
+                  <!-- bg circle -->
+                  <div class="absolute ltr:-right-16 rtl:-left-16 -top-16">
+                    <div class="bg-green-500 opacity-10 w-36 h-36 rounded-full shadow-lg shadow-indigo-500/10"></div>
+                  </div>
+                  <div class="absolute ltr:-right-4 rtl:-left-4 -top-24">
+                    <div class="bg-green-500 opacity-10 w-36 h-36 rounded-full shadow-lg shadow-indigo-500/10"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- target widget -->
+              <div class="flex-shrink max-w-full px-4 w-full sm:w-1/2 lg:w-1/4 mb-6">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg h-full p-6 relative overflow-hidden">
+                  <h3 class="text-base font-bold mb-2">Usuários</h3>
+                  <h2 class="text-3xl font-bold mb-4" id="quantity-users"></h2>
+                  <!-- target -->
+                  <div class="flex flex-row justify-between w-full">
+                    <div class="flex items-center" title="Target">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-5 h-5 mr-2 text-purple">
+                        <path d="M8.5 4.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0ZM10.9 12.006c.11.542-.348.994-.9.994H2c-.553 0-1.01-.452-.902-.994a5.002 5.002 0 0 1 9.803 0ZM14.002 12h-1.59a2.556 2.556 0 0 0-.04-.29 6.476 6.476 0 0 0-1.167-2.603 3.002 3.002 0 0 1 3.633 1.911c.18.522-.283.982-.836.982ZM12 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" />
+                      </svg> Total na plataforma
+                    </div>
+                  </div>
+
+                  <!-- bg circle -->
+                  <div class="absolute ltr:-right-16 rtl:-left-16 -top-16">
+                    <div class="bg-pink-500 opacity-10 w-36 h-36 rounded-full shadow-lg shadow-indigo-500/10"></div>
+                  </div>
+                  <div class="absolute ltr:-right-4 rtl:-left-4 -top-24">
+                    <div class="bg-pink-500 opacity-10 w-36 h-36 rounded-full shadow-lg shadow-indigo-500/10"></div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Sales Revenue -->
+              <div class="flex-shrink max-w-full px-4 w-full mb-6">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg h-full p-6">
+                  <div class="flex pb-6">
+                    <div class="flex flex-col">
+                      <h3 class="text-base font-bold">Receita da vendas - <span class="text-purple">Ano atual</span></h3>
+                    </div>
+                  </div>
+                  <div class="relative">
+                      <canvas class="max-w-100" id="ChartKpi" style="display: block; box-sizing: border-box; height: 475px; width: 1551px;" width="1551" height="475"></canvas>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Posts -->
+              <div class="flex-shrink max-w-full px-4 w-full lg:w-1/2 mb-6">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg h-full p-6">
+                  <div class="flex pb-6">
+                    <div class="flex flex-col">
+                      <h3 class="text-base font-bold">Visão geral das publicações - <span class="text-purple">Ano atual</span></h3>
+                    </div>
+                  </div>
+                  <div class="relative">
+                    <canvas class="max-w-100" id="BarPosts" style="display: block; box-sizing: border-box; height: 367px; width: 735px;" width="735" height="367"></canvas>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Visitors -->
+              <div class="flex-shrink max-w-full px-4 w-full lg:w-1/2 mb-6">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg h-full p-6">
+                  <div class="flex pb-6">
+                    <div class="flex flex-col">
+                      <h3 class="text-base font-bold">Visitantes - <span class="text-purple">Ano atual</span></h3>
+                    </div>
+                  </div>
+                  <div class="relative">
+                    <canvas class="max-w-100" id="BarVisitors" style="display: block; box-sizing: border-box; height: 367px; width: 735px;" width="735" height="367"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="fixed bottom-0 inset-x-0 border-t-orange">
+    <%- include('../../../partials/app/footer') %>
+  </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/charts/chart.min.js"></script>
+<script src="/js/charts/sales.js"></script>
+
+</html>

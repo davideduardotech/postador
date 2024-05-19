@@ -1,0 +1,227 @@
+<%- include('../../partials/head', {title: "Configurações da conta" }) %>
+
+<body class="bg-gray-100">
+  <%- include('../../partials/app/sidebar') %>
+
+  <div class="xl:ml-64 pb-14">
+    <%- include('../../partials/app/nav', {user: user, title: "Configurações da conta"}) %>
+
+    <main class="px-12 py-4 fade-in">
+      <div class="mx-auto lg:flex gap-x-6 mt-4">
+        <aside class="flex flex-col border overflow-x-auto lg:block lg:w-80 lg:flex-none lg:py-4 bg-white shadow-sm rounded-lg fade-in">
+          <div class="flex flex-col items-center justify-center p-4">
+            <% if (user.avatar.length > 0) { %>
+              <img class="w-24 h-24 rounded-full" src="/img/avatars/<%= user.avatar %>">
+            <% } else { %>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-20 w-20 text-purple">
+                <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
+              </svg>
+            <% } %>                
+
+            <h2 class="text-lg font-semibold text-gray-600 mt-4"><%= user.name %></h2>
+            <span class="w-auto text-sm text-gray-500"><%= user.plan %></span>
+          </div>
+
+          <nav class="border-t border-gray-200">
+            <ul role="list" class="flex gap-x-3 gap-y-1 whitespace-nowrap lg:flex-col px-4 p-2 sm:p-6">
+              <li>
+                <button onclick="openSection('account')" class="w-full text-gray-700 group flex gap-x-3 rounded-lg py-2 pl-2 pr-3 text-md leading-6 font-semibold">
+                  <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  Conta
+                </button>
+              </li>
+
+              <li>
+                <button onclick="openSection('security')" class="w-full text-gray-700 group flex gap-x-3 rounded-lg py-2 pl-2 pr-3 text-md leading-6 font-semibold">
+                  <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7.864 4.243A7.5 7.5 0 0119.5 10.5c0 2.92-.556 5.709-1.568 8.268M5.742 6.364A7.465 7.465 0 004.5 10.5a7.464 7.464 0 01-1.15 3.993m1.989 3.559A11.209 11.209 0 008.25 10.5a3.75 3.75 0 117.5 0c0 .527-.021 1.049-.064 1.565M12 10.5a14.94 14.94 0 01-3.6 9.75m6.633-4.596a18.666 18.666 0 01-2.485 5.33" />
+                  </svg>
+                  Segurança
+                </button>
+              </li>
+              <li>
+                <button onclick="openSection('payments')" class="w-full text-gray-700 group flex gap-x-3 rounded-lg py-2 pl-2 pr-3 text-md leading-6 font-semibold">
+                  <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
+                  </svg>
+                  Pagamentos
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </aside>
+      
+        <div class="border lg:flex-auto bg-white shadow-sm rounded-lg fade-in mt-4 sm:mt-0" id="account">
+          <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
+            <div class="p-5">
+              <h2 class="text-lg font-semibold leading-7 text-gray-900 fire-sans">Editar conta</h2>
+              <p class="mt-1 text-sm leading-6 text-gray-500 fire-sans">Edite suas informações pessoais</p>
+            </div>
+      
+            <div class="p-6 border-t border-gray-200">
+              <div class="col-span-full flex items-center gap-x-8">
+                <% if (user.avatar.length > 0) { %>
+                  <img src="/img/avatars/<%= user.avatar %>" alt="" class="h-24 w-24 flex-none rounded-full object-cover preview">
+                <% } else { %>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-20 w-20 text-purple">
+                    <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
+                  </svg>
+                <% } %>                    
+
+                <div class="mt-2">
+                  <label for="avatar-input" class="rounded-md px-3 py-2 text-sm font-semibold border border-purple text-purple shadow-sm cursor-pointer">Faça upload</label>
+                  <p class="mt-4 text-xs leading-5 text-gray-600 fire-sans">JPG, GIF or PNG. 1MB max.</p>
+                  <input type="file" id="avatar-input" class="hidden" name="avatar-input">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-10">
+                <div>
+                  <label for="name" class="block text-md font-medium leading-6 text-gray-900 font-semibold">Nome completo</label>
+                  <input type="text" name="name" id="name"
+                    class="w-full rounded-lg py-1.5 mt-2 pl-2 text-gray-900 sm:text-sm sm:leading-6 border-2"
+                    value="<%= user.name %>">
+                </div>
+
+                <div>
+                  <label for="cpf" class="block text-md font-medium leading-6 text-gray-900 font-semibold">CPF</label>
+                  <input type="text" name="cpf" id="cpf"
+                    class="w-full rounded-lg py-1.5 mt-2 pl-2 text-gray-900 sm:text-sm sm:leading-6 border-2"
+                    value="<%= user.cpf %>">
+                </div>
+
+                <div>
+                  <label for="email" class="block text-md font-medium leading-6 text-gray-900 font-semibold">Email</label>
+                  <input type="text" name="email" id="email"
+                    class="w-full rounded-lg py-1.5 mt-2 pl-2 text-gray-900 sm:text-sm sm:leading-6 border-2"
+                    value="<%= user.email %>">
+                </div>
+
+                <div>
+                  <label for="phone" class="block text-md font-medium leading-6 text-gray-900 font-semibold">Telefone</label>
+                  <input type="text" name="phone" id="phone"
+                    class="w-full rounded-lg py-1.5 mt-2 pl-2 text-gray-900 sm:text-sm sm:leading-6 border-2"
+                    value="<%= user.phone %>">
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-end p-6">
+              <button onclick="updateAccount()" type="button" class="text-purple border-2 border-purple font-medium rounded-lg text-sm px-5 py-2">Atualizar perfil</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="border lg:flex-auto bg-white shadow-sm rounded-lg fade-in mt-4 sm:mt-0 hidden" id="security">
+          <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
+            <div class="p-5">
+              <h2 class="text-lg font-semibold leading-7 text-gray-900 fire-sans">Segurança</h2>
+              <p class="mt-1 text-sm leading-6 text-gray-500 fire-sans">Edite suas informações de acesso</p>
+            </div>
+      
+            <div class="p-6 border-t border-gray-200">
+              <div class="grid grid-cols-1 gap-4">
+                <div>
+                  <label for="current-password" class="block text-md font-medium leading-6 text-gray-900 font-semibold">Senha atual</label>
+                  <input type="password" name="current-password" id="current-password"
+                    class="w-full rounded-lg py-1.5 mt-2 pl-2 text-gray-900 sm:text-sm sm:leading-6 border-2" placeholder="Sua senha atual">
+                </div>
+
+                <div class="col-span-2">
+                  <label for="new-password" class="block text-md font-medium leading-6 text-gray-900 font-semibold">Senha nova</label>
+                  <input type="password" name="new-password" id="new-password"
+                    class="w-full rounded-lg py-1.5 mt-2 pl-2 text-gray-900 sm:text-sm sm:leading-6 border-2" placeholder="Sua nova senha">
+                </div>
+
+                <div class="col-span-2">
+                  <label for="confirm-password" class="block text-md font-medium leading-6 text-gray-900 font-semibold">Confirme a nova senha</label>
+                  <input type="password" name="confirm-password" id="confirm-password"
+                    class="w-full rounded-lg py-1.5 mt-2 pl-2 text-gray-900 sm:text-sm sm:leading-6 border-2" placeholder="Confirme sua nova senha">
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-end p-6">
+              <button onclick="updatePassword()" type="button" class="text-purple border-2 border-purple focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2">Atualizar senha</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="border lg:flex-auto bg-white shadow-sm rounded-lg hidden fade-in mt-4 sm:mt-0" id="payments">
+          <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
+            <div class="p-5">
+              <h2 class="text-lg font-semibold leading-7 text-gray-900 fire-sans">Pagamentos</h2>
+              <p class="mt-1 text-sm leading-6 text-gray-500 fire-sans">Gerencie os seus pagamentos</p>
+            </div>
+
+            <div class="p-6 border-t border-gray-200">
+              <div class="py-3 border border-gray-300 rounded-lg">
+                <div class="px-4">
+                  <div class="w-full overflow-x-auto">
+                    <table class="w-full min-w-max">
+                      <thead>
+                        <tr class="text-left">
+                          <th class="p-0 border-b border-neutral-100">
+                            <div class="pb-3.5"><span class="text-sm text-gray-400 font-medium">ID</span></div>
+                          </th>
+                          <th class="p-0 border-b border-neutral-100">
+                            <div class="pb-3.5"><span class="text-sm text-gray-400 font-medium">Plano</span></div>
+                          </th>
+                          <th class="p-0 border-b border-neutral-100">
+                            <div class="pb-3.5"><span class="text-sm text-gray-400 font-medium">Forma de pagamento</span></div>
+                          </th>
+                          <th class="p-0 border-b border-neutral-100">
+                            <div class="pb-3.5"><span class="text-sm text-gray-400 font-medium">Valor</span></div>
+                          </th>
+                          <th class="p-0 border-b border-neutral-100">
+                            <div class="pb-3.5"><span class="text-sm text-gray-400 font-medium">Data</span></div>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% finances.forEach(finance => { %>
+                          <tr>
+                            <td class="py-2 pr-4 border-b border-neutral-100">
+                              <span class="text-sm font-semibold"><%= finance.idPayment %></span>
+                            </td>
+                            <td class="py-2 pr-4 border-b border-neutral-100">
+                              <span class="text-sm text-purple font-semibold"><%= finance.titlePlan %></span>
+                            </td>
+                            <td class="py-2 pr-4 border-b border-neutral-100">
+                              <span class="text-sm"><%= (finance.typePayment == "pix") ? "Pix" : "Cartão de crédito" %></span>
+                            </td>
+                            <td class="py-2 pr-4 border-b border-neutral-100">
+                              <span class="text-sm text-green-600 font-semibold">R$<%= finance.amount %>,00</span>
+                            </td>
+                            <td class="py-2 pr-4 border-b border-neutral-100">
+                              <span class="text-sm"><%= finance.createdAtFormatted %></span>
+                            </td>
+                          </tr>
+                        <% }) %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-6">
+                <dt class="font-semibold color-purple">Próximo pagamento em: <span class="text-gray-800"><%= nextPayment %></span></dt>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="fixed bottom-0 inset-x-0 border-t-orange">
+    <%- include('../../partials/app/footer') %>
+  </div>
+</body>
+
+<script src="/js/app/settings.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-masker/1.1.0/vanilla-masker.min.js"></script>
+
+</html>

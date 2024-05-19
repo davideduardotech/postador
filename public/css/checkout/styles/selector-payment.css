@@ -1,0 +1,107 @@
+/* SELECIONAR FORMA DE PAGAMENTO */
+.custom-select{
+    position: relative;
+    background-color: #752A7A;
+    border-radius: 10px;
+
+    
+}
+
+.custom-select-selected::after{
+    content: '';
+    position: absolute;
+
+    top: 35%;
+    right: 15px;
+
+    width: 10px;
+    height: 10px;
+
+    transition: .3s linear;
+
+    border-right: 2px solid white;
+    border-bottom: 2px solid white;
+
+    transform: rotate(45deg);
+    border-radius: 1px;
+}
+
+.custom-select-selected:hover{
+    .custom-select-selected::after{
+        top: 45%;
+    }
+}
+
+.custom-select-options{
+    
+    position: absolute;
+    left: 0;
+    right: 0;
+
+    z-index: 1;
+
+   
+    
+
+    
+    box-shadow: 0px 0px 5px #ccc;
+}
+
+
+.custom-select-option-pix{
+    /*transition: background-color 0.3s, color 0.3s;*/
+    background-image: url('https://img.icons8.com/ios-glyphs/25/752A7A/pix.png');
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: 8px center;
+    background-color: #fff;
+
+    cursor: pointer;
+
+    transition: transform 0.3s;   
+}
+
+.custom-select-option-pix:hover{
+    /*box-shadow: 0 0 10px #ccc;*/
+    border-left: 5px solid #752A7A;
+    /*background-color: #752A7A;*/
+    /*background-image: url('https://img.icons8.com/ios-glyphs/25/FFFFFF/pix.png');*/
+    transform: scale(1.05);
+
+    
+   
+
+    
+}
+
+.custom-select-option-credit-card{
+    /*transition: background-color 0.3s, color 0.3s;*/
+    /*background-image: url('https://img.icons8.com/ios-filled/50/752A7A/bank-card-back-side.png');*/
+    background-image: url('https://img.icons8.com/ios/50/752A7A/card-in-use.png');
+    background-image: url('https://img.icons8.com/ios-filled/50/752A7A/card-in-use.png');
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: 8px center;
+
+    background-color: #fff;
+ 
+    cursor: pointer;
+
+    transition: transform 0.3s; 
+ 
+}
+
+.custom-select-option-credit-card:hover{
+    /*box-shadow: 0 0 10px #ccc;*/
+    /*background-color: #752A7A;*/
+    border-left: 5px solid #752A7A;
+    /*background-image: url('https://img.icons8.com/ios-filled/25/FFFFFF/bank-card-back-side.png');*/
+    transform: scale(1.05);
+   
+
+   
+}
+
+.custom-select-option-credit-card span, .custom-select-option-pix span{
+    margin-left: 32px;
+}

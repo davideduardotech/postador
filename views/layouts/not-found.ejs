@@ -1,0 +1,27 @@
+<%- include('../partials/head', {title: "Página não encontrada"}) %>
+
+<style>
+    .gradient {
+        background-image: linear-gradient(135deg, #752A7A 35%, #c262c9 100%);
+    }
+</style>
+
+<%- include('../partials/main/nav') %>
+
+<div class="gradient text-white min-h-screen flex items-center">
+    <div class="container mx-auto max-w-7xl flex flex-wrap">
+        <div class="w-full md:w-7/12 text-center md:text-left p-4 sm:-mt-24">
+          <div class="text-6xl font-medium fire-sans mb-4">404</div>
+          <div class="text-xl md:text-3xl font-medium fire-sans mb-2">
+            Ops! Essa página não existe.
+          </div>
+          <div class="text-lg mb-10 fire-sans">
+            A página que você procura não está disponível.
+          </div>
+          <a href="/" class="border border-white rounded-full p-4 fire-sans">Volte para a principal</a>
+        </div>
+    </div>
+</div>
+
+<script src="/js/main/index.js"></script>
+</html>

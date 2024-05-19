@@ -1,0 +1,1606 @@
+<%- include('../../../partials/head', {title: "Dashboard do usuário" }) %>
+<link rel="stylesheet"  href="/css/scrollbar-hidden.css"> 
+
+<body class="bg-gray-100 relative">
+
+  <!-- CODDING: Popup Editar -->
+  <div id="popup-background-full" class="hidden fixed top-0 left-0 w-full h-full bg-black opacity-25 z-[51]"></div> 
+  <div id="popup-editar" class="hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[450px] h-[90%] bg-white rounded-[10px] z-[51] overflow-y-auto">
+
+    <!-- CODDING: Titulo -->
+    <div class="flex flex-row justify-start items-center py-[32px] px-[32px] space-x-[10px] bg-purple rounded-tl-[10px] rounded-tr-[10px] relative">
+      <!-- CODDING: Botão Fechar -->
+      <div id="popup-editar-button-close" class="absolute top-[32px] right-[32px] h-[40px] w-[40px] flex justify-center items-center text-sm text-white cursor-pointer">
+        <i class="fa-solid fa-xmark"></i>
+      </div>
+
+      <i class="fa-brands fa-facebook-messenger text-white text-xl"></i>
+      <div class="flex flex-col justify-center items-start">
+        <p class="text-sm text-white">Facebook</p>
+        <p class="text-base/none text-white">Enviar Mensagem</p>
+      </div>
+    </div>
+
+    <!-- CODDING: Mensagem -->
+    <div class=" relative mb-[32px] flex flex-row justify-center items-start">
+      
+      <div class="bg-[#EEF1F4] w-[300px] rounded-[10px] shadow-[0_5px_15px_rgba(149,157,165,0.2)]">
+        <textarea id="popup-editar-children-content" rows="4" class="block p-[16px] w-full text-sm text-[#404040] bg-[#EEF1F4] rounded-lg resize-none focus:outline-none" placeholder="Digite sua mensagem">Olá, <span class="bg-purple text-white rounded-[10px]">Primeiro Nome</span> escolha uma das opções abaixo:</textarea>
+
+        <!-- CODDING: Upload de arquivo -->
+        <div class="mx-[16px] my-[16px] bg-white rounded-[10px] cursor-pointer">
+          <!-- CODDING: Selecionar Arquivo-->
+          <label id="popup-editar-inputfile" for="popup-editar-input-file" class="px-[16px] py-[16px] cursor-pointer flex flex-col items-center justify-center">
+            <i id="popup-editar-inputfile-icon" class="fa-solid fa-cloud-arrow-up text-purple text-xl flex justify-center items-center  w-full"></i>
+            <div class="flex flex-col items-center justify-center">
+              <p id="popup-editar-inputfile-text" class="text-sm/none text-purple font-bold">clique para <span class="">enviar video</span></p>
+              <p id="popup-editar-inputfile-accept" class="text-sm text-purple text-center">MP4, MOV, AVI ou MKV (MAX. 25MB)</p>
+            </div>
+          </label>
+          <input type="file" id="popup-editar-input-file" name="file-input" class="hidden" accept="video/mp4,video/quicktime,video/x-msvideo,video/x-matroska">
+
+          <!-- CODDING: Fazer upload de arquivo -->
+          <div id="popup-editar-push-upload" class="hidden w-full h-auto flex flex-col justify-start items-center">
+            <div class="py-[16px] flex flex-row w-full space-x-[10px]">
+              <!-- CODDING: Icone -->
+              <i class="fa-solid fa-video min-h-[40px] min-w-[40px] bg-purple text-white text-sm flex justify-center items-center rounded-[10px] ml-[16px] shadow-[0_2px_8px_0_rgba(99,99,99,0.2)]"></i>
+            
+              <div class="flex flex-col items-start justify-center w-full pr-[16px] relative">
+                <!-- CODDING: Informações do arquivo -->
+                <p class="text-sm text-purple font-semibold">video.mp4 <span class="text-sm text-gray-500 font-normal">(13MB)</span></p>
+
+                <!-- CODDING: Barra de progresso -->
+                <div class="w-full flex flex-row justify-start items-center space-x-[5px]">
+                  <div class="h-[5px] flex-1 bg-gray-300 rounded-[10px] relative">
+                    <!-- CODDING: Progress -->
+                    <div class="absolute left-0 h-full w-[0%] bg-purple"></div>
+                  </div>
+                  <p class="text-sm text-[#404040]">0%</p>
+                </div>
+
+
+              </div>
+            
+            </div>
+            
+             <!-- CODDING: Botão de cancelar e upload -->
+            <div class="px-[16px] pb-[16px] w-full flex justify-between items-center space-x-[5px]">
+              <button class="h-[40px] text-sm text-purple px-[16px]">Cancelar</button>
+              <button class="h-[40px] bg-purple text-sm text-white font-semibold flex flex-row justify-center items-center text-nowrap space-x-[10px] px-[16px] rounded-[10px]">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <p>Fazer Upload</p>
+              </button>
+            </div>
+          </div>
+
+          <!-- CODDING: Visualizar arquivo -->
+          <div id="popup-editar-view-file" class="hidden w-full h-[40px] flex flex-row justify-center items-center space-x-[10px]">
+            <i class="fa-solid fa-video text-sm text-white bg-purple w-[40px] h-[40px] rounded-tl-[10px] rounded-bl-[10px] flex justify-center items-center"></i>
+            <div class="flex-1 h-[40px] flex justify-between items-center">
+              <p class="text-sm text-purple font-semibold">videp.mp4 <span class="text-sm text-gray-400 font-normal">(25MB)</span></p>
+              
+              <i class="fa-solid fa-trash text-sm text-purple mr-[16px]"></i>
+            </div>
+          </div>
+         
+        </div>
+
+        
+
+        <!-- CODDING: Botões -->
+        <div id="popup-editar-botoes" class="px-[16px] pb-[16px] space-y-[5px]">
+          <button class="bg-white rounded-[10px] h-[40px] w-full text-sm text-[#404040]">Botão 01</button>
+          <button class="bg-white rounded-[10px] h-[40px] w-full text-sm text-[#404040]">Botão 02</button>
+          <button class="bg-white rounded-[10px] h-[40px] w-full text-sm text-[#404040]">Botão 03</button>
+          <button class="hidden bg-transparent border-2 border-dashed border-purple rounded-[10px] h-[40px] w-full text-sm text-purple">Adicionar Botão</button>
+          
+        </div>
+
+        <!-- CODDING: Adicionar botão -->
+        <button class="bg-purple rounded-bl-[10px] rounded-br-[10px] h-[40px] w-full text-sm text-white flex flex-row justify-center items-center space-x-[10px] ">
+          <i class="fa-solid fa-plus"></i>
+          <p>Adicionar Botão</p>
+        </button>
+      </div>
+      <div class="absolute top-[-1px] left-0 w-full bg-purple h-[50px] z-[-1]">
+        
+      </div>
+    </div>
+    
+    
+
+    <!-- CODDING: Adicionar -->
+    <div class="flex flex-col items-center justify-start space-y-[5px] mx-[32px] mb-[32px]">
+      <!-- CODDING: Texto, Imagem e Audio -->
+      <div class="w-full flex flex-row justify-center items-center space-x-[5px]">
+       
+        <div id="popup-editar-button-add-image" class="flex-1 h-[40px] px-[16px] bg-purple text-sm text-white flex justify-center items-center space-x-[10px] rounded-[10px] cursor-pointer">
+          <i class="fa-regular fa-image"></i>
+          <p>Imagem</p>
+        </div>
+        <div id="popup-editar-button-add-audio" class="flex-1 h-[40px] px-[16px] bg-purple text-sm text-white flex justify-center items-center space-x-[10px] rounded-[10px] cursor-pointer">
+          <i class="fa-solid fa-volume-off"></i>
+          <p>Audio</p>
+        </div>
+      </div>
+
+      <!-- CODDING: Video, Arquivo e Atraso -->
+      <div class="w-full flex flex-row justify-center items-center space-x-[5px]">
+        
+        <div id="popup-editar-button-add-video" class="flex-1 h-[40px] px-[16px] bg-purple text-sm text-white flex justify-center items-center space-x-[10px] rounded-[10px] cursor-pointer">
+          <i class="fa-solid fa-video"></i>
+          <p>Video</p>
+        </div>
+
+        <div id="popup-editar-button-add-arquivo" class="flex-1 h-[40px] px-[16px] bg-purple text-sm text-white flex justify-center items-center space-x-[10px] rounded-[10px] cursor-pointer">
+          <i class="fa-solid fa-paperclip"></i>
+          <p>Arquivo</p>
+        </div>
+        <div class="flex-1 h-[40px] px-[16px] bg-purple text-sm text-white flex justify-center items-center space-x-[10px] rounded-[10px] cursor-pointer">
+          <i class="fa-regular fa-clock"></i>
+          <p>Atraso</p>
+        </div>
+      </div>
+
+     
+
+    </div>
+  </div>
+  <div id="popup-vincular-pagina" class="hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] md:w-[450px] h-[500px] bg-white rounded-[10px] z-[51] flex flex-col items-start justify-start">
+    <!-- CODDING: Titulo -->
+    <div class="w-full flex flex-row justify-start items-center py-[32px] px-[32px] space-x-[10px] bg-purple rounded-tl-[10px] rounded-tr-[10px] relative">
+      <!-- CODDING: Botão Fechar -->
+      <div id="popup-vincular-pagina-button-close" class="absolute top-[32px] right-[32px] h-[40px] w-[40px] hover:bg-[#823f87] rounded-full flex justify-center items-center text-sm text-white cursor-pointer">
+        <i class="fa-solid fa-xmark"></i>
+      </div>
+
+      <i class="fa-brands fa-facebook-messenger text-white text-xl"></i>
+      <div class="flex flex-col justify-center items-start">
+        <p class="text-sm text-white">Facebook</p>
+        <p class="text-base/none text-white">Vincular Página</p>
+      </div>
+    </div>
+
+    <div class="w-full h-[500px] overflow-y-auto">
+      
+
+      <div class="w-full h-full flex flex-col items-start justify-start">
+        <!-- CODDING: Escolher conta do facebook -->
+        <div id="popup-vincular-pagina-escolher-conta-do-facebook" class=" w-full flex flex-col justify-center items-start">
+            <!-- CODDING: titulo -->
+            <div class="px-[32px] pt-[32px] pb-[16px] flex flex-row justify-start items-center space-x-[10px]">
+              <i class="fa-solid fa-user text-base text-white min-w-[40px] min-h-[40px] rounded-[10px] bg-purple flex justify-center items-center shadow-[0_3px_8px_rgba(0,0,0,0.24)]"></i>
+              <div class="w-full flex flex-col justify-center items-start">
+                <p id="popup-vincular-pagina-escolher-conta-do-facebook-title" class="text-base/none text-[#404040] font-bold">Contas do facebook</p>
+                <p id="popup-vincular-pagina-escolher-conta-do-facebook-subtitle" class="text-sm text-gray-500 font-normal">2 contas encontradas</p>
+              </div>
+            </div>
+
+            <!-- CODDING: Mensagem de escolher uma conta do facebook -->
+            <div id="popup-vincular-pagina-mensagem-escolher-conta-do-facebook" class="hidden w-full">
+              <p class="text-base text-[#404040] mx-[32px] pl-[10px] border-l-[3px] border-l-[#752A7A] bg-gray-50">Selecione sua conta do facebook</p>
+            </div>
+
+            <!-- CODDING: lista horizontal de contas do facebook -->
+            <div id="popup-vincular-pagina-escolher-conta-do-facebook-lista-de-contas-do-facebook" class="w-full  overflow-x-auto flex flex-row justify-start items-center space-x-[16px] px-[32px] py-[16px]">
+
+
+              <!-- CODDING: card de conta do facebook-->
+              <div class="px-[16px] py-[16px] rounded-[10px] bg-white flex flex-row justify-start items-center space-x-[10px] shadow-[0_3px_8px_rgba(0,0,0,0.24)] relative">
+                <div class="w-[40px] h-[40px] rounded-full bg-gray-500 relative shadow-[0_3px_8px_rgba(0,0,0,0.24)]">
+                  <img src="https://preview.redd.it/n%C3%A3o-ligo-muito-pra-opini%C3%A3o-aleat%C3%B3ria-mas-as-vezes-fico-me-v0-7is3qfvg7sjb1.png?width=640&crop=smart&auto=webp&s=aa75d020c41479d5745c392b0ba81625a001ae08" class="rounded-full w-full h-full" alt="">
+                  <div class="absolute top-[60%] left-[60%] w-[20px] h-[20px] rounded-full bg-[#207BF3] flex justify-center items-center">
+                    <i class="fa-brands fa-facebook-f text-xs text-white"></i>
+                  </div>
+                </div>
+                <div class="flex flex-col justify-center items-start">
+                  <p class="text-sm/none text-purple font-black">David Eduardo</p>
+                  <p class="text-sm text-purple font-normal">122131666430133140</p>
+                </div>
+
+                <!-- CODDING: icone selecioando-->
+                <i class="hidden fa-solid fa-circle-check absolute bottom-[-15px] right-[-15px] w-[40px] h-[40px] bg-white rounded-full flex justify-center items-center text-base text-purple"></i>
+              </div>
+
+              <!-- CODDING: card de conta do facebook-->
+              <div class="px-[16px] py-[16px] rounded-[10px] bg-white flex flex-row justify-start items-center space-x-[10px] shadow-[0_3px_8px_rgba(0,0,0,0.24)]">
+                <div class="w-[40px] h-[40px] rounded-full bg-gray-500 relative shadow-[0_3px_8px_rgba(0,0,0,0.24)]">
+                  <img src="https://preview.redd.it/n%C3%A3o-ligo-muito-pra-opini%C3%A3o-aleat%C3%B3ria-mas-as-vezes-fico-me-v0-7is3qfvg7sjb1.png?width=640&crop=smart&auto=webp&s=aa75d020c41479d5745c392b0ba81625a001ae08" class="rounded-full w-full h-full" alt="">
+                  <div class="absolute top-[60%] left-[60%] w-[20px] h-[20px] rounded-full bg-[#207BF3] flex justify-center items-center">
+                    <i class="fa-brands fa-facebook-f text-xs text-white"></i>
+                  </div>
+                </div>
+                <div class="flex flex-col justify-center items-start">
+                  <p class="text-sm/none text-[#404040] font-black">David Eduardo</p>
+                  <p class="text-sm text-gray-400 font-normal">122131666430133140</p>
+                </div>
+              </div>
+            </div>
+
+            
+        </div>
+
+        <!-- CODDING: Escolher conta do facebook | carregando -->
+        <div id="popup-vincular-pagina-escolher-conta-do-facebook-loading" class="hidden w-full flex flex-col justify-center items-start">
+            <!-- CODDING: titulo -->
+            <div class="px-[32px] pt-[32px] pb-[16px] flex flex-row justify-start items-center space-x-[10px]">
+              <div class="min-w-[40px] min-h-[40px] rounded-[10px] bg-gray-200 animate-pulse"></div>
+              
+              <div class="w-full flex flex-col justify-center items-start space-y-[5px]">
+                <p class="h-[20px] w-[200px] rounded-full bg-gray-200 animate-pulse"></p>
+                <p class="h-[20px] w-[100px] rounded-full bg-gray-200 animate-pulse"></p>
+              </div>
+            </div>
+
+            <!-- CODDING: lista horizontal de contas do facebook -->
+            <div class="w-full  overflow-x-auto flex flex-row justify-start items-center space-x-[16px] px-[32px] py-[16px]">
+              
+
+              <!-- CODDING: card de conta do facebook-->
+              <div class="min-h-[75px] min-w-[220px] rounded-[10px] bg-gray-200 animate-pulse"></div>
+              <div class="min-h-[75px] min-w-[220px] rounded-[10px] bg-gray-200 animate-pulse"></div>
+              <div class="min-h-[75px] min-w-[220px] rounded-[10px] bg-gray-200 animate-pulse"></div>
+              
+            </div>
+        </div>
+
+        <!-- CODDING: Escolher pagina do facebook -->
+        <div id="popup-vincular-pagina-escolher-pagina-do-facebook" class="hidden w-full flex flex-col justify-center items-start pb-[64px] space-y-[16px] ">
+            <!-- CODDING: Titulo -->
+            <div class="px-[32px] pb-[16px] pt-[32px] flex flex-row justify-start items-center space-x-[10px]">
+              <i class="fa-solid fa-flag text-base text-white min-w-[40px] min-h-[40px] rounded-[10px] bg-purple flex justify-center items-center shadow-[0_3px_8px_rgba(0,0,0,0.24)]"></i>
+              <div class="w-full flex flex-col justify-center items-start">
+                <p class="text-base/none text-[#404040] font-bold">Páginas do facebook</p>
+                <p id="popup-vincular-pagina-escolher-pagina-do-facebook-subtitle" class="text-sm text-gray-500 font-normal">5 paginas encontradas</p>
+              </div>
+            </div>
+
+            <!-- CODDING: Mensagem de escolher uma conta do facebook -->
+            <div id="popup-vincular-pagina-escolher-pagina-do-facebook-mensagem" class="hidden w-full">
+              <p class="text-base text-[#404040] mx-[32px] pl-[10px] border-l-[3px] border-l-[#752A7A] bg-gray-50">Selecione a página do facebook</p>
+            </div>
+
+            <div id="popup-vincular-pagina-escolher-pagina-do-facebook-lista-de-paginas" class="pb-[32px] w-full h-full overflow-y-auto flex flex-col justify-start items-start px-[32px] space-y-[16px]">
+              <!-- CODDING: Card da página -->
+              <div class="w-full p-[16px] bg-purple rounded-[10px] shadow-[0_3px_8px_rgba(0,0,0,0.24)] flex flex-row justify-start items-center space-x-[10px] relative">
+                  <!-- CODDING: Logo-->
+                  <div class="w-[40px] h-[40px] rounded-full bg-gray-500 relative shadow-[0_3px_8px_rgba(0,0,0,0.24)]">
+                    <img src="https://preview.redd.it/n%C3%A3o-ligo-muito-pra-opini%C3%A3o-aleat%C3%B3ria-mas-as-vezes-fico-me-v0-7is3qfvg7sjb1.png?width=640&crop=smart&auto=webp&s=aa75d020c41479d5745c392b0ba81625a001ae08" class="rounded-full w-full h-full" alt="">
+                    <div class="absolute top-[60%] left-[60%] w-[20px] h-[20px] rounded-full bg-[#207BF3] flex justify-center items-center">
+                      <i class="fa-brands fa-facebook-f text-xs text-white"></i>
+                    </div>
+                  </div>
+                  <!-- CODDING: Detalhes da pagina -->
+                  <div class="flex flex-col justify-center items-start">
+                    <p class="text-sm/none text-white font-black">Pagina da Plubee</p>
+                    <p class="text-sm text-white font-normal">122131666430133140</p>
+                  </div>
+
+                  <!-- CODDING: icone selecioando-->
+                  <i class="fa-solid fa-circle-check absolute bottom-[-15px] right-[-15px] w-[40px] h-[40px] bg-white rounded-full flex justify-center items-center text-base text-purple"></i>
+              </div>
+
+              <!-- CODDING: Card da página -->
+              <div class="w-full p-[16px] bg-white rounded-[10px] shadow-[0_3px_8px_rgba(0,0,0,0.24)] flex flex-row justify-start items-center space-x-[10px]">
+                  <!-- CODDING: Logo-->
+                  <div class="w-[40px] h-[40px] rounded-full bg-gray-500 relative shadow-[0_3px_8px_rgba(0,0,0,0.24)]">
+                    <img src="https://preview.redd.it/n%C3%A3o-ligo-muito-pra-opini%C3%A3o-aleat%C3%B3ria-mas-as-vezes-fico-me-v0-7is3qfvg7sjb1.png?width=640&crop=smart&auto=webp&s=aa75d020c41479d5745c392b0ba81625a001ae08" class="rounded-full w-full h-full" alt="">
+                    <div class="absolute top-[60%] left-[60%] w-[20px] h-[20px] rounded-full bg-[#207BF3] flex justify-center items-center">
+                      <i class="fa-brands fa-facebook-f text-xs text-white"></i>
+                    </div>
+                  </div>
+
+                  <!-- CODDING: Detalhes da pagina -->
+                  <div class="flex flex-col justify-center items-start">
+                    <p class="text-sm/none text-[#404040] font-black">Pagina da Plubee</p>
+                    <p class="text-sm text-gray-400 font-normal">122131666430133140</p>
+                  </div>
+
+                  
+              </div>
+
+              <!-- CODDING: Card da página -->
+              <div class="w-full p-[16px] bg-white rounded-[10px] shadow-[0_3px_8px_rgba(0,0,0,0.24)] flex flex-row justify-start items-center space-x-[10px]">
+                  <!-- CODDING: Logo-->
+                  <div class="w-[40px] h-[40px] rounded-full bg-gray-500 relative shadow-[0_3px_8px_rgba(0,0,0,0.24)]">
+                    <img src="https://preview.redd.it/n%C3%A3o-ligo-muito-pra-opini%C3%A3o-aleat%C3%B3ria-mas-as-vezes-fico-me-v0-7is3qfvg7sjb1.png?width=640&crop=smart&auto=webp&s=aa75d020c41479d5745c392b0ba81625a001ae08" class="rounded-full w-full h-full" alt="">
+                    <div class="absolute top-[60%] left-[60%] w-[20px] h-[20px] rounded-full bg-[#207BF3] flex justify-center items-center">
+                      <i class="fa-brands fa-facebook-f text-xs text-white"></i>
+                    </div>
+                  </div>
+                  <!-- CODDING: Detalhes da pagina -->
+                  <div class="flex flex-col justify-center items-start">
+                    <p class="text-sm/none text-[#404040] font-black">Pagina da Plubee</p>
+                    <p class="text-sm text-gray-400 font-normal">122131666430133140</p>
+                  </div>
+              </div>
+            </div>
+        </div>
+
+        <!-- CODDING: Escolher pagina do facebook | carregando -->
+        <div id="popup-vincular-pagina-escolher-pagina-do-facebook-loading" class="hidden w-full flex flex-col justify-center items-start">
+            <!-- CODDING: titulo -->
+            <div class="px-[32px] pt-[32px] pb-[16px] flex flex-row justify-start items-center space-x-[10px]">
+              <div class="min-w-[40px] min-h-[40px] rounded-[10px] bg-gray-200 animate-pulse"></div>
+              
+              <div class="w-full flex flex-col justify-center items-start space-y-[5px]">
+                <p class="h-[20px] w-[200px] rounded-full bg-gray-200 animate-pulse"></p>
+                <p class="h-[20px] w-[100px] rounded-full bg-gray-200 animate-pulse"></p>
+              </div>
+            </div>
+
+            <div class="pb-[32px] w-full h-full overflow-y-auto flex flex-col justify-start items-start px-[32px] space-y-[16px]">
+              <!-- CODDING: Card da página -->
+              <div class="min-h-[75px] w-full rounded-[10px] bg-gray-200 animate-pulse"></div>
+              <div class="min-h-[75px] w-full rounded-[10px] bg-gray-200 animate-pulse"></div>
+              <div class="min-h-[75px] w-full rounded-[10px] bg-gray-200 animate-pulse"></div>
+              
+            </div>
+        </div>
+
+        <!-- CODDING: Nenhuma conta do facebook encoontrada -->
+        <div id="popup-vincular-pagina-nenhuma-conta-do-facebook-encontrada" class="hidden w-full h-full flex flex-col justify-between items-center px-[32px]">
+          <div></div>
+
+         
+           
+          <div class="flex flex-row justify-start items-center space-x-[10px]">
+            
+            <!-- CODDING: Conteudo -->
+            <div class="w-full flex flex-col justify-start items-center">
+              
+                <p class="text-base text-[#404040] font-bold text-center">Nenhuma conta do facebook encontrada</p>
+              
+              <p class="text-base text-gray-600 text-center">vincule sua conta do facebook </p>
+            </div>
+          </div>
+          
+
+          <a href="" class="w-full h-[50px] rounded-[10px] flex flex-row justify-center items-center text-white text-sm space-x-[10px] bg-purple font-semibold mb-[32px] shadow-[0_3px_8px_rgba(0,0,0,0.24)]">
+            <i class="fa-brands fa-facebook text-xl"></i>
+            <p>Vincular conta</p>
+          </a>
+        </div>
+
+       
+      </div>
+    </div>
+
+ 
+    <!-- CODDING: Desvincular pagina do facebook-->
+ 
+    <div id="popup-vincular-pagina-botao-desvincular-pagina" class="shadow-[0_5px_15px_rgba(0,0,0,0.35)] py-[16px] px-[32px] bg-white rounded-bl-[10px] rounded-br-[10px] w-full flex flex-row justify-center items-center space-x-[5px]">
+      <button class="w-full h-[40px] text-sm text-white bg-purple flex justify-center items-center space-x-[10px] rounded-[10px] transform shadow-[0_3px_8px_rgba(0,0,0,0.24)] ">
+        <i class="fa-solid fa-link-slash"></i>
+        <p>Desvincular Página</p>
+
+        <!-- CODDING: Loading -->
+        <svg aria-hidden="true" class="hidden inline w-6 h-6 text-transparent animate-spin fill-white" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+          <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+        </svg>
+      </button>
+    
+    </div>
+  </div>
+
+  <!-- CODDING: Popup editar nome -->
+  <div id="popup-chatbot-alterar-nome" class="hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] md:w-[450px] bg-white rounded-[10px] z-[51] flex flex-col items-start justify-start">
+    <!-- CODDING: Titulo -->
+    <div class="w-full flex flex-row justify-start items-center py-[32px] px-[32px] space-x-[10px] bg-purple rounded-tl-[10px] rounded-tr-[10px] relative">
+      <!-- CODDING: Botão Fechar -->
+      <div id="popup-vincular-pagina-button-close" class="absolute top-[32px] right-[32px] h-[40px] w-[40px] hover:bg-[#823f87] rounded-full flex justify-center items-center text-sm text-white cursor-pointer">
+        <i class="fa-solid fa-xmark"></i>
+      </div>
+
+      <!-- CODDING: Texto -->
+      <i class="fa-brands fa-facebook-messenger text-white text-xl"></i>
+      <div class="flex flex-col justify-center items-start">
+        <p class="text-sm text-white">Facebook</p>
+        <p class="text-base/none text-white">Alterar Nome</p>
+      </div>
+    </div>
+    
+    <div class="w-full flex flex-col justify-start items-center bg-white rounded-[10px] relative">
+
+      <!-- CODDING: Input Alterar Nome -->
+      <div class="w-full flex flex-col px-[32px] pt-[16px] pb-[32px] justify-center items-start">
+        <p class="text-base/none text-[#40404]">Alterar Nome</p>
+        <input type="text" placeholder="Adicionar nome" class="w-full py-[8px] outline-none bg-transparent text-purple border-t-0 border-l-0 border-r-0 border-b-2 border-purple " value="nome do chatbot #03">
+      </div>
+      
+      <!-- CODDING: Botão de "cancelar" e "renomear" -->
+      <div class=" w-full px-[32px] py-[16px] flex flex-row justify-end items-center space-x-[10px]">
+        
+        <button class="flex-grow min-h-[40px] rounded border border-gray-500 hover:bg-gray-100 text-sm  flex justify-center items-center space-x-[10px]">
+          <p class="text-gray-900">cancelar</p>
+        </button>
+        <button class="flex-grow min-h-[40px] rounded bg-purple hover:bg-[#823f87] shadow-[0_3px_8px_rgba(0,0,0,0.24)] text-white text-sm flex justify-center items-center space-x-[10px]">
+          
+          <p class="">renomear</p>
+            
+          
+        </button>
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- CODDING: Popup editar trigger -->
+  <div id="popup-editar-trigger" class="hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] md:w-[450px] h-[500px] bg-white rounded-[10px] z-[51] flex flex-col items-start justify-start">
+    <!-- CODDING: Titulo -->
+    <div class="w-full flex flex-row justify-start items-center py-[32px] px-[32px] space-x-[10px] bg-purple rounded-tl-[10px] rounded-tr-[10px] relative">
+      <!-- CODDING: Botão Fechar -->
+      <div id="popup-vincular-pagina-button-close" class="absolute top-[32px] right-[32px] h-[40px] w-[40px] hover:bg-[#823f87] rounded-full flex justify-center items-center text-sm text-white cursor-pointer">
+        <i class="fa-solid fa-xmark"></i>
+      </div>
+
+      <i class="fa-brands fa-facebook-messenger text-white text-xl"></i>
+      <div class="flex flex-col justify-center items-start">
+        <p class="text-sm text-white">Facebook</p>
+        <p class="text-base/none text-white">Editar Gatilho</p>
+      </div>
+    </div>
+
+    <div class="w-full h-[500px] overflow-y-auto">
+
+      <div class="w-full h-full flex flex-col items-start justify-start py-[32px]">
+        <div class="w-full flex flex-col justify-center items-start">
+
+          <div class="px-[32px] flex flex-col justify-center items-start space-y-[16px]">
+            <!-- CODDING: Texto -->
+            <p class="text-base">Uma <span class="font-semibold">mensagem de resposta</span> será enviada quando um usuario:</p>
+
+            <div class="w-full flex flex-col justify-start items-center">
+              <div class="w-full flex flex-row justify-center items-center space-x-[10px]">
+                <i class="fa-solid fa-bolt min-w-[40px] min-h-[40px] rounded-[10px] bg-purple text-white flex justify-center items-center text-sm shadow-[0_3px_8px_rgba(0,0,0,0.24)]"></i>
+
+                <!-- CODDING: Selecionar o tipo de gatilho -->
+                <select id="countries" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#752A7A] focus:border-[#752A7A] block w-full p-2.5">
+                  <option value="comment">fazer um comentário na página</option>
+                  <option value="message">enviar mensagem na página</option>
+                </select>
+              </div>
+
+              <div class="w-full flex flex-col justify-center items-center pl-[50px]">
+                <!-- CODDING: Selecionar publicação ou qualquer publicação -->
+                <select id="countries" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#752A7A] focus:border-[#752A7A] block w-full p-2.5">
+                  <option value="comment">em uma publicação específica</option>
+                  <option value="message">em qualquer publicação</option>
+                </select>
+
+                <!-- CODDING: Postagem do Facebook -->
+                <div class="hidden w-full flex flex-col justify-center items-center bg-white rounded-[10px] my-[16px] shadow-[0_3px_8px_rgba(0,0,0,0.24)]">
+
+                  <!-- CODDING: Logo, nome e data de criação da pagina -->
+                  <div class="pt-[16px] px-[16px] w-full flex flex-row justify-start items-center space-x-[10px]">
+                    <!-- CODDING: Logo -->
+                    <div class="min-h-[40px] min-w-[40px] bg-purple rounded-full shadow-[0_3px_8px_rgba(0,0,0,0.24)]"></div>
+                    <div class="flex-grow flex flex-col justify-center items-start">
+                      <!-- CODDING: Nome da pagina -->
+                      <p class="text-sm font-semibold">Titulo da pagina</p>
+                      <!-- CODDING: Data de criação da postagem-->
+                      <p class="text-xs font-normal text-gray-400">20/04/2024 14:37:00 PM</p>
+                    </div>
+                  </div>
+
+                  <!-- CODDING: Conteudo da postagem -->
+                  <div class="w-full px-[16px] py-[16px]">
+                    <p class="text-sm">"Planeje, economize, invista: o caminho para a estabilidade financeira começa com pequenos passos." 💼💰 #FinançasPessoais</p>
+                  </div>
+                  
+                  <!-- CODDING: Imagem da postagem -->
+                  <div  class="w-full h-[250px] flex px-[16px] pb-[16px]">
+                    <img class="w-full h-full rounded-[10px] shadow-[0_3px_8px_rgba(0,0,0,0.24)]" src="https://scontent.fcau2-1.fna.fbcdn.net/v/t39.30808-6/437950440_827236152778123_868638692935331847_n.jpg?stp=dst-jpg_s640x640&_nc_cat=1&ccb=1-7&_nc_sid=5f2048&_nc_ohc=f2fm47OZAhcAb4hZZnr&_nc_ht=scontent.fcau2-1.fna&oh=00_AfDDNtf57wjFj4wH-AvlaUJTGkcMsOrK-XZPEOSs-ahtAw&oe=6629E1E9" alt="">
+                  </div>
+
+                  <!-- CODDING: Botão pra ver publicação no facebook -->
+                  <div class="w-full flex flex-row justify-end items-center space-x-[5px] text-sm pb-[16px] px-[16px]">
+                    <a href="" class="flex flex-row text-center items-center space-x-[5px] hover:text-[#0863F7]">
+                      <i class="fa-solid fa-link"></i>
+                      <p>visualizar publicação no facebook</p>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- CODDING: Postagem do Facebook carregando -->
+                <div class="w-full flex flex-col justify-center items-center bg-white rounded-[10px] my-[16px] shadow-[0_3px_8px_rgba(0,0,0,0.24)]">
+
+                  <!-- CODDING: Logo, nome e data de criação da pagina -->
+                  <div class="pt-[16px] px-[16px] w-full flex flex-row justify-start items-center space-x-[10px]">
+                    <!-- CODDING: Logo -->
+                    <div class="min-h-[40px] min-w-[40px] bg-gray-200 rounded-full animate-pulse"></div>
+                    <div class="flex-grow flex flex-col justify-center items-start space-y-[5px]">
+                      <!-- CODDING: Nome da pagina -->
+                      <p class="min-h-[20px] rounded-full w-[160px] bg-gray-200 animate-pulse"></p>
+                      <!-- CODDING: Data de criação da postagem-->
+                      <p class="min-h-[20px] rounded-full w-[100px] bg-gray-200 animate-pulse"></p>
+                    </div>
+                  </div>
+
+                  <!-- CODDING: Conteudo da postagem -->
+                  <div class="w-full px-[16px] py-[16px] space-y-[5px]">
+                    <p class="w-full min-h-[20px] rounded-full w-[100px] bg-gray-200 animate-pulse"></p>
+                    <p class="w-[50%] min-h-[20px] rounded-full w-[100px] bg-gray-200 animate-pulse"></p>
+                  </div>
+                  
+                  <!-- CODDING: Imagem da postagem -->
+                  <div  class="w-full h-[250px] flex px-[16px] pb-[16px]">
+                    <div class="w-full h-full rounded-[10px] bg-gray-200 animate-pulse" alt=""></div>
+                  </div>
+                </div>
+              </div>
+
+              
+
+              <!-- CODDING: Botão de escolher publicação e alterar publicação-->
+              <div class="w-full flex flex-col justify-center items-center">
+                
+                <!-- CODDINH: Botão escolher publicação -->
+                <div class="pl-[50px] h-[50px] pt-[5px]  w-full">
+                  <button class="h-[40px] rounded-lg shadow-[0_3px_8px_rgba(0,0,0,0.24)] bg-purple text-sm text-white hover:bg-[#823f87] w-full">Selecionar Publicação</button>
+                </div>
+
+                <!-- CODDING: Botão alterar publicação -->
+                <div class="pl-[50px] h-[50px] pt-[5px]  w-full">
+                  <button class="h-[40px] rounded-lg shadow-[0_3px_8px_rgba(0,0,0,0.24)] bg-purple text-sm text-white hover:bg-[#823f87] w-full">Alterar Publicação</button>
+                </div>
+              </div>
+            </div>
+            
+            
+          
+          </div>
+
+          <!-- CODDING: Palavras chaves -->
+          <div class="px-[32px] py-[16px] flex flex-col justify-center items-start space-y-[16px]">
+            <!-- CODDING: Texto -->
+            <p class="text-base">e o comentário <span class="font-semibold">contém</span> alguma destas palarvas-chaves:</p>
+
+            <!-- CODDING: Palavras chaves-->
+            <div class="flex flex-row flex-wrap justify-start items-center space-x-[5px] space-y-[5px]">
+              <div class="px-[16px] py-[8px] rounded-full bg-transparent border-gray-300 shadow-[0_3px_8px_rgba(0,0,0,0.24)] flex flex-row justify-center items-center space-x-[10px]">
+                <p class="text-sm text-[#404040]">eu quero</p>
+                <i class="fa-solid fa-xmark text-sm text-[#404040] cursor-pointer"></i>
+              </div>
+              <div class="px-[16px] py-[8px] rounded-full bg-transparent border-gray-300 shadow-[0_3px_8px_rgba(0,0,0,0.24)] flex flex-row justify-center items-center space-x-[10px]">
+                <p class="text-sm text-[#404040]">eu quero</p>
+                <i class="fa-solid fa-xmark text-sm text-[#404040] cursor-pointer"></i>
+              </div>
+              <div class="px-[16px] py-[8px] rounded-full bg-transparent border-gray-300 shadow-[0_3px_8px_rgba(0,0,0,0.24)] flex flex-row justify-center items-center space-x-[10px]">
+                <p class="text-sm text-[#404040]">eu quero</p>
+                <i class="fa-solid fa-xmark text-sm text-[#404040] cursor-pointer"></i>
+              </div>
+            </div>
+
+            <!-- CODDING: Adicionar palavra-chave -->
+            <div class="flex flex-row justify-start items-center w-full space-x-[16px]">
+              <input type="text" class="flex-grow min-h-[40px] border-t-none border-l-none border-r-none border-b border-gray-300 text-sm outline-none focus:border-[#752A7A]" placeholder="adicionar palavra-chave">
+              <i class="fa-solid fa-plus min-h-[40px] min-w-[40px] rounded-[10px] bg-purple text-white flex justify-center items-center cursor-pointer shadow-[0_3px_8px_rgba(0,0,0,0.24)] hover:bg-[#823f87]"></i>
+            </div>
+
+            
+          </div>
+
+          <!-- CODDING: Palavras chaves negativas -->
+          <div class="px-[32px] pt-[16px] pb-[32px] flex flex-col justify-center items-start space-y-[16px]">
+            <!-- CODDING: Texto -->
+            <p class="text-base">e o comentário <span class="font-semibold">não contém</span> nenhuma destas palarvas-chaves:</p>
+
+            <!-- CODDING: Visualizar palavras chaves negativas -->
+            <div class="flex flex-row flex-wrap justify-start items-center space-x-[5px] space-y-[5px]">
+              <div class="px-[16px] py-[8px] rounded-full bg-transparent border-gray-300 shadow-[0_3px_8px_rgba(0,0,0,0.24)] flex flex-row justify-center items-center space-x-[10px]">
+                <p class="text-sm text-[#404040]">eu quero</p>
+                <i class="fa-solid fa-xmark text-sm text-[#404040] cursor-pointer"></i>
+              </div>
+              <div class="px-[16px] py-[8px] rounded-full bg-transparent border-gray-300 shadow-[0_3px_8px_rgba(0,0,0,0.24)] flex flex-row justify-center items-center space-x-[10px]">
+                <p class="text-sm text-[#404040]">eu quero</p>
+                <i class="fa-solid fa-xmark text-sm text-[#404040] cursor-pointer"></i>
+              </div>
+              <div class="px-[16px] py-[8px] rounded-full bg-transparent border-gray-300 shadow-[0_3px_8px_rgba(0,0,0,0.24)] flex flex-row justify-center items-center space-x-[10px]">
+                <p class="text-sm text-[#404040]">eu quero</p>
+                <i class="fa-solid fa-xmark text-sm text-[#404040] cursor-pointer"></i>
+              </div>
+            </div>
+
+            <!-- CODDING: Adicionar palavra-chave negativas -->
+            <div class="flex flex-row justify-start items-center w-full space-x-[16px]">
+              <input type="text" class="flex-grow min-h-[40px] border-t-none border-l-none border-r-none border-b border-gray-300 text-sm outline-none focus:border-[#752A7A]" placeholder="adicionar palavra-chave negativa">
+              <i class="fa-solid fa-plus min-h-[40px] min-w-[40px] rounded-[10px] bg-purple text-white flex justify-center items-center cursor-pointer shadow-[0_3px_8px_rgba(0,0,0,0.24)] hover:bg-[#823f87]"></i>
+            </div>
+          </div>
+
+        </div>
+
+       
+      </div>
+    </div>
+    <!-- CODDING: Desvincular pagina do facebook-->
+    <div id="popup-vincular-pagina-botao-desvincular-pagina" class="shadow-[0_5px_15px_rgba(0,0,0,0.35)] py-[16px] px-[32px] bg-white border-t-[1px] border-gray-200 rounded-bl-[10px] rounded-br-[10px] w-full flex flex-row justify-center items-center space-x-[5px]">
+      <button class="w-full h-[40px] text-sm text-white bg-purple flex justify-center items-center space-x-[10px] rounded-[10px] transform shadow-[0_3px_8px_rgba(0,0,0,0.24)] hover:bg-[#823f87]">
+        
+        <p>Salvar Alterações</p>
+
+        <!-- CODDING: Loading -->
+        <svg aria-hidden="true" class="hidden inline w-6 h-6 text-transparent animate-spin fill-white" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+          <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+        </svg>
+      </button>
+    
+    </div>
+  </div>
+
+  <!-- CODDING: Popup escolher publicação -->
+  <div id="popup-escolher-publicacao" class="hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] md:w-[450px] h-[500px] bg-white rounded-[10px] z-[51] flex flex-col items-start justify-start">
+    <!-- CODDING: Titulo -->
+    <div class="w-full flex flex-row justify-start items-center py-[32px] px-[32px] space-x-[10px] bg-purple rounded-tl-[10px] rounded-tr-[10px] relative">
+      <!-- CODDING: Botão Fechar -->
+      <div id="popup-vincular-pagina-button-close" class="absolute top-[32px] right-[32px] h-[40px] w-[40px] hover:bg-[#823f87] rounded-full flex justify-center items-center text-sm text-white cursor-pointer">
+        <i class="fa-solid fa-xmark"></i>
+      </div>
+
+      <i class="fa-brands fa-facebook-messenger text-white text-xl"></i>
+      <div class="flex flex-col justify-center items-start">
+        <p class="text-sm text-white">Facebook</p>
+        <p class="text-base/none text-white">Escolher Publicação</p>
+      </div>
+    </div>
+
+    <!-- CODDING: Conteúdo -->
+    <div class="w-full h-[500px] overflow-y-auto py-[32px]">
+
+      
+        <!-- CODDING: Title -->
+        <div class="px-[32px] w-full flex flex-row justify-start items-center space-x-[10px]">
+          <!--<i class="fa-brands fa-facebook-f w-[40px] h-[40px] rounded-[10px] bg-purple text-white flex justify-center items-center shadow-[0_3px_8px_rgba(0,0,0,0.24)]"></i>-->
+          <div class="flex flex-col justify-center items-start">
+            <p class="text-base/none text-[#404040] font-bold">Selecione uma das publicações abaixo</p>
+            <p class="text-sm text-gray-400 font-normal">3 publicações encontradas</p>
+          </div>
+        </div>
+
+        <!-- CODDING: Lista horizontal das publicações -->
+        <div class="w-full overflow-x-auto px-[32px] py-[16px]">
+          <div class="flex flex-row justify-start items-center space-x-[16px]">
+            <!-- CODDING: Publicação -->
+            <div class="border-2 border-red-900 relative min-w-[250px] rounded-[10px] bg-purple shadow-[0_3px_8px_rgba(0,0,0,0.24)] flex flex-col items-center justify-start space-y-[16px]">
+              <!-- CODDING: Logo, nome e horario da postagem -->
+              <div class="w-full px-[16px] pt-[16px] flex flex-row justify-start items-center space-x-[10px]">
+                <!-- CODDING: Logo -->
+                <div class="min-h-[40px] min-w-[40px] rounded-full bg-white shadow-[0_3px_8px_rgba(0,0,0,0.24)]"></div>
+                <!-- CODDING: Nome da pagina, horario da postagem -->
+                <div class="flex flex-col justify-center items-start">
+                  <p class="text-sm text-white font-bold">Titulo da pagina</p>
+                  <p class="text-xs text-white font-normal">22/04/2024 00:32:00 AM</p>
+                </div>
+              </div>
+
+              <!-- CODDING: Conteúdo -->
+              <div class="w-full px-[16px]">
+                <p class="text-sm text-white">Desvendando o mundo do UI Design: onde cada pixel conta uma história. 💻✨ #UIDesign #CreativityUnleashed</p>
+              </div>
+
+              <!-- CODDING: Imagem da postagem -->
+              <div class="w-full px-[16px] pb-[16px]">
+                <img class="w-full h-[150px] rounded-[10px] shadow-[0_3px_8px_rgba(0,0,0,0.24)]" src="https://miro.medium.com/v2/resize:fit:1200/1*tFaTB_49m4OSU8rbU_5ciw.png" alt="">
+              </div>
+
+              <!-- CODDING: Icone de selecionado -->
+              <div class="absolute right-0 top-0 min-h-[40px] min-w-[40px] bg-purple  flex justify-center items-center">
+                <i class="fa-solid fa-circle-check text-xl text-white"></i>
+              </div>
+            </div>
+
+
+            <!-- CODDING: Publicação -->
+            <div class="hover:bg-[#f2f2f2] cursor-pointer min-w-[250px] border-[1px] border-gray-200 rounded-[10px] bg-white shadow-[0_3px_8px_rgba(0,0,0,0.24)] flex flex-col items-center justify-start space-y-[16px]">
+              <!-- CODDING: Logo, nome e horario da postagem -->
+              <div class="w-full px-[16px] pt-[16px] flex flex-row justify-start items-center space-x-[10px]">
+                <!-- CODDING: Logo -->
+                <div class="min-h-[40px] min-w-[40px] rounded-full bg-purple shadow-[0_3px_8px_rgba(0,0,0,0.24)]"></div>
+                <!-- CODDING: Nome da pagina, horario da postagem -->
+                <div class="flex flex-col justify-center items-start">
+                  <p class="text-sm text-[#404040] font-bold">Titulo da pagina</p>
+                  <p class="text-xs text-gray-400 font-normal">22/04/2024 00:32:00 AM</p>
+                </div>
+              </div>
+
+              <!-- CODDING: Conteúdo -->
+              <div class="w-full px-[16px]">
+                <p class="text-sm text-[#404040]">Desvendando o mundo do UI Design: onde cada pixel conta uma história. 💻✨ #UIDesign #CreativityUnleashed</p>
+              </div>
+
+              <!-- CODDING: Imagem da postagem -->
+              <div class="w-full px-[16px] pb-[16px]">
+                <img class="w-full h-[150px] rounded-[10px] shadow-[0_3px_8px_rgba(0,0,0,0.24)]" src="https://miro.medium.com/v2/resize:fit:1200/1*tFaTB_49m4OSU8rbU_5ciw.png" alt="">
+              </div>
+            </div>
+
+
+            <!-- CODDING: Publicação -->
+            <div class="hover:bg-[#f2f2f2] cursor-pointer min-w-[250px] border-[1px] border-gray-200 rounded-[10px] bg-white shadow-[0_3px_8px_rgba(0,0,0,0.24)] flex flex-col items-center justify-start space-y-[16px]">
+              <!-- CODDING: Logo, nome e horario da postagem -->
+              <div class="w-full px-[16px] pt-[16px] flex flex-row justify-start items-center space-x-[10px]">
+                <!-- CODDING: Logo -->
+                <div class="min-h-[40px] min-w-[40px] rounded-full bg-purple shadow-[0_3px_8px_rgba(0,0,0,0.24)]"></div>
+                <!-- CODDING: Nome da pagina, horario da postagem -->
+                <div class="flex flex-col justify-center items-start">
+                  <p class="text-sm text-[#404040] font-bold">Titulo da pagina</p>
+                  <p class="text-xs text-gray-400 font-normal">22/04/2024 00:32:00 AM</p>
+                </div>
+              </div>
+
+              <!-- CODDING: Conteúdo -->
+              <div class="w-full px-[16px]">
+                <p class="text-sm text-[#404040]">Desvendando o mundo do UI Design: onde cada pixel conta uma história. 💻✨ #UIDesign #CreativityUnleashed</p>
+              </div>
+
+              <!-- CODDING: Imagem da postagem -->
+              <div class="w-full px-[16px] pb-[16px]">
+                <img class="w-full h-[150px] rounded-[10px] shadow-[0_3px_8px_rgba(0,0,0,0.24)]" src="https://miro.medium.com/v2/resize:fit:1200/1*tFaTB_49m4OSU8rbU_5ciw.png" alt="">
+              </div>
+            </div>
+
+
+            <!-- CODDING: Publicação -->
+            <div class="hover:bg-[#f2f2f2] cursor-pointer border-[1px] border-gray-200 min-w-[250px] rounded-[10px] bg-white shadow-[0_3px_8px_rgba(0,0,0,0.24)] flex flex-col items-center justify-start space-y-[16px]">
+              <!-- CODDING: Logo, nome e horario da postagem -->
+              <div class="w-full px-[16px] pt-[16px] flex flex-row justify-start items-center space-x-[10px]">
+                <!-- CODDING: Logo -->
+                <div class="min-h-[40px] min-w-[40px] rounded-full bg-purple shadow-[0_3px_8px_rgba(0,0,0,0.24)]"></div>
+                <!-- CODDING: Nome da pagina, horario da postagem -->
+                <div class="flex flex-col justify-center items-start">
+                  <p class="text-sm text-[#404040] font-bold">Titulo da pagina</p>
+                  <p class="text-xs text-gray-400 font-normal">22/04/2024 00:32:00 AM</p>
+                </div>
+              </div>
+
+              <!-- CODDING: Conteúdo -->
+              <div class="w-full px-[16px]">
+                <p class="text-sm text-[#404040]">Desvendando o mundo do UI Design: onde cada pixel conta uma história. 💻✨ #UIDesign #CreativityUnleashed</p>
+              </div>
+
+              <!-- CODDING: Imagem da postagem -->
+              <div class="w-full px-[16px] pb-[16px]">
+                <img class="w-full h-[150px] rounded-[10px] shadow-[0_3px_8px_rgba(0,0,0,0.24)]" src="https://miro.medium.com/v2/resize:fit:1200/1*tFaTB_49m4OSU8rbU_5ciw.png" alt="">
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+       
+     
+    </div>
+
+    <!-- CODDING: Botão de Salvar -->
+    <div class="w-full px-[32px] py-[16px] shadow-[0_5px_15px_rgba(0,0,0,0.35)] border-t-[1px] border-gray-200">
+      <button class="w-full h-[40px] bg-purple rounded-[10px] text-white text-sm hover:bg-[#823f87] shadow-[0_3px_8px_rgba(0,0,0,0.24)]">Salvar</button>
+    </div>
+  </div>
+
+  
+
+  <%- include('../../../partials/app/sidebar') %>
+
+  
+
+  <div class="xl:ml-64 pb-14">
+    <%- include('../../../partials/app/nav', {user: user, title: "ChatBot"}) %>
+
+    <main class="py-4 fade-in">
+      
+
+      <section class="py-4  overflow-hidden relative">
+        <!-- CODDING: Sessão de botões  -->
+        <div  class="w-full flex flex-col md:flex-row justify-between  px-[16px] md:px-[64px] items-center space-y-4 md:space-y-0">
+          <div class="flex items-center space-x-[16px]">
+            <!-- CODDING: Botão de voltar -->
+            <div id="construtor-de-fluxograma-botao-de-voltar" class="hidden flex flex-row justify-center items-center space-x-[5px] bg-purple h-[40px] px-[16px] rounded-full cursor-pointer shadow-[0_8px_24px_rgba(149,157,165,0.2)]">
+              <i class="fa-solid fa-chevron-left text-sm text-white pr-[5px]"></i>
+              <p class="text-sm text-white">Voltar</p>
+            </div>
+
+            <!-- CODDING: Titulo -->
+            <div class="flex flex-col items-start justify-center">
+              <h2 id="construtor-de-fluxograma-title" class="text-xl/none font-semibold text-gray-900">Minhas Automações</h2>
+              <p id="construtor-de-fluxograma-subtitle" class="text-base text-gray-500">0 automações encontradas</p>
+            </div>
+          </div>
+
+          <div class="flex flex-col md:flex-row justify-center items-center space-x-2">
+
+            <!-- CODDING: Botão criar -->
+            <button id="botao-criar-automacao" class="text-base text-white rounded-[5px] h-[40px] px-[16px] bg-purple space-x-[10px] flex justify-center items-center">
+              <i class="fa-solid fa-plus h-[30px] w-[30px] rounded-[10px] flex justify-center items-center"></i> 
+              <span>Criar Automação</span>
+            </button>
+
+            <!-- CODDING: Botão ellipsis -->
+            <button id="botao-de-opcoes-ellipsis" class="hidden text-base text-white rounded-[5px] h-[40px] px-[16px] bg-purple space-x-[10px]">
+              <i class="fa-solid fa-ellipsis-vertical"></i>
+             
+            </button>
+
+           
+          </div>
+        </div>
+
+        <!-- CODDING: Detalhes do chatbot -->
+        <div id="detalhes-do-chatbot-container" class="hidden py-[32px] w-full px-[16px] my-[32px] flex flex-col items-center">
+          <!-- CODDING: Detalhes -->
+          <div class="w-[90%] py-[16px] px-[16px] md:py-[24px] grid grid-cols-2 md:grid-cols-5 gap-4 bg-white rounded-[10px] shadow-[0_8px_24px_rgba(149,157,165,0.2)]">
+              
+            <div class="flex flex-col items-start">
+              <p class="text-base text-purple font-bold">ChatBot</p>
+              <p id="detalhes-do-chatbot-nome" class="text-base/none text-[#40404]">Sem Nome</p>
+              
+            </div>
+            <div class="flex flex-col items-start">
+              <p class="text-base text-purple font-bold">Página</p>
+              <p id="detalhes-do-chatbot-pagina" class="text-base/none text-[#40404]">Nenhuma página vinculada</p>
+            </div>
+
+          
+          
+            <div class="flex flex-col items-start" id="detalhes-do-chatbot-status">
+              <p class="text-base text-purple font-bold">Status</p>
+              <div class="flex flex-row justify-start items-center space-x-[5px]">
+                <div class="w-[8px] h-[8px] rounded-full bg-red-500"></div>
+                <p class="text-base/none text-red-500 font-medium">Desligado</p>
+              </div>
+            </div>
+
+            <div class="flex flex-col items-start">
+              <p class="text-base text-purple font-bold">Modificado</p>  
+              <p id="detalhes-do-chatbot-modificado" class="text-base/none text-[#404040]">02/04/2024 16:05:00</p>
+            </div>
+
+
+            <!-- CODDING: Botões -->
+            <div class=" flex flex-row justify-end md:justify-start items-center space-x-[5px] pr-[24px] mb-[16px] md:mb-[0px]">
+             
+              <div class="relative">
+                <button id="detalhes-do-chatbot-button-ellipsis" class="px-[16px] h-[50px] rounded-[10px]  flex justify-center items-center space-x-[10px] bg-purple relative">
+                    <i class="fa-solid fa-ellipsis-vertical text-base text-white"></i>
+                </button>
+
+                <!-- CODDING: Opções shadow fraco: shadow-[0_8px_24px_rgba(149,157,165,0.2)] shadow forte: shadow-[0_5px_15px_rgba(0,0,0,0.35)] -->
+                <div id="chatbot-button-ellipsis-options-${chatbot._id}" class="z-50 hidden absolute top-[100%] mt-[5px] mb-[16px] right-0 bg-white rounded-[10px] shadow-[0_8px_24px_rgba(149,157,165,0.2)]">
+                    <button id="chatbot-button-edit-name-${chatbot._id}" class=" px-[16px] py-[8px] text-sm text-[#404040] hover:text-purple flex flex-row justify-start items-center space-x-[10px] rounded-tl-[10px] transform transition-transform hover:scale-105">
+                    <i class="fa-solid fa-pen text-white min-w-[30px] min-h-[30px] rounded-[10px] flex justify-center items-center bg-purple shadow-[0_3px_8px_rgba(0,0,0,0.24)]"></i>
+                        <p>Editar nome</p>
+                    </button>
+                    
+                    <button id="chatbot-button-link-page-${chatbot._id}" class=" px-[16px] py-[8px] text-sm text-[#404040] flex flex-row justify-start items-center space-x-[10px] transform transition-transform hover:scale-105">
+                        <i class="fa-solid fa-${chatbot.page?.page?.idPage ? "link-slash":"link"} text-white min-w-[30px] min-h-[30px] rounded-[10px] flex justify-center items-center bg-purple shadow-[0_3px_8px_rgba(0,0,0,0.24)]"></i>
+                        <p class="text-nowrap">${chatbot.page?.page?.idPage ? "Desvincular":"Vincular"} página</p>
+                    </button>
+                    
+                    <button id="chatbot-button-on-and-off-automation-${chatbot._id}" class=" px-[16px] py-[8px] text-sm text-[#404040] flex flex-row justify-start items-center space-x-[10px] transform transition-transform hover:scale-105">
+                    <i class="fa-solid fa-toggle-${chatbot.status === "ligado" ? "off":"on"} text-white min-w-[30px] min-h-[30px] rounded-[10px] flex justify-center items-center bg-purple shadow-[0_3px_8px_rgba(0,0,0,0.24)]"></i>
+                        <p class="text-nowrap">${chatbot.status === "ligado" ? "Desligar" : "Ligar"} automação</p>
+                    </button>
+                    
+                    <button id="chatbot-button-delete-${chatbot._id}" class=" px-[16px] py-[8px] text-sm text-[#404040] flex flex-row justify-start items-center space-x-[10px] transform transition-transform hover:scale-105">
+                    <i class="fa-solid fa-trash text-white min-w-[30px] min-h-[30px] rounded-[10px] flex justify-center items-center bg-purple shadow-[0_3px_8px_rgba(0,0,0,0.24)]"></i>
+                        <p>Excluir</p>
+                    </button>
+                    
+                </div>
+              </div>
+            </div>
+
+           
+          </div>
+        </div>
+      
+        <!-- CODDING: Lista de chatbots criados -->
+        <div id="lista-de-chatbots-encontrados" class="hidden w-full py-[64px] px-[16px] flex flex-col justify-start items-center space-y-[32px] md:space-y-[16px] overflow-y-auto">
+
+          <!-- CODDING: ChatBot -->
+          <div  class=" w-[90%] bg-white rounded-[10px] shadow-[0_8px_24px_rgba(149,157,165,0.2)] flex flex-col md:flex-row items-center space-x-[0px] md:space-x-[24px] relative md:p-0 md:pl-[100px]">
+            <!-- CODDING: Imagem -->
+            <div class="w-full md:w-[100px] h-[100px] md:h-auto md:flex-grow md:flex-shrink-0 rounded-tl-[10px] rounded-bl-[0px] rounded-tr-[10px] rounded-br-[0px] md:rounded-bl-[10px] md:rounded-tr-[0px] md:rounded-br-[0px] bg-purple flex justify-center items-center relative md:absolute md:top-0 md:bottom-0 md:left-0">
+              <i class="fa-brands fa-facebook-messenger text-4xl text-white"></i>
+            </div>
+
+            
+
+            <!-- CODDING: Detalhes -->
+            <div class="w-full py-[32px] px-[16px] md:px-0 md:py-[24px] grid grid-cols-2 md:grid-cols-4 gap-4">
+              
+              <div class="flex flex-col items-start">
+                <p class="text-base text-purple font-bold">ChatBot</p>
+                <p class="text-base/none text-[#40404]">Sem Nome</p>
+                
+              </div>
+              <div class="flex flex-col items-start">
+                <p class="text-base text-purple font-bold">Página</p>
+                <p class="text-base/none text-[#40404]">Nenhuma página vinculada, Nenhuma página vinculada,Nenhuma página vinculada</p>
+              </div>
+
+            
+            
+              <div class="flex flex-col items-start">
+                <p class="text-base text-purple font-bold">Status</p>
+                <div class="flex flex-row justify-start items-center space-x-[5px]">
+                  <div class="w-[8px] h-[8px] rounded-full bg-red-500"></div>
+                  <p class="text-base/none text-red-500 font-medium">Desligado</p>
+                </div>
+              </div>
+              <div class="flex flex-col items-start">
+                <p class="text-base text-purple font-bold">Modificado</p>  
+                <p class="text-base/none text-[#404040]">02/04/2024 16:05:00</p>
+              
+              </div>
+
+             
+            </div>
+
+            <!-- CODDING: Botões -->
+            <div class="w-full md:w-auto flex flex-row justify-end md:justify-start items-center space-x-[5px] pr-[24px] mb-[16px] md:mb-[0px]">
+              <button class="w-[120px] px-[16px] h-[50px] text-sm text-white rounded-[10px] bg-purple flex justify-center items-center space-x-[10px]">
+                <i class="fa-solid fa-pen"></i>
+                <span>Editar</span>
+              </button>
+              <button class="px-[16px] h-[50px] rounded-[10px]  flex justify-center items-center space-x-[10px] bg-purple">
+                <i class="fa-solid fa-ellipsis-vertical text-base text-white"></i>
+              </button>
+            </div>
+          </div>
+         
+
+        </div>
+
+
+        <!-- CODDING: Lista de chatbots carregando -->
+        <div id="lista-de-chatbots-carregando" class=" w-full py-[64px] px-[16px] flex flex-col justify-start items-center space-y-[32px] md:space-y-[16px]">
+
+          <!-- CODDING: ChatBot -->
+          <div  class="w-[90%] bg-white rounded-[10px] shadow-[0_8px_24px_rgba(149,157,165,0.2)] flex flex-col md:flex-row items-center space-x-[0px] md:space-x-[24px] relative md:p-0 md:pl-[100px]">
+            <!-- CODDING: Imagem -->
+            <div class="w-[95%] mt-[16px] md:my-[10px] md:mx-[10px] md:w-[100px] h-[100px] md:h-auto md:flex-grow md:flex-shrink-0 rounded-[10px] bg-gray-200 animate-pulse flex justify-center items-center relative md:absolute md:top-0 md:bottom-0 md:left-0">
+          
+              <i class="hidden fa-brands fa-facebook-messenger text-4xl text-white"></i>
+            </div>
+
+            
+
+            <!-- CODDING: Detalhes -->
+            <div class="w-full py-[32px] px-[16px] md:px-0 md:py-[24px] grid grid-cols-2 md:grid-cols-4 gap-4">
+              
+              <!-- CODDING: carregando chatbot -->
+              <div class="flex flex-col items-start space-y-[5px]">
+                <p class="h-[20px] w-[60px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+                <p class="h-[20px] w-[120px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+              </div>
+
+              <!-- CODDING: carregando pagina -->
+              <div class="flex flex-col items-start space-y-[5px]">
+                <p class="h-[20px] w-[60px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+                <p class="h-[20px] w-[120px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+              </div>
+             
+            
+              
+              <!-- CODDING: carregando status -->
+              <div class="flex flex-col items-start space-y-[5px]">
+                <p class="h-[20px] w-[60px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+                <div class="flex flex-row justify-start items-center space-x-[5px]">
+                  <p class="h-[20px] w-[30px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+                  <p class="h-[20px] w-[90px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+                </div>
+              </div>
+
+              <!-- CODDING: carregando modificado -->
+              <div class="flex flex-col items-start space-y-[5px]">
+                <p class="h-[20px] w-[60px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+                <p class="h-[20px] w-[120px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+              </div>
+              
+
+             
+            </div>
+
+            <!-- CODDING: carregando botões -->
+            <div class="w-full md:w-auto flex flex-row justify-end md:justify-start items-center space-x-[5px] pr-[24px] mb-[16px] md:mb-[0px]">
+              <div class="w-[120px] px-[16px] h-[50px] text-sm text-white rounded-[10px] bg-gray-200 animate-pulse flex justify-center items-center space-x-[10px]">
+
+              </div>
+              <div class="px-[16px] h-[50px] rounded-[10px]  flex justify-center items-center space-x-[10px] bg-gray-200 animate-pulse"></div>
+              
+            </div>
+          </div>
+          <!-- CODDING: ChatBot -->
+          <div  class="w-[90%] bg-white rounded-[10px] shadow-[0_8px_24px_rgba(149,157,165,0.2)] flex flex-col md:flex-row items-center space-x-[0px] md:space-x-[24px] relative md:p-0 md:pl-[100px]">
+            <!-- CODDING: Imagem -->
+            <div class="w-[95%] mt-[16px] md:my-[10px] md:mx-[10px] md:w-[100px] h-[100px] md:h-auto md:flex-grow md:flex-shrink-0 rounded-[10px] bg-gray-200 animate-pulse flex justify-center items-center relative md:absolute md:top-0 md:bottom-0 md:left-0">
+          
+              <i class="hidden fa-brands fa-facebook-messenger text-4xl text-white"></i>
+            </div>
+
+            
+
+            <!-- CODDING: Detalhes -->
+            <div class="w-full py-[32px] px-[16px] md:px-0 md:py-[24px] grid grid-cols-2 md:grid-cols-4 gap-4">
+              
+              <!-- CODDING: carregando chatbot -->
+              <div class="flex flex-col items-start space-y-[5px]">
+                <p class="h-[20px] w-[60px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+                <p class="h-[20px] w-[120px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+              </div>
+
+              <!-- CODDING: carregando pagina -->
+              <div class="flex flex-col items-start space-y-[5px]">
+                <p class="h-[20px] w-[60px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+                <p class="h-[20px] w-[120px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+              </div>
+             
+            
+              
+              <!-- CODDING: carregando status -->
+              <div class="flex flex-col items-start space-y-[5px]">
+                <p class="h-[20px] w-[60px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+                <div class="flex flex-row justify-start items-center space-x-[5px]">
+                  <p class="h-[20px] w-[30px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+                  <p class="h-[20px] w-[90px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+                </div>
+              </div>
+
+              <!-- CODDING: carregando modificado -->
+              <div class="flex flex-col items-start space-y-[5px]">
+                <p class="h-[20px] w-[60px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+                <p class="h-[20px] w-[120px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+              </div>
+              
+
+             
+            </div>
+
+            <!-- CODDING: carregando botões -->
+            <div class="w-full md:w-auto flex flex-row justify-end md:justify-start items-center space-x-[5px] pr-[24px] mb-[16px] md:mb-[0px]">
+              <div class="w-[120px] px-[16px] h-[50px] text-sm text-white rounded-[10px] bg-gray-200 animate-pulse flex justify-center items-center space-x-[10px]">
+
+              </div>
+              <div class="px-[16px] h-[50px] rounded-[10px]  flex justify-center items-center space-x-[10px] bg-gray-200 animate-pulse"></div>
+              
+            </div>
+          </div>
+          <!-- CODDING: ChatBot -->
+          <div  class="w-[90%] bg-white rounded-[10px] shadow-[0_8px_24px_rgba(149,157,165,0.2)] flex flex-col md:flex-row items-center space-x-[0px] md:space-x-[24px] relative md:p-0 md:pl-[100px]">
+            <!-- CODDING: Imagem -->
+            <div class="w-[95%] mt-[16px] md:my-[10px] md:mx-[10px] md:w-[100px] h-[100px] md:h-auto md:flex-grow md:flex-shrink-0 rounded-[10px] bg-gray-200 animate-pulse flex justify-center items-center relative md:absolute md:top-0 md:bottom-0 md:left-0">
+          
+              <i class="hidden fa-brands fa-facebook-messenger text-4xl text-white"></i>
+            </div>
+
+            
+
+            <!-- CODDING: Detalhes -->
+            <div class="w-full py-[32px] px-[16px] md:px-0 md:py-[24px] grid grid-cols-2 md:grid-cols-4 gap-4">
+              
+              <!-- CODDING: carregando chatbot -->
+              <div class="flex flex-col items-start space-y-[5px]">
+                <p class="h-[20px] w-[60px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+                <p class="h-[20px] w-[120px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+              </div>
+
+              <!-- CODDING: carregando pagina -->
+              <div class="flex flex-col items-start space-y-[5px]">
+                <p class="h-[20px] w-[60px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+                <p class="h-[20px] w-[120px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+              </div>
+             
+            
+              
+              <!-- CODDING: carregando status -->
+              <div class="flex flex-col items-start space-y-[5px]">
+                <p class="h-[20px] w-[60px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+                <div class="flex flex-row justify-start items-center space-x-[5px]">
+                  <p class="h-[20px] w-[30px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+                  <p class="h-[20px] w-[90px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+                </div>
+              </div>
+
+              <!-- CODDING: carregando modificado -->
+              <div class="flex flex-col items-start space-y-[5px]">
+                <p class="h-[20px] w-[60px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+                <p class="h-[20px] w-[120px] rounded-[10px] bg-gray-200 animate-pulse"></p>
+              </div>
+              
+
+             
+            </div>
+
+            <!-- CODDING: carregando botões -->
+            <div class="w-full md:w-auto flex flex-row justify-end md:justify-start items-center space-x-[5px] pr-[24px] mb-[16px] md:mb-[0px]">
+              <div class="w-[120px] px-[16px] h-[50px] text-sm text-white rounded-[10px] bg-gray-200 animate-pulse flex justify-center items-center space-x-[10px]">
+
+              </div>
+              <div class="px-[16px] h-[50px] rounded-[10px]  flex justify-center items-center space-x-[10px] bg-gray-200 animate-pulse"></div>
+              
+            </div>
+          </div>
+         
+         
+
+        </div>
+
+        <!-- CODDING: Criar automação | Construtor de fluxograma -->
+        <div id="construtor-de-fluxograma-container" class="w-full px-[16px] flex flex-col items-center justify-center">
+          <div class="w-[90%] mx-[16px] px-[16px] pb-[32px] rounded-[10px] bg-white shadow-[0_8px_24px_rgba(149,157,165,0.2)]">
+            <div class="flex flex-row justify-start items-center space-x-[10px] py-[32px]">
+              <i class="fa-solid fa-diagram-project w-[40px] h-[40px] rounded-[10px] bg-purple text-white flex justify-center items-center shadow-[0_8px_24px_rgba(149,157,165,0.2)]"></i>
+              <div class="flex flex-col items-start justify-center">
+                <p class="text-base/none text-purple font-bold">Fluxograma</p>
+                <p class="text-base text-[#404040]">Crie e Edite sua automação com facilidade.</p>
+              </div>
+            </div>
+
+            <div class="w-full h-[500px] bg-gray-100 rounded-[10px] px-[16px] relative">
+              <!-- CODDING: Popup absolute top-0 left-0 w-full h-full bg-black opacity-25 z-50 -->
+              <div id="popup-background" class="hidden absolute top-0 left-0 w-full h-full bg-black opacity-25 z-50"></div>
+
+              <div id="popup-container" class="hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white w-[80%] md:w-auto rounded-[10px] shadow-[0_8px_24px_rgba(149,157,165,0.2)] z-50 flex flex-col justify-center items-center ">
+                  
+              </div>
+              
+              <div id="construtor-de-fluxograma" class="w-[5000px] h-[5000px]  py-11 px-[16px] flex flex-col items-center relative">
+                
+                <!-- CODDING: Sessão 01 -->
+                <div id="sessao-01" class="flex flex-row justify-center items-center space-x-[64px]">
+                  <!-- CODDING: Gatilho-->
+                  <div id="gatilho-fluxograma" class=" min-w-[300px] max-w-[300px] relative rounded-[10px] bg-white shadow-[0_8px_24px_rgba(149,157,165,0.2)] flex flex-col justify-between items-center">
+                    <!-- CODDING: Content -->
+                    <div class="flex flex-col justify-start space-y-[32px] w-full">
+                      
+                      <!-- CODDING:  Titulo do gatilho -->
+                      <div class="flex justify-start items-center space-x-[10px] px-[16px] pt-[16px] text-[#404040] w-full">
+                        <i class="fa-solid fa-bolt text-xl min-h-[40px] min-w-[40px] rounded-[10px] bg-purple text-white flex justify-center items-center"></i>
+                        <div class="flex flex-col justify-center items-start">
+                          <p class="text-base/none">Quando...</p>
+                        </div>
+                      </div>
+
+                      <!-- CODDING: Sobre -->
+                      <div class="hidden px-[16px] space-y-[16px] text-sm text-[#404040]">
+                      
+                        
+                          <p class="text-base">O <span class="font-bold">gatilho</span> é responsável por acionar a <span class="font-bold">automação</span> </p>
+                          <p class="text-base">clique em <span class="font-bold">"Adicionar Gatilho"</span></p>
+                        
+                      </div>
+
+                      <!-- CODDING: Gatilho escolhido -->
+                      <div class=" px-[16px] space-y-[10px]">
+                        <!-- CODDING: comment -->
+                        <div class="w-full flex flex-row justify-start items-center rounded-[10px] space-x-[10px] bg-[#EEF1F4] py-[16px] px-[16px] border border-gray-400 shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
+                          <i class="fa-brands fa-facebook-messenger text-white text-base min-w-[30px] min-h-[30px] bg-[#08A4F6] flex justify-center items-center rounded-full"></i>
+                          <div class="flex flex-col items-start justify-center">
+                            <!-- CODDING: Texto -->
+                            <p class="text-base/none text-[#404040]">O usuário deixa um <span class="font-bold">comentário</span> na sua publicação:</p>
+                            
+                            <!-- CODDING: Publicação -->
+                            <a href="https://localhost:3000" target="_blank">
+                              <div class="w-full border border-gray-400 hover:border-[#752A7A] my-[16px] bg-white shadow-[0_3px_8px_rgba(0,0,0,0.24)] rounded-[10px] shadow py-[16px] px-[16px] flex flex-col items-start justify-start space-y-[5px]">
+                                <!-- CODDING: Logo mais nome da pagina -->
+                                <div class="flex flex-row justify-start items-center space-x-[5px]">
+                                  <img class="max-w-[30px] max-h-[30px] rounded-full" src="https://scontent.fcau2-1.fna.fbcdn.net/v/t39.30808-1/429776193_377336775084635_459692734501322956_n.jpg?stp=c156.156.588.588a_dst-jpg_s200x200&_nc_cat=1&ccb=1-7&_nc_sid=5f2048&_nc_ohc=HNLqNm8Tw2AAb6zrIoZ&_nc_ht=scontent.fcau2-1.fna&oh=00_AfBoe_EjQbgXUuEdUg6pSFM2qG5c14ptJadoaGzqPm8MXw&oe=6626262A" alt="">
+                                  <div class="flex flex-col items-start justify-center">
+                                      <p class="text-[12px] font-bold">Receitas Favoritas d...</p>
+                                      <p class="text-[10px] text-[#cccccc]">17/04/2024 19:00:00</p>
+                                  </div>
+                                </div>
+                                
+                                <!-- CODDING: Titulo da postagem -->
+                                <p class="text-[10px] text-[#404040]">Se prepare para ter muita fartura na sua vida!🙌❤️🌳🌵🌾👏</p>
+
+                                <!-- CODDING: Imagem da postagem -->
+                                <img class="w-full h-[80px] rounded" src="https://scontent.fcau2-1.fna.fbcdn.net/v/t39.30808-6/437498692_407698788715100_1648270019578917156_n.jpg?stp=dst-jpg_p526x296&_nc_cat=102&ccb=1-7&_nc_sid=5f2048&_nc_ohc=-DokeLsg77gAb6-aX9C&_nc_ht=scontent.fcau2-1.fna&oh=00_AfDntszK6yMVKc2Qab0vVpVcg_aslOLxfZFmCxKUqCR-nw&oe=6626330B" alt="">
+                              </div>
+                            </a>
+                            
+                            <!-- CODDING: Palavras chaves-->
+                            <div class="flex flex-col items-start justify-center space-y-[10px] mt-[32px]">
+                              <p class="text-base/none text-[#404040]"> e o comentário <span class="font-bold">contém</span> alguma destas palavras-chave:</p>
+                              <div class="flex flex-row flex-wrap justify-start items-center space-x-[5px] space-y-[5px]">
+                                <div class="px-[16px] py-[8px] rounded-full bg-gray-200 shadow-[0_3px_8px_rgba(0,0,0,0.24)]">
+                                  <p class="text-sm text-[#404040]">eu quero</p>
+                                </div>
+                                <div class="px-[16px] py-[8px] rounded-full bg-gray-200 shadow-[0_3px_8px_rgba(0,0,0,0.24)]">
+                                  <p class="text-sm text-[#404040]">eu quero</p>
+                                </div>
+                                <div class="px-[16px] py-[8px] rounded-full bg-gray-200 shadow-[0_3px_8px_rgba(0,0,0,0.24)]">
+                                  <p class="text-sm text-[#404040]">eu quero</p>
+                                </div>
+                              </div>
+                            </div>
+
+                            <!-- CODDING: Palavras chaves negativas -->
+                            <div class="flex flex-col items-start justify-center space-y-[10px] mt-[32px]">
+                              <p class="text-base/none text-[#404040]"> e o comentário <span class="font-bold">não contém</span> nenhuma destas palavras-chave:</p>
+                              <div class="flex flex-row flex-wrap justify-start items-center space-x-[5px] space-y-[5px]">
+                                <div class="px-[16px] py-[8px] rounded-full bg-gray-200 shadow-[0_3px_8px_rgba(0,0,0,0.24)]">
+                                  <p class="text-sm text-[#404040]">eu quero</p>
+                                </div>
+                                <div class="px-[16px] py-[8px] rounded-full bg-gray-200 shadow-[0_3px_8px_rgba(0,0,0,0.24)]">
+                                  <p class="text-sm text-[#404040]">eu quero</p>
+                                </div>
+                                <div class="px-[16px] py-[8px] rounded-full bg-gray-200 shadow-[0_3px_8px_rgba(0,0,0,0.24)]">
+                                  <p class="text-sm text-[#404040]">eu quero</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- CODDING: message -->
+                        <div class="hidden w-full flex flex-row justify-start items-center rounded-[10px] space-x-[10px] bg-[#EEF1F4] py-[16px] px-[16px]">
+                          <i class="fa-brands fa-facebook-messenger text-white text-base min-w-[30px] min-h-[30px] bg-[#08A4F6] flex justify-center items-center rounded-full"></i>
+                          <div class="flex flex-col items-start justify-center">
+                            <!-- CODDING: Texto -->
+                            <p class="text-base/none text-[#404040]">O usuário enviou uma <span class="font-bold">mensagem</span></p>
+                            
+                            <!-- CODDING: Palavras chaves-->
+                            <div class="flex flex-col items-start justify-center space-y-[10px] mt-[32px]">
+                              <p class="text-base/none text-[#404040]">e a mensagem <span class="font-bold">contém</span> alguma destas palavras-chave:</p>
+                              <div class="flex flex-row flex-wrap justify-start items-center space-x-[5px] space-y-[5px]">
+                                <div class="px-[16px] py-[8px] rounded-full bg-gray-200 shadow-[0_3px_8px_rgba(0,0,0,0.24)]">
+                                  <p class="text-sm text-[#404040]">eu quero</p>
+                                </div>
+                                <div class="px-[16px] py-[8px] rounded-full bg-gray-200 shadow-[0_3px_8px_rgba(0,0,0,0.24)]">
+                                  <p class="text-sm text-[#404040]">eu quero</p>
+                                </div>
+                                <div class="px-[16px] py-[8px] rounded-full bg-gray-200 shadow-[0_3px_8px_rgba(0,0,0,0.24)]">
+                                  <p class="text-sm text-[#404040]">eu quero</p>
+                                </div>
+                              </div>
+                            </div>
+
+                            <!-- CODDING: Palavras chaves negativas -->
+                            <div class="flex flex-col items-start justify-center space-y-[10px] mt-[32px]">
+                              <p class="text-base/none text-[#404040]">e a mensagem <span class="font-bold">não contém</span> nenhuma destas palavras-chave:</p>
+                              <div class="flex flex-row flex-wrap justify-start items-center space-x-[5px] space-y-[5px]">
+                                <div class="px-[16px] py-[8px] rounded-full bg-gray-200 shadow-[0_3px_8px_rgba(0,0,0,0.24)]">
+                                  <p class="text-sm text-[#404040]">eu quero</p>
+                                </div>
+                                <div class="px-[16px] py-[8px] rounded-full bg-gray-200 shadow-[0_3px_8px_rgba(0,0,0,0.24)]">
+                                  <p class="text-sm text-[#404040]">eu quero</p>
+                                </div>
+                                <div class="px-[16px] py-[8px] rounded-full bg-gray-200 shadow-[0_3px_8px_rgba(0,0,0,0.24)]">
+                                  <p class="text-sm text-[#404040]">eu quero</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- CODDING: Botões de Editar e Excluir -->
+                    <div class="w-full flex flex-row justify-center items-center space-x-[5px] px-[16px] py-[32px]">
+                      <div id="${child.id}-edit" class="cursor-pointer flex-1 h-[40px] bg-purple rounded-[10px] flex flex-row justify-center items-center text-sm text-white space-x-[10px]">
+                          <i class="fa-solid fa-pen"></i>
+                          <p>Editar</p>
+                      </div>
+                      <div class="cursor-pointer flex-1 h-[40px] bg-purple rounded-[10px] flex flex-row justify-center items-center text-sm text-white space-x-[10px]">
+                          <i class="fa-solid fa-trash"></i>
+                          <p>Deletar</p>
+                      </div>
+                    </div>
+
+                    <!-- CODDING: Botão -->
+                    <button class="hidden w-full py-[8px] bg-purple text-white rounded-bl-[10px] rounded-br-[10px] space-x-1 ">
+                      <i class="fa-solid fa-plus"></i>
+                      <span>Adicionar Gatilho</span>
+                    </button>
+
+                    <!-- CODDING: Line -->
+                    <div class="absolute w-[64px] h-[3px] top-[50%] left-[100%] bg-purple">
+                      <div class="w-full relative">
+                        <!-- CODDING: Circle left -->
+                        <div class="w-[15px] h-[15px] rounded-full bg-purple absolute left-[-7px] top-[-6px]">
+
+                        </div>
+                        <!-- CODDING: Circle right -->
+                        <div class="w-[15px] h-[15px] rounded-full bg-purple absolute right-[-7px] top-[-6px]">
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- CODDING: Adicionar mensagem -->
+                  <div id="adicionar-mensagem-card" class=" min-w-[300px] max-w-[300px] rounded-[10px] bg-white shadow-[0_8px_24px_rgba(149,157,165,0.2)] flex flex-col justify-between items-center space-y-[16px]">
+                   
+
+                    <div class="w-full flex flex-col justify-start space-y-[16px]">
+                      
+                      <!-- CODDING: Titulo -->
+                      <div class="flex flex-row justify-start items-center py-[16px] px-[16px] space-x-[10px]">
+                        <i class="fa-brands fa-facebook-messenger text-[#08A4F6] text-xl"></i>
+                        <div class="flex flex-col justify-center items-start">
+                          <p class="text-sm text-gray-400">Facebook</p>
+                          <p class="text-base/none text-[#404040]">Enviar Mensagem</p>
+                        </div>
+                      </div>
+
+                      
+                      <div class="bg-[#EEF1F4] rounded-[10px] mx-[16px] py-[16px] space-y-[15px]">
+                        
+
+                        <p class="mx-[16px] text-sm text-[#404040]">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+
+                        <!-- CODDING: Cards -->
+                        <div class="w-full">
+                          <div class="px-[16px] py-[16px] relative">
+                            <!-- CODDING: Card -->
+                            <div class="w-full bg-white flex flex-col items-center items-start shadow-[0_3px_8px_rgba(0,0,0,0.24)] rounded-[10px]">
+                              <!-- CODDING: Paginação -->
+                              <div class="py-[16px] px-[16px] w-full flex flex-row justify-end items-center space-x-[5px]">
+                                <div class="w-[6px] h-[6px] rounded-full bg-purple"></div>
+                                <div class="w-[6px] h-[6px] rounded-full bg-gray-400"></div>
+                              </div>
+
+                              <!-- CODDING: Imagem -->
+                              <div class="px-[16px] py-[16px] w-full bg-white relative rounded-tr-[10px] rounded-tl-[10px]">
+                                <img src="https://down-br.img.susercontent.com/file/sg-11134201-7rbln-lpeq500ctslkd4" class="w-full h-[150px] rounded-[10px]">
+                                
+                              </div>
+
+                              <div class="w-full px-[16px] py-[16px] bg-white rounded-[10px] flex flex-col justify-start items-start shadow-[1.95px_1.95px_2.6px_rgba(0,0,0,0.15)]">
+                                <!-- CODDING: Titulo e Legenda -->
+                                <p class="text-sm font-bold">Fone De Ouvido Bluetooth Sem Fio Com design </p>
+                                <p class="text-sm font-normal text-gray-500">Design giratório de 180 graus, terno para orelha esquerda e direita...</p>
+
+                                <!-- CODDING: Botões -->
+                                <div class="py-[10px] w-full flex flex-col items-center justify-start space-y-[10px]">
+                                  <a href="/" class="w-full h-[40px] w-full rounded-[10px] px-[16px] space-x-[10px] shadow-[0_3px_8px_rgba(0,0,0,0.24)] text-sm text-[#404040] bg-white hover:bg-[#FDFDFD] flex flex-row justify-between items-center">
+                                    <i class="fa-solid fa-link text-purple"></i>
+                                    <div class="flex-grow flex justify-start items-center">
+                                      <p>Botão 01</p>
+                                    </div>
+                                  </a>
+                                  <a href="/" class="w-full h-[40px] w-full rounded-[10px] px-[16px] space-x-[10px] shadow-[0_3px_8px_rgba(0,0,0,0.24)] text-sm text-[#404040] bg-white hover:bg-[#FDFDFD] flex flex-row justify-between items-center">
+                                    <i class="fa-solid fa-link text-purple"></i>
+                                    <div class="flex-grow flex justify-start items-center">
+                                      <p>Botão 02</p>
+                                    </div>
+                                  </a>
+                                  <a href="/" class="w-full h-[40px] w-full rounded-[10px] px-[16px] space-x-[10px] shadow-[0_3px_8px_rgba(0,0,0,0.24)] text-sm text-[#404040] bg-white hover:bg-[#FDFDFD] flex flex-row justify-between items-center">
+                                    <i class="fa-solid fa-link text-purple"></i>
+                                    <div class="flex-grow flex justify-start items-center">
+                                      <p>Botão 03</p>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+
+                              
+                              
+                            </div>
+
+                            <!-- CODDING: Arrow Left -->
+                            <div class="absolute top-[40%] left-[-15px] min-h-[40px] min-w-[40px] rounded-[10px] bg-purple flex justify-center items-center shadow-[0_3px_8px_rgba(0,0,0,0.24)] hover:shadow-[0_5px_15px_rgba(0,0,0,0.35)] cursor-pointer">
+                              <i class="fa-solid fa-chevron-left text-white"></i>
+                            </div>
+                            <!-- CODDING: Arrow Right -->
+                            <div class="absolute top-[40%] right-[-15px] min-h-[40px] min-w-[40px] rounded-[10px] bg-purple flex justify-center items-center shadow-[0_3px_8px_rgba(0,0,0,0.24)] hover:shadow-[0_5px_15px_rgba(0,0,0,0.35)] cursor-pointer">
+                              <i class="fa-solid fa-chevron-right text-white"></i>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- CODDING: Carregando Audio -->
+                        <div class="mx-[16px] flex flex-col items-start justify-center rounded-[10px] bg-white shadow-[0_3px_8px_rgba(0,0,0,0.24)]">
+                          <div class="w-full pt-[16px] px-[16px]">
+                            <div class="w-full rounded-[10px] h-[50px] bg-gray-200 animate-pulse"></div>
+                          </div>
+
+                          <div class="px-[16px] py-[16px] flex flex-row justify-start items-center space-x-[10px]">
+                            <i class="h-[40px] w-[40px] rounded-[10px] bg-gray-200 animate-pulse"></i>
+                            <div class="flex flex-col items-start justify-center space-y-[5px]">
+                              <p class="text-sm font-bold h-[15px] rounded-full w-[100px] bg-gray-200"></p>
+                              <p class="text-sm font-normal h-[15px] rounded-full w-[150px] bg-gray-200"></p>
+                            </div>
+                          </div>
+                          
+                        </div>
+
+                        <!-- CODDING: Audio -->
+                        <div class="mx-[16px] flex flex-col items-start justify-center rounded-[10px] bg-white shadow-[0_3px_8px_rgba(0,0,0,0.24)]">
+                          <div class="px-[16px] pt-[16px] w-full">
+                            <audio controls class="w-full bg-[#F1F3F4] rounded-[10px]">
+                              <source src="https://codeskulptor-demos.commondatastorage.googleapis.com/GalaxyInvaders/theme_01.mp3" type="audio/mpeg">
+                              Seu navegador não suporta o elemento de áudio.
+                            </audio>
+                          </div>
+
+                          <div class="px-[16px] py-[16px] flex flex-row justify-start items-center space-x-[10px]">
+                            <i class="fa-solid fa-microphone h-[40px] w-[40px] text-white bg-purple rounded-[10px] flex justify-center items-center"></i>
+                            <div class="flex flex-col items-start justify-center">
+                              <p class="text-sm font-bold">audio.mp3</p>
+                              <p class="text-sm font-normal">00:00 / 01:35 <span class="text-gray-500">(1MB)</span></p>
+                            </div>
+                          </div>
+                          
+                        </div>
+
+                        <!-- CODDING: Carregando video -->
+                        <div class="mx-[16px] flex flex-col items-center justify-center bg-white shadow-[0_3px_8px_rgba(0,0,0,0.24)] rounded-[10px] ">
+                          <div class="px-[16px] pt-[16px] w-full h-auto max-h-[150px]">
+                            <div class="w-full h-full rounded-[10px] h-[100px] bg-gray-200 animate-pulse">
+
+                            </div>
+                          </div>
+                          <div class="w-full px-[16px] py-[16px] flex justify-start items-center space-x-[10px] ">
+                            <i class="h-[40px] w-[40px] rounded-[10px] bg-gray-200 animate-pulse"></i>
+                            <div class="flex flex-col items-start justify-center space-y-[5px]">
+                              <p class="text-sm font-bold h-[15px] rounded-full w-[100px] bg-gray-200"></p>
+                              <p class="text-sm font-normal h-[15px] rounded-full w-[150px] bg-gray-200"></p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- CODDING: Video -->
+                        <div class="mx-[16px] flex flex-col items-center justify-center bg-white shadow-[0_3px_8px_rgba(0,0,0,0.24)] rounded-[10px] ">
+                          <div class="px-[16px] pt-[16px] w-full h-auto max-h-[150px]">
+                            <video controls class="rounded-[10px]">
+                              <source src="https://localhost:5500/chatbot/media/videos/3521318-uhd_3840_2160_30fps.mp4">
+                              Seu navegador não oferece suporte ao elemento de vídeo. Atualize-o para a versão mais recente.
+                            </video>
+                          </div>
+                          <div class="w-full px-[16px] py-[16px] flex justify-start items-center space-x-[10px] ">
+                            <i class="fa-solid fa-video h-[40px] w-[40px] rounded-[10px] text-white bg-purple flex justify-center items-center"></i>
+                            <div class="flex flex-col items-start justify-center">
+                              <p class="text-sm font-bold">video.mp4</p>
+                              <p class="text-sm font-normal">00:00 / 15:00 <span class="text-gray-500">(15MB)<span></p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- CODDING: Atraso -->
+                        <div class="mx-[16px] px-[16px] py-[16px] shadow-[0_3px_8px_rgba(0,0,0,0.24)] bg-white rounded-[10px] flex flex-row justify-start items-center space-x-[10px]">
+                          <i class="fa-regular fa-clock min-w-[40px] min-h-[40px] rounded-[10px] bg-purple text-white flex justify-center items-center"></i>
+                          <p class="text-sm text-[#404040]">Esperar 60 segundos</p>
+                        </div>
+
+                        <!-- CODDING: Imagem -->
+                        <div class="mx-[16px] bg-white shadow-[0_3px_8px_rgba(0,0,0,0.24)] rounded-[10px] flex flex-col items-center justify-center">
+                          <div class="px-[16px] pt-[16px] w-full">
+                            <img src="https://down-br.img.susercontent.com/file/sg-11134201-7rbln-lpeq500ctslkd4" alt="" class="rounded-[10px] w-full h-[150px]">
+                          </div>
+                          <div class="w-full px-[16px] py-[16px] flex flex-row justify-start items-center space-x-[10px]">
+                            <i class="fa-regular fa-image w-[40px] h-[40px] rounded-[10px] bg-purple text-white text-sm flex justify-center items-center"></i>
+                            <div class="flex flex-col items-start justify-center">
+                              <p class="text-sm font-bold">imagem.png</p>
+                              <p class="text-sm font-normal">500x500 <span class="text-gray-500">(2MB)</span></p>
+                              <p></p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- CODDING: Arquivo carregando -->
+                        <div class="mx-[16px] bg-white shadow-[0_3px_8px_rgba(0,0,0,0.24)] rounded-[10px] flex flex-col items-center justify-center">
+                          
+                          <div class="w-full px-[16px] py-[16px] flex flex-row justify-start items-center space-x-[10px]">
+                            <i class="min-w-[40px] max-w-[40px] min-h-[40px] max-h-[40px] rounded-[10px] bg-gray-200 animate-pulse"></i>
+                            <div class="w-full flex flex-col items-start justify-center space-y-[5px]">
+                              <p class="min-h-[15px] w-full rounded-full bg-gray-200 animate-pulse"></p>
+                              <p class="min-h-[15px] w-[30%] rounded-full bg-gray-200 animate-pulse"></p>
+                              
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- CODDING: Arquivo -->
+                        <div class="mx-[16px] bg-white shadow-[0_3px_8px_rgba(0,0,0,0.24)] rounded-[10px] flex flex-col items-center justify-center">
+                          
+                          <div class="w-full px-[16px] py-[16px] flex flex-row justify-start items-center space-x-[10px]">
+                            <i class="fa-solid fa-paperclip min-w-[40px] max-w-[40px] min-h-[40px] max-h-[40px] rounded-[10px] bg-purple text-white text-sm flex justify-center items-center"></i>
+                            <div class="flex flex-col items-start justify-center">
+                              <p class="text-sm font-bold">Prospecção Fanática - Jed Blount Prospecção Fanática - Jed Blount Prospecção Fanática - Jed Blount Prospecção Fanática - Jed Blount Prospecção Fanática - Jed Blount.pdf</p>
+                              <p class="text-sm font-normal"><span class="text-gray-500">2MB</span></p>
+                              
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="mx-[16px] flex flex-col space-y-[5px]">
+                          <button id="button-01" class="w-full rounded-[10px] h-[40px] bg-white flex flex-row justify-center items-center text-sm text-[#404040] hover:border-[1px] shadow-[1.95px_1.95px_2.6px_rgba(0,0,0,0.15)] relative">
+    
+                              <p class="flex-1">Botão 01</p>
+                            
+                            
+                          
+                          </button>
+                          <button id="button-02" class="w-full rounded-[10px] h-[40px] bg-white text-sm text-[#404040] border-[1px] shadow-[1.95px_1.95px_2.6px_rgba(0,0,0,0.15)] relative flex justify-center items-center">
+                            <p class="flex-1">Botão 02</p>
+                        
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- CODDING: Botões de Editar e Excluir -->
+                    <div class="w-full flex flex-row justify-center items-center space-x-[5px] px-[16px]">
+                        <div id="${child.id}-edit" class="cursor-pointer flex-1 h-[40px] bg-purple rounded-[10px] flex flex-row justify-center items-center text-sm text-white space-x-[10px]">
+                            <i class="fa-solid fa-pen"></i>
+                            <p>Editar</p>
+                        </div>
+                        <div class="cursor-pointer flex-1 h-[40px] bg-purple rounded-[10px] flex flex-row justify-center items-center text-sm text-white space-x-[10px]">
+                            <i class="fa-solid fa-trash"></i>
+                            <p>Deletar</p>
+                        </div>
+                    </div>
+
+                    <!--- CODDING: Botão de Adicionar -->
+                    <div id="${child.id}-button-adicionar-ou-remover" class="cursor-pointer w-full h-[40px] bg-purple rounded-br-[10px] text-sm text-white rounded-bl-[10px] flex flex-row justify-center items-center space-x-[10px]">
+                      <i class="fa-solid fa-plus"></i>
+                      <p>Adicionar</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- CODDING: Sessão 02 -->
+                <div class="hidden flex flex-row justify-center items-center space-x-[64px] py-[64px]">
+                  <div id="card-filho" class="min-w-[300px] max-w-[300px] h-[200px] relative rounded-[10px] bg-white shadow-[0_8px_24px_rgba(149,157,165,0.2)] flex flex-col justify-between items-center space-y-[16px]">
+
+                  </div>
+                  <div id="card-filho-02" class="min-w-[300px] max-w-[300px] h-[200px] relative rounded-[10px] bg-white shadow-[0_8px_24px_rgba(149,157,165,0.2)] flex flex-col justify-between items-center space-y-[16px]">
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+       
+
+        <!-- CODDING: Nenhuma chatbot encontrado -->
+        <div id="nenhum-chatbot-encontrado" class="flex flex-col items-center py-[64px] h-full">
+
+          <div class="p-[16px] rounded-[10px] bg-white shadow-[0_8px_24px_rgba(149,157,165,0.2)] relative">
+
+          
+            <div class="absolute top-[60%] left-[-10px] md:left-[-20px] bg-white rounded-[10px] px-[16px] py-[8px] flex flex-row justify-start items-center shadow-[0_2px_8px_0_rgba(99,99,99,0.2)] space-x-[10px]">
+              <i class="fa-brands fa-facebook-messenger text-base text-[#08ACFE]"></i>
+              <div class="flex flex-col items-start justify-center">
+                <p class="text-sm text-[#404040]">Facebook</p>
+                <p class="text-base/none text-[#404040]">Enviar Mensagem</p>
+              </div>
+            </div>
+
+           
+
+            <div class="absolute top-[40%] right-[-15px] w-[40px] h-[40px] bg-[#08ACFE] rounded-full flex justify-center items-center shadow-[0_2px_8px_0_rgba(99,99,99,0.2)]">
+              <i class="fa-brands fa-facebook-messenger text-white text-base"></i>
+            </div>
+           
+          <svg class="h-48 md:h-72" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 809.34183 629.87561" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M363.34812,549.37208C326.75641,513.35019,311.30181,475.77031,319.83,443.556c10.94436-41.34026,59.56474-69.92355,133.39432-78.42081l.27268,2.37135c-72.8018,8.37841-120.68047,36.32021-131.35973,76.66007-8.29975,31.35084,6.93053,68.10978,42.88542,103.50533Z" transform="translate(-195.32909 -135.0622)" fill="#f0f0f0"/><path d="M716.39646,677.23887c-45.66871,0-95.2959-6.78662-144.58981-19.83666-60.95842-16.138-116.85076-40.49659-161.63444-70.44326l1.3261-1.98332c44.56809,29.8016,100.21281,54.04886,160.919,70.11932,54.85932,14.52412,110.13,21.25364,159.81659,19.47775l.08623,2.38417Q724.44916,677.24,716.39646,677.23887Z" transform="translate(-195.32909 -135.0622)" fill="#f0f0f0"/><path d="M821.16612,662.23116l-.76443-2.26066c40.84443-13.8098,66.391-36.05568,73.87795-64.33483,9.51688-35.94965-11.15878-77.66687-58.21884-117.4672C788.76069,438.166,720.553,404.974,643.99959,384.7079l.61061-2.30727c76.88788,20.35521,145.42765,53.71909,192.99111,93.94591,47.80351,40.42842,68.75185,83.00971,58.98559,119.89973C888.88553,625.33647,862.80527,648.15334,821.16612,662.23116Z" transform="translate(-195.32909 -135.0622)" fill="#f0f0f0"/><path d="M446.11894,678.23635C356.38263,638.43719,287.234,586.8028,251.412,532.84367l1.988-1.32027C288.97435,585.10906,357.76,636.43756,447.08613,676.05494Z" transform="translate(-195.32909 -135.0622)" fill="#f0f0f0"/><path d="M761.62469,747.18514q-13.8838,0-28.24187-.61993l.10255-2.38418c71.43317,3.09267,134.46-5.45587,182.27864-24.72619l.8926,2.214C874.94289,738.477,821.77556,747.18514,761.62469,747.18514Z" transform="translate(-195.32909 -135.0622)" fill="#f0f0f0"/><path d="M709.55856,367.27523c-14.83176-4.829-30.08768-9.3252-45.34359-13.36408-87.792-23.24162-174.09251-31.49359-249.575-23.85923l-.24-2.37485c75.764-7.65942,162.35983.61236,250.42571,23.92681,15.299,4.05053,30.59806,8.55961,45.47177,13.40253Z" transform="translate(-195.32909 -135.0622)" fill="#f0f0f0"/><path d="M307.26526,552.95184c-36.59172-36.0219-52.04632-73.60177-43.51818-105.8161,10.94437-41.34025,59.56474-69.92354,133.39433-78.4208l.27267,2.37135c-72.8018,8.37841-120.68047,36.32021-131.35973,76.66006-8.29975,31.35085,6.93054,68.10978,42.88542,103.50533Z" transform="translate(-195.32909 -135.0622)" fill="#f0f0f0"/><path d="M660.31359,680.81863c-45.66871,0-95.29589-6.78663-144.58981-19.83666-60.95842-16.138-116.85076-40.49659-161.63443-70.44326l1.32609-1.98332c44.5681,29.8016,100.21282,54.04886,160.919,70.11931,54.85932,14.52412,110.13,21.25365,159.8166,19.47775l.08623,2.38418Q668.3663,680.81979,660.31359,680.81863Z" transform="translate(-195.32909 -135.0622)" fill="#f0f0f0"/><path d="M765.08325,665.81091l-.76442-2.26065c40.84442-13.8098,66.391-36.05569,73.87794-64.33484,9.51689-35.94964-11.15878-77.66687-58.21884-117.4672-47.3001-40.0025-115.50777-73.1945-192.06121-93.46056l.61061-2.30727C665.41521,406.3356,733.955,439.69947,781.51844,479.9263,829.322,520.35472,850.27029,562.936,840.504,599.826,832.80266,628.91622,806.7224,651.7331,765.08325,665.81091Z" transform="translate(-195.32909 -135.0622)" fill="#f0f0f0"/><path d="M390.03608,681.81611c-89.73632-39.79916-158.885-91.43355-194.707-145.39269l1.988-1.32026c35.57443,53.58566,104.36007,104.91416,193.68621,144.53154Z" transform="translate(-195.32909 -135.0622)" fill="#f0f0f0"/><path d="M705.54182,750.7649q-13.88379,0-28.24186-.61994l.10254-2.38417c71.43318,3.09267,134.46-5.45587,182.27864-24.7262l.89261,2.21405C818.86,742.05672,765.6927,750.7649,705.54182,750.7649Z" transform="translate(-195.32909 -135.0622)" fill="#f0f0f0"/><path d="M653.47569,370.855c-14.83175-4.82894-30.08767-9.32519-45.34359-13.36407-87.792-23.24163-174.09251-31.4936-249.57505-23.85923l-.24-2.37485c75.764-7.65942,162.35983.61236,250.42571,23.92681,15.299,4.05053,30.59807,8.55961,45.47177,13.40253Z" transform="translate(-195.32909 -135.0622)" fill="#f0f0f0"/><path d="M236.00582,489.03092c17.14976-19.22826,44.50649-30.9473,69.29785-23.93208a118.70968,118.70968,0,0,0-46.32362,67.05768c-2.67852,10.46848-4.56766,22.39086-13.2738,28.79149-5.41709,3.98274-12.59491,4.93415-19.25684,4.02714-6.66224-.90723-12.96156-3.498-19.17587-6.06531l-1.6722.14488C210.40907,533.74217,218.85606,508.25918,236.00582,489.03092Z" transform="translate(-195.32909 -135.0622)" fill="#f2f2f2"/><path d="M305.22794,465.63414a101.46482,101.46482,0,0,0-53.2125,32.64337,43.694,43.694,0,0,0-7.36793,11.53847,25.06052,25.06052,0,0,0-1.47925,13.10607c.55678,4.13632,1.60531,8.30284,1.14692,12.50247a15.34469,15.34469,0,0,1-6.50386,10.73231c-4.35348,3.179-9.58959,4.60415-14.7585,5.81987-5.7391,1.34983-11.7216,2.66095-16.39988,6.475-.56684.46212-1.25076-.44444-.68477-.90587,8.1394-6.63578,19.45136-5.7838,28.45684-10.60368,4.20212-2.24905,7.75192-5.77808,8.615-10.6206.75471-4.23457-.32287-8.53205-.92282-12.71529a26.74161,26.74161,0,0,1,.96892-12.86881,40.3945,40.3945,0,0,1,6.89713-11.77917,98.43912,98.43912,0,0,1,22.91947-20.52511,103.26408,103.26408,0,0,1,32.19117-13.92683c.70851-.17132.838.95761.13408,1.12781Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><path d="M256.1732,492.79743a15.223,15.223,0,0,1-.469-19.70657c.46161-.56633,1.36335.12438.90112.69147a14.09612,14.09612,0,0,0,.47371,18.33032c.48879.54315-.41987,1.22481-.90586.68478Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><path d="M242.60972,520.862a29.341,29.341,0,0,0,20.38536-6.45483c.56846-.4601,1.25255.44632.68478.90586a30.51908,30.51908,0,0,1-21.22647,6.67372c-.73038-.05063-.57008-1.17511.15633-1.12475Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><path d="M283.01569,473.47307a8.61692,8.61692,0,0,0,6.954,4.30074c.73066.04134.56957,1.16582-.15633,1.12475a9.656,9.656,0,0,1-7.70353-4.74072.58687.58687,0,0,1,.11055-.79532.57066.57066,0,0,1,.79532.11055Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><path d="M340.49545,544.9208c-.457-.01284-.91394-.02568-1.37675-.03089a113.48,113.48,0,0,0-18.37688,1.07221c-.47163.05859-.9487.12507-1.41766.19708a119.63375,119.63375,0,0,0-41.593,14.49229,116.1798,116.1798,0,0,0-14.59508,9.929c-6.361,5.07568-12.8542,11.08514-20.30131,13.68643a19.92976,19.92976,0,0,1-2.367.69439l-34.56-23.87781c-.05131-.09368-.10842-.17978-.16012-.27373l-1.42346-.89027c.22432-.20613.46141-.4151.68573-.62122.12963-.12012.267-.23491.39658-.355.08886-.07839.17814-.15656.25384-.23238.02948-.0262.05934-.05214.0834-.07049.07571-.07582.15407-.13821.22432-.20613q1.98306-1.7576,3.99773-3.49341c.00545-.00789.00545-.00789.01861-.01047,10.25634-8.7913,21.33673-16.80359,33.281-22.87937.35942-.18268.72391-.37352,1.09912-.54529a110.86072,110.86072,0,0,1,16.77837-6.7664,98.008,98.008,0,0,1,9.61356-2.4324,81.49862,81.49862,0,0,1,25.46291-.97585c16.91705,2.01955,32.99991,9.427,43.48488,22.57717C339.97222,544.24483,340.23292,544.57632,340.49545,544.9208Z" transform="translate(-195.32909 -135.0622)" fill="#f2f2f2"/><path d="M340.1147,545.30576a101.4649,101.4649,0,0,0-62.14077-5.9737,43.69454,43.69454,0,0,0-12.82983,4.77682,25.06061,25.06061,0,0,0-9.07186,9.57386c-2.04579,3.63784-3.71713,7.59586-6.6116,10.673a15.34465,15.34465,0,0,1-11.65456,4.65337c-5.39-.08284-10.42876-2.09744-15.2878-4.2388-5.395-2.37757-10.96111-4.93259-16.99277-4.70394-.73082.02771-.73108-1.1079-.00136-1.13556,10.49405-.39782,19.01307,7.093,29.10534,8.66653,4.70924.73423,9.66828.05372,13.27292-3.29314,3.15209-2.92668,4.87909-7.00675,6.91866-10.708a26.74157,26.74157,0,0,1,8.52154-9.69167,40.39458,40.39458,0,0,1,12.59885-5.25246,98.439,98.439,0,0,1,30.65744-2.589,103.264,103.264,0,0,1,34.08777,8.26152c.66884.28978.09251,1.2691-.572.98121Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><path d="M284.59306,537.45978a15.223,15.223,0,0,1,11.49027-16.01694c.70954-.17426,1.01367.92015.30319,1.09464a14.09613,14.09613,0,0,0-10.6579,14.92094c.06327.728-1.07266.72516-1.13556.00136Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><path d="M256.8666,551.70159a29.341,29.341,0,0,0,20.16282,7.11958c.73089-.02512.73137,1.11048.00136,1.13556a30.519,30.519,0,0,1-20.96618-7.45121c-.55269-.48016.25232-1.28148.802-.80393Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><path d="M317.65988,538.1914a8.61693,8.61693,0,0,0,2.963,7.62068c.5585.47292-.24714,1.27377-.802.80393a9.656,9.656,0,0,1-3.2966-8.42325.58686.58686,0,0,1,.5671-.56846.57065.57065,0,0,1,.56846.5671Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><path d="M907.994,646.65488c-9.68947-23.87372-31.516-44.10561-57.223-45.83088a118.70969,118.70969,0,0,1,21.09071,78.72606c-.99576,10.75975-3.22363,22.62349,2.82479,31.57791,3.76336,5.57173,10.20385,8.88026,16.78308,10.26509,6.57959,1.38473,13.38321,1.06186,20.09888.73254l1.52623.69848C917.07422,697.36818,917.68346,670.52859,907.994,646.65488Z" transform="translate(-195.32909 -135.0622)" fill="#f2f2f2"/><path d="M850.66244,601.35361a101.46487,101.46487,0,0,1,39.14549,48.62911,43.6942,43.6942,0,0,1,3.06122,13.3436,25.06057,25.06057,0,0,1-3.01175,12.84082c-1.91461,3.70856-4.30251,7.28029-5.28229,11.38968a15.34469,15.34469,0,0,0,2.51838,12.29392c3.03176,4.45727,7.48427,7.55936,11.94389,10.44163,4.95155,3.20022,10.14536,6.44579,13.26959,11.61032.37854.62576,1.32737.0018.9494-.623-5.43562-8.98541-16.37587-11.985-23.2375-19.55118-3.20176-3.53055-5.35895-8.04737-4.54424-12.89826.71244-4.24188,3.17171-7.92719,5.14275-11.66543A26.74158,26.74158,0,0,0,894.03,664.719a40.39429,40.39429,0,0,0-2.53691-13.41205,98.439,98.439,0,0,0-14.68766-27.03433,103.2639,103.2639,0,0,0-25.63769-23.93611c-.60971-.39948-1.11106.62026-.50533,1.01713Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><path d="M887.7339,643.424a15.223,15.223,0,0,0,7.06506-18.40254c-.24441-.68854-1.32584-.34108-1.0811.34837a14.09613,14.09613,0,0,1-6.607,17.10477c-.64291.34726-.01621,1.29467.623.9494Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><path d="M891.07584,674.41461a29.341,29.341,0,0,1-17.03-12.93084c-.38075-.6244-1.32969-.00063-.9494.623a30.51906,30.51906,0,0,0,17.74861,13.4197c.70491.1978.93187-.91514.23079-1.11187Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><path d="M868.94785,616.20207a8.61693,8.61693,0,0,1-7.99493,1.7133c-.702-.20663-.92827.90658-.23079,1.11187a9.656,9.656,0,0,0,8.84874-1.87578.58685.58685,0,0,0,.16319-.7862.57065.57065,0,0,0-.78621-.16319Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><path d="M790.7983,664.17446c.43471.14149.86941.283,1.30705.43363a113.47979,113.47979,0,0,1,16.94746,7.18631c.4245.21369.85148.43665,1.269.66209a119.63349,119.63349,0,0,1,34.30249,27.62862,116.1803,116.1803,0,0,1,10.40889,14.25679c4.28507,6.91836,8.38071,14.76057,14.5203,19.71352a19.933,19.933,0,0,0,1.99594,1.44955l40.57483-10.87314c.07981-.071.16254-.13288.2428-.204l1.63988-.36005c-.142-.26954-.29506-.546-.437-.81556-.08172-.15669-.17247-.311-.25419-.46766-.05734-.10369-.11515-.20732-.161-.30417-.019-.03459-.03836-.06905-.05485-.09443-.04582-.09685-.09866-.182-.142-.26953q-1.277-2.32185-2.591-4.63382c-.00249-.00927-.00249-.00927-.014-.01611-6.70494-11.727-14.44781-22.99734-23.65514-32.73414-.27711-.29285-.55625-.59509-.8519-.883a110.86056,110.86056,0,0,0-13.52812-12.012,98.00839,98.00839,0,0,0-8.23678-5.522,81.499,81.499,0,0,0-23.65365-9.47717c-16.6117-3.78376-34.24859-2.21269-48.54339,6.6485C791.5183,663.71366,791.16135,663.93825,790.7983,664.17446Z" transform="translate(-195.32909 -135.0622)" fill="#f2f2f2"/><path d="M791.02753,664.665a101.46484,101.46484,0,0,1,60.53356,15.25934,43.69414,43.69414,0,0,1,10.478,8.811,25.06059,25.06059,0,0,1,5.32635,12.066c.7041,4.1138.94792,8.4033,2.63976,12.27431a15.34468,15.34468,0,0,0,9.41257,8.29977c5.10427,1.73356,10.527,1.52968,15.82311,1.146,5.88029-.426,11.98132-.96161,17.58524,1.281.679.27172,1.06091-.79774.38294-1.069-9.74986-3.90172-20.291.2901-30.325-1.61994-4.68206-.89126-9.12389-3.19892-11.394-7.56259-1.98507-3.81585-2.24029-8.239-2.9172-12.41048a26.74153,26.74153,0,0,0-4.76845-11.992,40.394,40.394,0,0,0-10.10057-9.18138,98.43872,98.43872,0,0,0-28.0038-12.74241,103.264,103.264,0,0,0-34.88145-3.676c-.72734.04813-.51368,1.16418.20891,1.11637Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><path d="M845.9563,675.93628a15.223,15.223,0,0,0-5.43854-18.94706c-.6097-.4026-1.264.52592-.65346.92906a14.09612,14.09612,0,0,1,5.023,17.635c-.30425.66435.76654,1.04349,1.06905.383Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><path d="M867.28313,698.66845a29.341,29.341,0,0,1-21.38276-.07132c-.67993-.26931-1.06206.80006-.38295,1.06905a30.51914,30.51914,0,0,0,22.25086.029c.68192-.26648.19306-1.29174-.48515-1.02672Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><path d="M814.5672,665.51157a8.617,8.617,0,0,1-5.352,6.18148c-.685.2577-.19535,1.28273.48515,1.02671a9.656,9.656,0,0,0,5.93587-6.82525.58684.58684,0,0,0-.34305-.726.57064.57064,0,0,0-.726.34305Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><circle cx="524.6825" cy="583.33993" r="9.54602" fill="#fd6584"/><circle cx="558.49624" cy="420.74992" r="9.54602" fill="#e6e6e6"/><circle cx="380.86745" cy="155.96167" r="9.54602" fill="#e6e6e6"/><path d="M376.15456,657.20782c0,2.43.08,4.86.25,7.27.18,2.88.49,5.74.91,8.58a107.2491,107.2491,0,0,0,8.02,27.73q.29993.66.6,1.32l.3.66c.1.22.21.44.31.65.14.29.27.57.41.85.17.35.34.7.52,1.05.02.04.04.09.07.14.15.3.29.59.45.89a1.7462,1.7462,0,0,0,.1.19c.17.34.35.69.53,1.03.2.36005.39.73.59,1.09.48.89.98,1.77,1.49,2.65.15.26.3.52.46.78.14.24.28.48.43.72.1.16.2.33.3.49.16.27.32.53.49.8.37.59.75,1.18,1.12,1.77h.01c.17.27.35.54.53.8v.01c.53.8,1.08,1.6,1.63,2.38995a.0098.0098,0,0,1,.01.01c.44.64.9,1.26,1.35,1.88v.01c.3.39.59.79.89,1.18.24.32.49.65.74.97.05.06994.11.12994.16.2v.01c.07.09.14.17.21.26q1.59,2.04,3.28,3.99l.18.21c.06.07.13.14.19.22.1.11005.19.22.29.33.09.11.19.22.29.33a108.617,108.617,0,0,0,19.83,17.49c.97.67,1.96,1.32,2.95,1.95.25.16.5.32.75.47.07.05.15.1.22.15.14.08.27.16.41.25.13.08.26.16.4.24.53.33,1.07.65,1.61.97.13.08.27.16.41.24006.13.06994.27.15.41.23,0,.01,0,.01.01.01h.01v.01h.01q1.00506.58492,2.04,1.13995c.37.2.75.41,1.13.6.86.47,1.73.92,2.6,1.35.31.15.63.3.94.46.26.12.52.25.78.37.08.04.15.07.22.11.22.1.43.2.65.3.24.11005.48.22.71.33.27.12.53.24.8.35,1,.45,2.01.88,3.02,1.29a105.87419,105.87419,0,0,0,11.08,3.84c.17.05.35.1.53.15q2.41508.675,4.86005,1.23,4.275.99006,8.63,1.62h.02c.35.05.69.1,1.04.15.03,0,.06.01.1.01,0,.01,0,.01.01,0,.38.05.77.1,1.15.15a.24843.24843,0,0,0,.08.01c.36.05.73.09,1.09.13q.58494.06,1.17.12.45.045.9.09a.19454.19454,0,0,0,.08.01c.27.02.54.05.81.07h.04c.23.02.47.04.7.06006,2.79.22,5.59.31994,8.43.31994,3.07,0,6.12-.12,9.13-.38h.03c.65-.06,1.29-.12,1.93-.18.17-.02.33-.03.5-.05.03,0,.07-.01.1-.01.05-.01.1-.01.16-.02a.24843.24843,0,0,0,.08-.01c.22-.02.44-.05.67-.07l.75-.09c.25-.03.5-.07.75-.1.06-.01.11-.01.17-.02.18-.02.36-.05.54-.07995.09-.01.18-.02.26-.03.18-.03.35-.05.53-.08h.01a105.706,105.706,0,0,0,16.2-3.65c.28-.09.56-.17005.84-.26.01,0,.02-.01.03-.01.08-.03.17-.05.25-.08.75-.24,1.49-.49,2.23-.75,1.02-.34,2.03-.71,3.04-1.09.27-.11.54-.21.81-.32.55-.21,1.09-.43,1.63-.65.92-.37,1.84-.76,2.75-1.16.85-.38,1.69-.76,2.53-1.16.02-.00994.05-.00994.07-.03.19-.09.38-.18.56-.27h.01a107.18912,107.18912,0,0,0,13.29-7.59q2.04-1.365,4.02-2.82c1.06-.79,2.1-1.59,3.14-2.41a108.28427,108.28427,0,0,0,14.19-13.56v-.01c.31-.34.6-.69.9-1.04.05-.05.09-.1.13-.14.19-.23.37-.45.56-.67v-.01c.25-.29.5-.59.74-.89.06-.06994.11-.12994.16-.19v-.01c.2-.24.38995-.48.59-.73.1-.12.19-.24.29-.36v-.01c.59-.74,1.16-1.48,1.73-2.24.15-.2.3-.41.46-.62.72-.97,1.42-1.96,2.1-2.95v-.01c.26-.37.51-.75.77-1.12q.375-.57.75-1.13995c.25-.4.51-.79.76-1.19l.03-.06c.25-.38.5-.78.74-1.17.19-.32.38-.63.57-.94.12-.21.25-.42.37-.63995a2.3919,2.3919,0,0,0,.13-.21q.42-.735.84-1.47c.33-.56994.65-1.15.97-1.73.12-.24.25-.48.38-.72.05-.08.09-.16.13-.24.15-.28.3-.56994.44-.86.15-.28.3-.57.45-.86.13995-.28.29-.57.43-.86.11-.22.21-.44.32-.66a.2175.2175,0,0,1,.03-.05c.05-.11.1-.21.14-.31a.21619.21619,0,0,0,.03-.05c.11-.22.21-.45.32-.67.14-.29.27-.59.41-.88.09-.2.19-.41.28-.62.13-.29.27-.58.39-.88.14-.30005.27-.6.4-.91a2.29962,2.29962,0,0,0,.1-.23c.07-.14.12-.28.18-.42.16-.37.32-.75.47-1.12.18-.42.35-.85.51-1.27.16-.39.31-.79.46-1.19l.06-.14a108.31693,108.31693,0,0,0,5.28-18.93v-.01a109.43156,109.43156,0,0,0,1.43-11.14c.01-.21.03-.41.04-.61.18-2.53.26-5.07.26-7.62,0-1.13-.02-2.25-.05-3.37a107.22221,107.22221,0,0,0-23.78-64.2c-.32-.4-.64-.8-.97-1.2-.33-.4-.67-.79-1-1.18a107.74949,107.74949,0,0,0-173.04,12.43c-.49.78-.98,1.57-1.45,2.36005-.48.8-.94,1.6-1.4,2.41A107.27619,107.27619,0,0,0,376.15456,657.20782Z" transform="translate(-195.32909 -135.0622)" fill="#f2f2f2"/><path d="M479.61245,586.74147a254.162,254.162,0,0,0,54.14823,7.81528,67.79984,67.79984,0,0,0,8.29619-.05641c6.069-.51045,11.26756-2.41793,17.05716-3.46033,2.78331-.4997,5.88364-.86509,8.68575-1.40509q-.97121-1.20493-1.97732-2.38032c-6.04216.51046-12.17832,2.18151-18.293,2.95794-10.39442,1.3218-22.04079-.15314-29.92056-3.79078-3.823-1.76509-6.75141-3.96809-10.561-5.74124a4.9219,4.9219,0,0,0-1.65762-.50777,5.76807,5.76807,0,0,0-3.1272.81136c-6.39139,3.22658-15.67088,5.84869-24.28409,4.406C477.3369,585.8925,478.55662,586.46474,479.61245,586.74147Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><path d="M441.49774,598.09637c-.07866-.01437-.15753-.02558-.23624-.03921a6.42127,6.42127,0,0,0,.93083-.7013Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><path d="M389.93673,604.46221q5.396.4312,10.84845.6421a68.3417,68.3417,0,0,0,8.2962-.05641c6.069-.51315,11.26756-2.41793,17.05716-3.46033,5.306-.95375,11.75383-1.41315,15.12283-3.53018-8.70725-1.50718-17.72881,1.56091-26.70741,2.70271a63.77318,63.77318,0,0,1-21.76406-1.07464Q391.29884,602.03086,389.93673,604.46221Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><path d="M433.4546,752.41785c.86.47,1.73.92,2.6,1.35.31.15.63.3.94.46.26.12.52.25.78.37.08.04.15.07.22.11.22.1.43.2.65.3.24.11005.48.22.71.33.27.12.53.24.8.35,1,.45,2.01.88,3.02,1.29a105.87419,105.87419,0,0,0,11.08,3.84c.17.05.35.1.53.15q2.41508.675,4.86005,1.23,4.275.99006,8.63,1.62h.02c.35.05.69.1,1.04.15.03,0,.06.01.1.01,0,.01,0,.01.01,0,.38.05.77.1,1.15.15a.24843.24843,0,0,0,.08.01c.36.05.73.09,1.09.13q.58494.06,1.17.12.45.045.9.09a.19454.19454,0,0,0,.08.01c.27.02.54.05.81.07h.04c.23.02.47.04.7.06006,2.79.22,5.59.31994,8.43.31994,3.07,0,6.12-.12,9.13-.38h.03c.65-.06,1.29-.12,1.93-.18.17-.02.33-.03.5-.05.03,0,.07-.01.1-.01.05-.01.1-.01.16-.02a.24843.24843,0,0,0,.08-.01c.22-.02.44-.05.67-.07l.75-.09c.25-.03.5-.07.75-.1.06-.01.11-.01.17-.02.18-.02.36-.05.54-.07995.09-.01.18-.02.26-.03.18-.03.35-.05.53-.08h.01a105.706,105.706,0,0,0,16.2-3.65c.28-.09.56-.17005.84-.26a40.177,40.177,0,0,0-22.03-27.86,9.49736,9.49736,0,0,0,2.73-4.86005,9.29434,9.29434,0,0,0-1.28-7.01995,8.9678,8.9678,0,0,0-5.66-3.88l-14.82-3.1a9.2231,9.2231,0,0,0-10.8,7.2,9.76284,9.76284,0,0,0-.2,2.22C450.21461,732.10785,439.94459,741.95782,433.4546,752.41785Z" transform="translate(-195.32909 -135.0622)" fill="#752a7a"/><circle cx="281.88445" cy="541.39662" r="30.87556" fill="#ffb8b8"/><path d="M457.96832,703.07847c-3.29254-2.24911-6.65479-6.57094-8.89946-9.81005a37.07482,37.07482,0,0,1-5.72473-29.60121,11.3042,11.3042,0,0,1,2.65776-5.44507c1.45423-1.439,3.82936-2.12133,5.60422-1.10373a10.13228,10.13228,0,0,1,.41151-8.03954,17.85678,17.85678,0,0,1,5.27941-6.28793,29.73759,29.73759,0,0,1,30.2834-3.58533c1.92864.89366-1.23909-6.00834.77965-5.34279a8.22979,8.22979,0,0,0,6.21161-.10916c1.89865-.95571,8.19188,4.72263,7.46365,2.72565a9.37686,9.37686,0,0,1,2.17171,15.70349c-1.59351,1.34506-3.583,2.11958-5.32779,3.26163a15.29686,15.29686,0,0,0-4.67894,19.74039,20.26618,20.26618,0,0,0-5.96467-2.592,6.85938,6.85938,0,0,0-6.10476,1.46829,7.70642,7.70642,0,0,0-1.86711,5.81588c.06916,2.09526.56765,4.15949.6236,6.25514.16417,6.14915,3.45742,17.84-1.3102,21.10849C475.81474,709.82,462.46384,706.14933,457.96832,703.07847Z" transform="translate(-195.32909 -135.0622)" fill="#2f2e41"/><path d="M1003.65739,172.362H196.34261a1.03636,1.03636,0,0,1,0-2.07221h807.31478a1.03636,1.03636,0,0,1,0,2.07221Z" transform="translate(-195.32909 -135.0622)" fill="#cacaca"/><ellipse cx="23.82568" cy="11.39717" rx="11.14871" ry="11.39717" fill="#3f3d56"/><ellipse cx="62.33942" cy="11.39717" rx="11.14871" ry="11.39717" fill="#3f3d56"/><ellipse cx="100.85315" cy="11.39717" rx="11.14871" ry="11.39717" fill="#3f3d56"/><path d="M980.58187,142.03348h-27.365a2.07272,2.07272,0,0,1,0-4.14443h27.365a2.07272,2.07272,0,0,1,0,4.14443Z" transform="translate(-195.32909 -135.0622)" fill="#3f3d56"/><path d="M980.58187,149.80427h-27.365a2.07271,2.07271,0,0,1,0-4.14442h27.365a2.07271,2.07271,0,0,1,0,4.14442Z" transform="translate(-195.32909 -135.0622)" fill="#3f3d56"/><path d="M980.58187,157.57507h-27.365a2.07271,2.07271,0,0,1,0-4.14442h27.365a2.07271,2.07271,0,0,1,0,4.14442Z" transform="translate(-195.32909 -135.0622)" fill="#3f3d56"/><path d="M498.44289,521.91827a4.93032,4.93032,0,0,1-1.89356-.38281,4.78958,4.78958,0,0,1-3.0039-4.49512v-4.8872a3.8707,3.8707,0,0,0-3.86622-3.8667,4.87211,4.87211,0,0,1-4.8667-4.8667V436.46466a4.872,4.872,0,0,1,4.86622-4.8667H711.50539a4.87211,4.87211,0,0,1,4.8667,4.8667v66.95508a4.87211,4.87211,0,0,1-4.8667,4.8667H515.64992a3.8427,3.8427,0,0,0-2.73438,1.13232l-11.062,11.062A4.79813,4.79813,0,0,1,498.44289,521.91827Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><path d="M498.44289,522.91827a5.9116,5.9116,0,0,1-2.27686-.459,5.77532,5.77532,0,0,1-3.6206-5.41895v-4.88672a2.86981,2.86981,0,0,0-2.86622-2.86718,5.87351,5.87351,0,0,1-5.8667-5.86719V436.46466a5.873,5.873,0,0,1,5.86622-5.8667H711.50539a5.87341,5.87341,0,0,1,5.8667,5.8667v66.95459a5.87351,5.87351,0,0,1-5.8667,5.86719H515.64992a2.84681,2.84681,0,0,0-2.02735.83984l-11.062,11.06152A5.79479,5.79479,0,0,1,498.44289,522.91827ZM489.67873,432.598a3.8707,3.8707,0,0,0-3.86622,3.8667v66.95459a3.87091,3.87091,0,0,0,3.8667,3.86719,4.87241,4.87241,0,0,1,4.86622,4.86718v4.88672a3.86665,3.86665,0,0,0,6.60058,2.7334l11.0625-11.06152a4.83313,4.83313,0,0,1,3.44141-1.42578H711.50539a3.87091,3.87091,0,0,0,3.8667-3.86719V436.46466a3.8708,3.8708,0,0,0-3.8667-3.8667Z" transform="translate(-195.32909 -135.0622)" fill="#3f3d56"/><path d="M692.44337,461.91046H512.565a2.59082,2.59082,0,0,1,0-5.18164H692.44337a2.59082,2.59082,0,0,1,0,5.18164Z" transform="translate(-195.32909 -135.0622)" fill="#752a7a"/><path d="M692.11281,472.9173H512.565a2.59082,2.59082,0,0,1,0-5.18164H692.11281a2.59082,2.59082,0,1,1,0,5.18164Z" transform="translate(-195.32909 -135.0622)" fill="#e6e6e6"/><path d="M691.9341,483.92364H512.565a2.59082,2.59082,0,0,1,0-5.18164H691.9341a2.59082,2.59082,0,0,1,0,5.18164Z" transform="translate(-195.32909 -135.0622)" fill="#e6e6e6"/><path d="M975.71461,421.20782c0,2.43-.08,4.86-.25,7.27-.18,2.88-.49,5.74-.91,8.58a107.2491,107.2491,0,0,1-8.02,27.73q-.29993.66-.6,1.32l-.3.66c-.1.22-.21.44-.31.65-.14.29-.27.57-.41.85-.17.35-.34.7-.52,1.05-.02.04-.04.09-.07.14-.15.3-.29.59-.45.89a1.7462,1.7462,0,0,1-.1.19c-.17.34-.35.69-.53,1.03-.2.36005-.39.73-.59,1.09-.48.89-.98,1.77-1.49,2.65-.15.26-.3.52-.46.78-.14.24-.28.48-.43.72-.1.16-.2.33-.30005.49-.16.27-.32.53-.49.8-.37.59-.75,1.18-1.12,1.77h-.01c-.17.27-.35.54-.53.8v.01c-.53.8-1.08,1.6-1.63,2.38995a.0098.0098,0,0,0-.01.01c-.44.64-.9,1.26-1.35,1.88v.01c-.3.39-.59.79-.89,1.18-.24.32-.49.65-.74.97-.05.06994-.11.12994-.16.2v.01c-.07.09-.14.17-.21.26q-1.59,2.04-3.28,3.99l-.18.21c-.06.07-.13.14-.19.22-.1.11005-.19.22-.29.33-.09.11-.19.22-.29.33a108.617,108.617,0,0,1-19.83,17.49c-.97.67-1.96,1.32-2.95,1.95-.25.16-.5.32-.75.47-.07.05-.15.1-.22.15-.14.08-.27.16-.41.25-.13.08-.26.16-.4.24-.53.33-1.07.65-1.61.97-.13.08-.27.16-.41.24006-.13.06994-.27.15-.41.23,0,.01,0,.01-.01.01h-.01v.01h-.01q-1.00506.58492-2.04,1.13995c-.37.2-.75.41-1.13.6-.86.47-1.73.92-2.6,1.35-.31.15-.63.3-.94.46-.26.12-.52.25-.78.37-.08.04-.15.07-.22.11-.22.1-.43.2-.65.3-.24.11005-.48.22-.71.33-.27.12-.53.24-.8.35-1,.45-2.01.88-3.02,1.29a105.87419,105.87419,0,0,1-11.08,3.84c-.17.05-.35.1-.53.15q-2.41508.675-4.86005,1.23-4.275.99006-8.63,1.62h-.02c-.35.05-.69.1-1.04.15-.03,0-.06.01-.1.01,0,.01,0,.01-.01,0-.38.05-.77.1-1.15.15a.24843.24843,0,0,1-.08.01c-.36.05-.73.09-1.09.13q-.58494.06-1.17.12-.45.045-.9.09a.19454.19454,0,0,1-.08.01c-.27.02-.54.05-.81.07h-.04c-.23.02-.47.04-.7.06006-2.79.22-5.59.31994-8.43.31994-3.07,0-6.12-.12-9.13-.38h-.03c-.65-.06-1.29-.12-1.93-.18-.17-.02-.33-.03-.5-.05-.03,0-.07-.01-.1-.01-.05-.01-.1-.01-.16-.02a.24843.24843,0,0,1-.08-.01c-.22-.02-.44-.05-.67-.07l-.75-.09c-.25-.03-.5-.07-.75-.1-.06-.01-.11-.01-.17-.02-.18-.02-.36-.05-.54-.07995-.09-.01-.18-.02-.26-.03-.18-.03-.35-.05-.53-.08h-.01a105.706,105.706,0,0,1-16.2-3.65c-.28-.09-.56-.17005-.84-.26-.01,0-.02-.01-.03-.01-.08-.03-.17-.05-.25-.08-.75-.24-1.49-.49-2.23-.75-1.02-.34-2.03-.71-3.04-1.09-.27-.11-.54-.21-.81-.32-.55-.21-1.09-.43-1.63-.65-.92-.37-1.84-.76-2.75-1.16-.85-.38-1.69-.76-2.53-1.16-.02-.00994-.05-.00994-.07-.03-.19-.09-.38-.18-.56-.27h-.01a107.18912,107.18912,0,0,1-13.29-7.59q-2.04-1.365-4.02-2.82c-1.06-.79-2.1-1.59-3.14-2.41a108.28427,108.28427,0,0,1-14.19-13.56v-.01c-.31-.34-.6-.69-.9-1.04-.05-.05-.09-.1-.13-.14-.19-.23-.37-.45-.56-.67v-.01c-.25-.29-.5-.59-.74-.89-.06-.06994-.11-.12994-.16-.19v-.01c-.2-.24-.39-.48-.59-.73-.1-.12-.19-.24-.29-.36v-.01c-.59-.74-1.16-1.48-1.73-2.24-.15-.2-.3-.41-.46-.62-.72-.97-1.42-1.96-2.1-2.95v-.01c-.26-.37-.51-.75-.77-1.12q-.375-.57-.75-1.13995c-.25-.4-.51-.79-.76-1.19l-.03-.06c-.25-.38-.5-.78-.74-1.17005-.19-.32-.38-.63-.57-.94-.12-.21-.25-.42-.37-.63995a2.3919,2.3919,0,0,1-.13-.21q-.42-.735-.84-1.47c-.33-.56994-.65-1.15-.97-1.73-.12-.24-.25-.48-.38-.72-.05-.08-.09-.16-.13-.24-.15-.28-.3-.56994-.44-.86-.15-.28-.3-.57-.45-.86-.14-.28-.29-.57-.43-.86-.11-.22-.21-.44-.32-.66a.2175.2175,0,0,0-.03-.05c-.05-.11-.1-.21-.14-.31a.21619.21619,0,0,1-.03-.05c-.11005-.22-.21-.45-.32-.67-.14-.29-.27-.59-.41-.88-.09-.2-.19-.41-.28-.62-.13-.29-.27-.58-.39-.88-.14-.3-.27-.6-.4-.91a2.29721,2.29721,0,0,1-.1-.23c-.07-.14-.12-.28-.18-.42-.16-.37-.32-.75-.47-1.12-.18-.42005-.35-.85-.51-1.27-.16-.39-.31-.79-.46-1.19l-.06-.14a108.31693,108.31693,0,0,1-5.28-18.93v-.01a109.43156,109.43156,0,0,1-1.43-11.14c-.01-.21-.03-.41-.04-.61-.18-2.53-.26-5.07-.26-7.62,0-1.13.02-2.25.05-3.37a107.22221,107.22221,0,0,1,23.78-64.2c.32-.4.64-.8.97-1.2.33-.4.67-.79,1-1.18a107.74949,107.74949,0,0,1,173.04,12.43c.49.78.98,1.57,1.45,2.36005.48.8.94,1.6,1.4,2.41A107.27629,107.27629,0,0,1,975.71461,421.20782Z" transform="translate(-195.32909 -135.0622)" fill="#f2f2f2"/><path d="M872.25672,350.74147a254.162,254.162,0,0,1-54.14823,7.81528,67.79984,67.79984,0,0,1-8.29619-.05641c-6.069-.51045-11.26756-2.41793-17.05716-3.46033-2.78331-.4997-5.88364-.86509-8.68575-1.40509q.9712-1.20494,1.97732-2.38032c6.04216.51046,12.17832,2.18151,18.293,2.95794,10.39441,1.3218,22.04078-.15314,29.92055-3.79078,3.823-1.76509,6.75141-3.96809,10.561-5.74124a4.9219,4.9219,0,0,1,1.65762-.50777,5.768,5.768,0,0,1,3.1272.81136c6.39139,3.22658,15.67089,5.84869,24.28409,4.406C874.53227,349.8925,873.31255,350.46474,872.25672,350.74147Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><path d="M910.37143,362.09637c.07866-.01437.15753-.02558.23624-.03921a6.42127,6.42127,0,0,1-.93083-.7013Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><path d="M961.93244,368.46221q-5.396.4312-10.84845.6421a68.3417,68.3417,0,0,1-8.2962-.05641c-6.069-.51315-11.26756-2.41793-17.05716-3.46033-5.306-.95375-11.75383-1.41315-15.12283-3.53018,8.70725-1.50718,17.72881,1.56091,26.70741,2.70271a63.77318,63.77318,0,0,0,21.76406-1.07464Q960.57033,366.03086,961.93244,368.46221Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><ellipse cx="660.50012" cy="300.20735" rx="32.35846" ry="33.07962" fill="#ffb6b6"/><path d="M918.41457,516.41785c-.86.47-1.73.92-2.6,1.35-.31.15-.63.3-.94.46-.26.12-.52.25-.78.37-.08.04-.15.07-.22.11-.22.1-.43.2-.65.3-.24.11005-.48.22-.71.33-.27.12-.53.24-.8.35-1,.45-2.01.88-3.02,1.29a105.87419,105.87419,0,0,1-11.08,3.84c-.17.05-.35.1-.53.15q-2.41508.675-4.86005,1.23-4.275.99006-8.63,1.62h-.02c-.35.05-.69.1-1.04.15-.03,0-.06.01-.1.01,0,.01,0,.01-.01,0-.38.05-.77.1-1.15.15a.24843.24843,0,0,1-.08.01c-.36.05-.73.09-1.09.13q-.58494.06-1.17.12-.45.045-.9.09a.19454.19454,0,0,1-.08.01c-.27.02-.54.05-.81.07h-.04c-.23.02-.47.04-.7.06006-2.79.22-5.59.31994-8.43.31994-3.07,0-6.12-.12-9.13-.38h-.03c-.65-.06-1.29-.12-1.93-.18-.17-.02-.33-.03-.5-.05-.03,0-.07-.01-.1-.01-.05-.01-.1-.01-.16-.02a.24843.24843,0,0,1-.08-.01c-.22-.02-.44-.05-.67-.07l-.75-.09c-.25-.03-.5-.07-.75-.1-.06-.01-.11-.01-.17-.02-.18-.02-.36-.05-.54-.07995-.09-.01-.18-.02-.26-.03-.18-.03-.35-.05-.53-.08h-.01a105.706,105.706,0,0,1-16.2-3.65c-.28-.09-.56-.17005-.84-.26a40.177,40.177,0,0,1,22.03-27.86,9.49736,9.49736,0,0,1-2.73-4.86005,9.29434,9.29434,0,0,1,1.28-7.01995,8.9678,8.9678,0,0,1,5.66-3.88l14.82-3.1a9.22312,9.22312,0,0,1,10.8,7.2,9.7634,9.7634,0,0,1,.2,2.22C901.65456,496.10785,911.92458,505.95782,918.41457,516.41785Z" transform="translate(-195.32909 -135.0622)" fill="#752a7a"/><path d="M942.41713,420.92308c-5.50024-6.41419-8.11524-14.9242-12.51227-22.20783-4.39709-7.28369-12.04883-13.80261-20.13245-12.1076-5.57232,1.16852-9.87878,6.08563-12.059,11.56769-2.17974,5.482-2.58838,11.52755-2.97046,17.45013.135-12.17114-7.88372-23.97028-18.92974-27.85394-11.04517-3.88364-24.26429.44839-31.205,10.22647a16.8664,16.8664,0,0,0-22.40161-.47025c-6.20825,5.54874-7.58216,16.10984-3.01642,23.18738s14.4538,9.71414,21.70959,5.78885l2.56519,2.35968c-1.44391,5.05014,1.3562,11.01556,6.06323,12.9166,3.81684,1.54174,9.20532,1.28512,10.63361,5.29061.99817,2.79877-.86743,5.78617-2.852,7.93683-1.98407,2.15064-4.34015,4.37152-4.57843,7.3476-.36011,4.49042,4.28027,7.63605,8.49853,8.5834,10.17145,2.28446,21.4574-2.42572,27.31989-11.4021q.16946-.25964.36853-.52a39.27849,39.27849,0,0,0,7.90057-30.03344c-.32977-2.07468.0025-3.61783,1.43292-4.10916,6.18256-2.12369,23.50434,2.33352,28.74653,6.36187,5.24261,4.02835,9.44061,9.3595,14.49,13.64783,5.04986,4.28839,11.48462,7.59625,17.89618,6.42847,5.135-.93528,9.50348-4.66327,12.44189-9.16,2.938-4.4967,4.629-9.73825,6.14374-14.94729C966.61519,433.76451,951.07466,431.01866,942.41713,420.92308Z" transform="translate(-195.32909 -135.0622)" fill="#2f2e41"/><path d="M278.15456,354.20782c0,2.43.08,4.86.25,7.27.18,2.88.49,5.74.91,8.58a107.2491,107.2491,0,0,0,8.02,27.73q.29993.66.6,1.32l.3.66c.1.22.21.44.31.65.14.29.27.57.41.85.17.35.34.7.52,1.05.02.04.04.09.07.14.15.3.29.59.45.89a1.7462,1.7462,0,0,0,.1.19c.17.34.35.69.53,1.03.2.36005.39.73.59,1.09.48.89.98,1.77,1.49,2.65.15.26.3.52.46.78.14.24.28.48.43.72.1.16.2.33.3.49.16.27.32.53.49.8.37.59.75,1.18,1.12,1.77h.01c.17.27.35.54.53.8v.01c.53.8,1.08,1.6,1.63,2.38995a.0098.0098,0,0,1,.01.01c.44.64.9,1.26,1.35,1.88v.01c.3.39.59.79.89,1.18.24.32.49.65.74.97.05.06994.11.12994.16.2v.01c.07.09.14.17.21.26q1.59,2.04,3.28,3.99l.18.21c.06.07.13.14.19.22.1.11005.19.22.29.33.09.11.19.22.29.33a108.617,108.617,0,0,0,19.83,17.49c.97.67,1.96,1.32,2.95,1.95.25.16.5.32.75.47.07.05.15.1.22.15.14.08.27.16.41.25.13.08.26.16.4.24.53.33,1.07.65,1.61.97.13.08.27.16.41.24006.13.06994.27.15.41.23,0,.01,0,.01.01.01h.01v.01h.01q1.00506.58492,2.04,1.13995c.37.2.75.41,1.13.6.86.47,1.73.92,2.6,1.35.31.15.63.3.94.46.26.12.52.25.78.37.08.04.15.07.22.11.22.1.43.2.65.3.24.11005.48.22.71.33.27.12.53.24.8.35,1,.45,2.01.88,3.02,1.29a105.87419,105.87419,0,0,0,11.08,3.84c.17.05.35.1.53.15q2.41508.675,4.86005,1.23,4.275.99006,8.63,1.62h.02c.35.05.69.1,1.04.15.03,0,.06.01.1.01,0,.01,0,.01.01,0,.38.05.77.1,1.15.15a.24843.24843,0,0,0,.08.01c.36.05.73.09,1.09.13q.58494.06,1.17.12.45.045.9.09a.19454.19454,0,0,0,.08.01c.27.02.54.05.81.07h.04c.23.02.47.04.7.06006,2.79.22,5.59.31994,8.43.31994,3.07,0,6.12-.12,9.13-.38h.03c.65-.06,1.29-.12,1.93-.18.17-.02.33-.03.5-.05.03,0,.07-.01.1-.01.05-.01.1-.01.16-.02a.24843.24843,0,0,0,.08-.01c.22-.02.44-.05.67-.07l.75-.09c.25-.03.5-.07.75-.1.06-.01.11-.01.17-.02.18-.02.36-.05.54-.07995.09-.01.18-.02.26-.03.18-.03.35-.05.53-.08h.01a105.706,105.706,0,0,0,16.2-3.65c.28-.09.56-.17005.84-.26.01,0,.02-.01.03-.01.08-.03.17-.05.25-.08.75-.24,1.49-.49,2.23-.75,1.02-.34,2.03-.71,3.04-1.09.27-.11.54-.21.81-.32.55-.21,1.09-.43,1.63-.65.92-.37,1.84-.76,2.75-1.16.85-.38,1.69-.76,2.53-1.16.02-.00994.05-.00994.07-.03.19-.09.38-.18.56-.27h.01a107.18912,107.18912,0,0,0,13.29-7.59q2.04-1.365,4.02-2.82c1.06-.79,2.1-1.59,3.14-2.41a108.28427,108.28427,0,0,0,14.19-13.56v-.01c.31-.34.6-.69.9-1.04.05-.05.09-.1.13-.14.19-.23.37-.45.56-.67v-.01c.25-.29.5-.59.74-.89.06-.06994.11-.12994.16-.19v-.01c.2-.24.38995-.48.59-.73.1-.12.19-.24.29-.36v-.01c.59-.74,1.16-1.48,1.73-2.24.15-.2.3-.41.46-.62.72-.97,1.42-1.96,2.1-2.95v-.01c.26-.37.51-.75.77-1.12q.375-.57.75-1.13995c.25-.4.51-.79.76-1.19l.03-.06c.25-.38.5-.78.74-1.17005.19-.32.38-.63.57-.94.12-.21.25-.42.37-.63995a2.3919,2.3919,0,0,0,.13-.21q.42-.735.84-1.47c.33-.56994.65-1.15.97-1.73.12-.24.25-.48.38-.72.05-.08.09-.16.13-.24.15-.28.3-.56994.44-.86.15-.28.3-.57.45-.86.13995-.28.29-.57.43-.86.11-.22.21-.44.32-.66a.2175.2175,0,0,1,.03-.05c.05-.11.1-.21.14-.31a.21619.21619,0,0,0,.03-.05c.11005-.22.21-.45.32-.67.14-.29.27-.59.41-.88.09-.2.19-.41.28-.62.13-.29.27-.58.39-.88.14-.3.27-.6.4-.91a2.29962,2.29962,0,0,0,.1-.23c.07-.14.12-.28.18-.42.16-.37.32-.75.47-1.12.18-.42005.35-.85.51-1.27.16-.39.31-.79.46-1.19l.06-.14a108.31693,108.31693,0,0,0,5.28-18.93v-.01a109.43156,109.43156,0,0,0,1.43-11.14c.01-.21.03-.41.04-.61.18-2.53.26-5.07.26-7.62,0-1.13-.02-2.25-.05-3.37a107.22221,107.22221,0,0,0-23.78-64.2c-.32-.4-.64-.8-.97-1.2-.33-.4-.67-.79-1-1.18a107.74949,107.74949,0,0,0-173.04,12.43c-.49.78-.98,1.57-1.45,2.36005-.48.8-.94,1.6-1.4,2.41A107.27619,107.27619,0,0,0,278.15456,354.20782Z" transform="translate(-195.32909 -135.0622)" fill="#f2f2f2"/><path d="M381.61245,283.74147a254.162,254.162,0,0,0,54.14823,7.81528,67.79984,67.79984,0,0,0,8.29619-.05641c6.069-.51045,11.26756-2.41793,17.05716-3.46033,2.78331-.4997,5.88364-.86509,8.68575-1.40509q-.9712-1.20494-1.97732-2.38032c-6.04216.51046-12.17832,2.18151-18.293,2.95794-10.39442,1.3218-22.04079-.15314-29.92056-3.79078-3.823-1.76509-6.75141-3.96809-10.561-5.74124a4.9219,4.9219,0,0,0-1.65762-.50777,5.76807,5.76807,0,0,0-3.1272.81136c-6.39139,3.22658-15.67088,5.84869-24.28409,4.406C379.3369,282.8925,380.55662,283.46474,381.61245,283.74147Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><path d="M343.49774,295.09637c-.07866-.01437-.15753-.02558-.23624-.03921a6.42127,6.42127,0,0,0,.93083-.7013Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><path d="M291.93673,301.46221q5.396.4312,10.84845.6421a68.3417,68.3417,0,0,0,8.2962-.05641c6.069-.51315,11.26756-2.41793,17.05716-3.46033,5.306-.95375,11.75383-1.41315,15.12283-3.53018-8.70725-1.50718-17.72881,1.56091-26.70741,2.70271a63.77318,63.77318,0,0,1-21.76406-1.07464Q293.29884,299.03086,291.93673,301.46221Z" transform="translate(-195.32909 -135.0622)" fill="#fff"/><path d="M335.4546,449.41785c.86.47,1.73.92,2.6,1.35.31.15.63.3.94.46.26.12.52.25.78.37.08.04.15.07.22.11.22.1.43.2.65.3.24.11005.48.22.71.33.27.12.53.24.8.35,1,.45,2.01.88,3.02,1.29a105.87419,105.87419,0,0,0,11.08,3.84c.17.05.35.1.53.15q2.41508.675,4.86005,1.23,4.275.99006,8.63,1.62h.02c.35.05.69.1,1.04.15.03,0,.06.01.1.01,0,.01,0,.01.01,0,.38.05.77.1,1.15.15a.24843.24843,0,0,0,.08.01c.36.05.73.09,1.09.13q.58494.06,1.17.12.45.045.9.09a.19454.19454,0,0,0,.08.01c.27.02.54.05.81.07h.04c.23.02.47.04.7.06006,2.79.22,5.59.31994,8.43.31994,3.07,0,6.12-.12,9.13-.38h.03c.65-.06,1.29-.12,1.93-.18.17-.02.33-.03.5-.05.03,0,.07-.01.1-.01.05-.01.1-.01.16-.02a.24843.24843,0,0,0,.08-.01c.22-.02.44-.05.67-.07l.75-.09c.25-.03.5-.07.75-.1.06-.01.11-.01.17-.02.18-.02.36-.05.54-.07995.09-.01.18-.02.26-.03.18-.03.35-.05.53-.08h.01a105.706,105.706,0,0,0,16.2-3.65c.28-.09.56-.17005.84-.26a40.177,40.177,0,0,0-22.03-27.86,9.49736,9.49736,0,0,0,2.73-4.86005,9.29434,9.29434,0,0,0-1.28-7.01995,8.9678,8.9678,0,0,0-5.66-3.88l-14.82-3.1a9.2231,9.2231,0,0,0-10.8,7.2,9.76284,9.76284,0,0,0-.2,2.22C352.21461,429.10785,341.94459,438.95782,335.4546,449.41785Z" transform="translate(-195.32909 -135.0622)" fill="#752a7a"/><circle cx="198.75404" cy="229.04877" r="36.07316" fill="#9e616a"/><path d="M388.957,398.256c-9.03088,2.43906-18.98715-.80368-26.03488-6.95474s-11.45636-14.86707-13.99658-23.87c-1.86041-6.59356-2.74253-13.91271.1933-20.10281s10.83712-10.36639,16.933-7.23959c-3.7605-4.38129-1.88181-11.62772,2.51016-15.37573s10.42282-4.82261,16.16669-5.41c8.33594-.85248,16.9465-.9479,24.87878,1.75269s15.13953,8.60486,17.62207,16.60809a12.64027,12.64027,0,0,0,15.07663-3.404,11.45182,11.45182,0,0,1-6.30975,12.41714l12.15372-3.94033c2.09021,4.42428-1.57233,9.9-6.25589,11.31683s-9.73932-.13181-14.18381-2.17871-8.75159-4.63474-13.57922-5.433-10.49836.7529-12.73139,5.10685c-1.16958,2.28042-1.23059,4.95123-1.90964,7.42248s-2.3992,5.03348-4.9541,5.23572c-1.61416.12778-3.19455-.732-4.8042-.55621a5.17666,5.17666,0,0,0-4.05441,3.96139,15.1987,15.1987,0,0,0-.0144,5.98l3.08725,23.598Z" transform="translate(-195.32909 -135.0622)" fill="#2f2e41"/></svg>  
+          </div>        
+          <div class="w-full flex flex-col justify-center items-center">
+            <h2 class="font-semibold text-xl text-center mt-10">Nenhuma automação encontrado.</h2>
+            <p class="text-md text-gray-600 text-center px-[16px]">crie sua primeira automação clicando em <span class="text-purple font-black md:font-bold">"<i class="hidden fa-solid fa-plus pr-[5px]"></i>Criar Automação"</span></p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="fixed bottom-0 inset-x-0 border-t-orange">
+    <%- include('../../../partials/app/footer') %>
+  </div>
+</body>
+
+<script src="https://unpkg.com/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
+<script src="/js/libs/element-coordinates.min.js"></script>
+<script src="/js/app/chatbot/chatbot.js"></script>
+
+
+</html>
