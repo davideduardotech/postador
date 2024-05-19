@@ -203,7 +203,7 @@ router.get('/social-accounts/auth/facebook',
 );
 router.get('/login-facebook',
   authMiddleware,
-  passport.authenticate('facebook', { scope: ['public_profile', 'email','pages_messaging'] })
+  passport.authenticate('facebook', { scope: ['public_profile', 'email', 'pages_messaging'] })
 );
 router.get('/social-accounts/auth/facebook/callback',
   authMiddleware,

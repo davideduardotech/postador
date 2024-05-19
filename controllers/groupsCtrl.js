@@ -62,8 +62,13 @@ const getGroupsAccount = asyncHandler(async (req, res) => {
     }
 
     const { data: { data: groups } } = await axios.get(`https://graph.facebook.com/v16.0/me/groups?access_token=${accessToken}&fields=privacy,name,icon,description,id`);
+    console.log('resposta da api ao tentar pegar as informações do grupo');
+   
+    console.log('groups:',groups);
+   
 
     const groupRequests = groups.map(group => getGroupDetails(group, account.idAccount, accessToken));
+    console.log('groupRequests:',groupRequests);
     const results = await Promise.all(groupRequests);
 
     res.status(200).json({ results: results })
