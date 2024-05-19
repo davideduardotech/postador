@@ -102,7 +102,7 @@ if (process.env.MODE == "DEV") {
     cert: fs.readFileSync("./keys/localhost.pem"),
   };
   
-  https.createServer(options, app).listen(5600,'0.0.0.0', () => {
+  https.createServer(app).listen(5600,'0.0.0.0', () => {
     console.log('Server listening on port ' + 5600);
   });
 } else if (process.env.MODE == "PROD") {
