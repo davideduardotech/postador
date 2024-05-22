@@ -7,7 +7,7 @@ const Plan = require('../models/planModel')
 const socialAccounts = asyncHandler(async(req, res) => {
     const findPlan = await Plan.findOne({title: req.user.plan})
     res.render('layouts/app/social-accounts', {user: req.user, plan: findPlan})
-})
+});
 
 async function newAccountFb(user, accessToken, profile) {
     try {

@@ -1,219 +1,358 @@
 <%- include('../../partials/head', {title: "Contas sociais" }) %>
 
-<body class="bg-gray-100">
-  <%- include('../../partials/app/sidebar') %>
+    <body class="bg-gray-100">
+        <%- include('../../partials/app/sidebar') %>
 
-  <div class="xl:ml-64 pb-14">
-    <%- include('../../partials/app/nav', {user: user, title: "Contas sociais"}) %>
-    
-    <main class="py-6 px-12 fade-in">
-      <div class="fixed inset-0 z-50 flex items-center justify-center flex-wrap py-20 bg-neutral-500 bg-opacity-80 overflow-y-auto hidden" id="popup-import-account-instagram">
-        <div class="container px-4 mx-auto">
-          <div id="select-accounts-area" class="pb-5 max-w-xl mx-auto bg-white rounded-xl shadow-3xl">
-            <div class="px-5 pb-3.5">
-              <div class="flex flex-wrap items-center justify-between border-b">
-                <div class="w-auto">
-                  <h3 class="font-heading pt-4 pb-2.5 text-lg font-semibold">Selecionar contas do Instagram</h3>
-                </div>
-                <div class="w-auto">
-                  <button onclick="closeImportAccountInstagram()" class="text-neutral-300 hover:text-neutral-400">
-                    <svg width="19" height="18" viewbox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M4.46967 12.9697C4.17678 13.2626 4.17678 13.7374 4.46967 14.0303C4.76256 14.3232 5.23744 14.3232 5.53033 14.0303L4.46967 12.9697ZM14.5303 5.03033C14.8232 4.73744 14.8232 4.26256 14.5303 3.96967C14.2374 3.67678 13.7626 3.67678 13.4697 3.96967L14.5303 5.03033ZM5.53033 3.96967C5.23744 3.67678 4.76256 3.67678 4.46967 3.96967C4.17678 4.26256 4.17678 4.73744 4.46967 5.03033L5.53033 3.96967ZM13.4697 14.0303C13.7626 14.3232 14.2374 14.3232 14.5303 14.0303C14.8232 13.7374 14.8232 13.2626 14.5303 12.9697L13.4697 14.0303ZM5.53033 14.0303L14.5303 5.03033L13.4697 3.96967L4.46967 12.9697L5.53033 14.0303ZM4.46967 5.03033L13.4697 14.0303L14.5303 12.9697L5.53033 3.96967L4.46967 5.03033Z" fill="currentColor"></path>
-                    </svg>
-                  </button>
-                </div>
-              </div>
+            <div class="xl:ml-64 pb-14">
+                <%- include('../../partials/app/nav', {user: user, title: "Contas sociais" }) %>
+
+                    <main class="py-6 px-12 fade-in">
+                        <div class="fixed inset-0 z-50 flex items-center justify-center flex-wrap py-20 bg-neutral-500 bg-opacity-80 overflow-y-auto hidden"
+                            id="popup-import-account-instagram">
+                            <div class="container px-4 mx-auto">
+                                <div id="select-accounts-area"
+                                    class="pb-5 max-w-xl mx-auto bg-white rounded-xl shadow-3xl">
+                                    <div class="px-5 pb-3.5">
+                                        <div class="flex flex-wrap items-center justify-between border-b">
+                                            <div class="w-auto">
+                                                <h3 class="font-heading pt-4 pb-2.5 text-lg font-semibold">Selecionar
+                                                    contas do Instagram</h3>
+                                            </div>
+                                            <div class="w-auto">
+                                                <button onclick="closeImportAccountInstagram()"
+                                                    class="text-neutral-300 hover:text-neutral-400">
+                                                    <svg width="19" height="18" viewbox="0 0 19 18" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M4.46967 12.9697C4.17678 13.2626 4.17678 13.7374 4.46967 14.0303C4.76256 14.3232 5.23744 14.3232 5.53033 14.0303L4.46967 12.9697ZM14.5303 5.03033C14.8232 4.73744 14.8232 4.26256 14.5303 3.96967C14.2374 3.67678 13.7626 3.67678 13.4697 3.96967L14.5303 5.03033ZM5.53033 3.96967C5.23744 3.67678 4.76256 3.67678 4.46967 3.96967C4.17678 4.26256 4.17678 4.73744 4.46967 5.03033L5.53033 3.96967ZM13.4697 14.0303C13.7626 14.3232 14.2374 14.3232 14.5303 14.0303C14.8232 13.7374 14.8232 13.2626 14.5303 12.9697L13.4697 14.0303ZM5.53033 14.0303L14.5303 5.03033L13.4697 3.96967L4.46967 12.9697L5.53033 14.0303ZM4.46967 5.03033L13.4697 14.0303L14.5303 12.9697L5.53033 3.96967L4.46967 5.03033Z"
+                                                            fill="currentColor"></path>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <ul class="h-96 overflow-y-auto px-5" id="list-accounts-instagram" role="listbox">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-4 md:gap-x-6">
+                            <!-- CODDING: tabela -->
+                            <div class="col-span-3">
+                                <% if (user.accountsFb.length> 0 || user.accountsIg.length > 0) { %>
+                                    <div class="mt-3 overflow-x-auto shadow-[0_7px_29px_0_rgba(100,100,111,0.2)]">
+                                        <table class="min-w-full divide-y divide-gray-300 shadow-[0_7px_29px_0_rgba(100,100,111,0.2)]">
+                                            <thead class="bg-primary">
+                                                <tr class="">
+                                                    <th scope="col"
+                                                        class="rounded-tl-[10px] py-3.5 pl-4 pr-3 text-left text-sm text-nowrap font-bold text-white sm:pl-6 inter">
+                                                        Foto</th>
+                                                    <th scope="col"
+                                                        class="py-3.5 pl-4 pr-3 text-left text-sm text-nowrap font-bold text-white sm:pl-6 inter">
+                                                        Nome da conta</th>
+                                                    <th scope="col"
+                                                        class="py-3.5 pl-4 pr-3 text-left text-sm text-nowrap font-bold text-white sm:pl-6 inter">
+                                                        Plataforma</th>
+                                                    <th scope="col"
+                                                        class="py-3.5 pl-4 pr-3 text-left text-sm text-nowrap font-bold text-white sm:pl-6 inter">
+                                                        Data de cadastro</th>
+                                                    <th scope="col"
+                                                        class="rounded-tr-[10px] py-3.5 pl-4 pr-3 text-left text-sm text-nowrap font-bold text-white sm:pl-6 inter">
+                                                        Ações</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody class="divide-y divide-gray-200 bg-white">
+                                                <% user.accountsFb.forEach(function(item) { %>
+                                                    <tr>
+                                                        <td
+                                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                                                            <img class="min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] rounded-full"
+                                                                src="<%= item.photo %>" alt="img">
+                                                        </td>
+                                                        <td
+                                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-semibold inter text-gray-900 sm:pl-6">
+                                                            <%= item.name %>
+                                                        </td>
+                                                        <td style="color: #1877F2;"
+                                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-semibold inter text-gray-900 sm:pl-6">
+                                                            <div class="flex flex-row justify-start items-center space-x-[10px]">
+                                                                <i class="fa-brands fa-facebook text-xl text-primary"></i>
+                                                                <p class="text-primary"><%= item.platform %></p>
+                                                            </div>
+                                                        </td>
+                                                        <td
+                                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-semibold inter text-gray-900 sm:pl-6">
+                                                            <%= item.date %>
+                                                        </td>
+                                                        <td
+                                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-semibold inter text-gray-900 sm:pl-6">
+                                                            <div class="flex">
+                                                                <button
+                                                                    onclick="removeAccount('<%= item.idAccount %>', '<%= item.platform %>')"
+                                                                    class="shadow-[0_2px_8px_0_rgba(99,99,99,0.2)] bg-red-500 rounded-[10px] px-[16px] py-[8px] flex items-center rounded-r-lg">
+                                                                    <i class="fa-solid fa-trash text-sm text-white"></i>
+                                                                    <p class="text-white ml-2">Remover</p>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <% }) %>
+
+                                                        <% user.accountsIg.forEach(function(item) { %>
+                                                            <tr>
+                                                                <td
+                                                                    class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                                                                    <img class="h-10 rounded-full"
+                                                                        src="<%= item.photo %>" alt="img">
+                                                                </td>
+                                                                <td
+                                                                    class="whitespace-nowrap flex flex-col py-4 pl-4 pr-3 text-sm font-medium inter text-gray-900 sm:pl-6">
+                                                                    <span>
+                                                                        <%= item.name %>
+                                                                    </span>
+                                                                    <span class="text-xs">@<%= item.username
+                                                                            %></span>
+                                                                </td>
+                                                                <td style="color: #C21F70;"
+                                                                    class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium inter text-gray-900 sm:pl-6">
+                                                                    <%= item.platform %>
+                                                                </td>
+                                                                <td
+                                                                    class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium inter text-gray-900 sm:pl-6">
+                                                                    <%= item.date %>
+                                                                </td>
+                                                                <td
+                                                                    class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium inter text-gray-900 sm:pl-6">
+                                                                    <div class="flex">
+                                                                        <button
+                                                                            onclick="removeAccount('<%= item.idAccount %>', '<%= item.platform %>')"
+                                                                            class="flex items-center rounded-r-lg">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                fill="none"
+                                                                                viewBox="0 0 24 24"
+                                                                                stroke-width="1.5"
+                                                                                stroke="currentColor"
+                                                                                class="w-6 h-6 text-red-700">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                                                            </svg>
+                                                                            <p class="text-red-700 ml-2">
+                                                                                Remover</p>
+                                                                        </button>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <% }) %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="hidden mt-3 flow-root">
+                                        <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                                            <div class="inline-block min-w-full py-[16px] align-middle sm:px-6 lg:px-8 ">
+                                                <div
+                                                    class="overflow-hidden ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+                                                    <table class="min-w-full divide-y divide-gray-300 shadow-[0_7px_29px_0_rgba(100,100,111,0.2)]">
+                                                        <thead class="bg-[#666666]">
+                                                            <tr>
+                                                                <th scope="col"
+                                                                    class="py-3.5 pl-4 pr-3 text-left text-sm font-bold text-white sm:pl-6 inter">
+                                                                    Foto</th>
+                                                                <th scope="col"
+                                                                    class="py-3.5 pl-4 pr-3 text-left text-sm font-bold text-white sm:pl-6 inter">
+                                                                    Nome da conta</th>
+                                                                <th scope="col"
+                                                                    class="py-3.5 pl-4 pr-3 text-left text-sm font-bold text-white sm:pl-6 inter">
+                                                                    Plataforma</th>
+                                                                <th scope="col"
+                                                                    class="py-3.5 pl-4 pr-3 text-left text-sm font-bold text-white sm:pl-6 inter">
+                                                                    Data de cadastro</th>
+                                                                <th scope="col"
+                                                                    class="py-3.5 pl-4 pr-3 text-left text-sm font-bold text-white sm:pl-6 inter">
+                                                                    Ações</th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody class="divide-y divide-gray-200 bg-white">
+                                                            <% user.accountsFb.forEach(function(item) { %>
+                                                                <tr>
+                                                                    <td
+                                                                        class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                                                                        <img class="h-10 rounded-full"
+                                                                            src="<%= item.photo %>" alt="img">
+                                                                    </td>
+                                                                    <td
+                                                                        class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-semibold inter text-gray-900 sm:pl-6">
+                                                                        <%= item.name %>
+                                                                    </td>
+                                                                    <td style="color: #1877F2;"
+                                                                        class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-semibold inter text-gray-900 sm:pl-6">
+                                                                        <div class="flex flex-row justify-start items-center space-x-[10px]">
+                                                                            <i class="fa-brands fa-facebook text-xl"></i>
+                                                                            <p><%= item.platform %></p>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td
+                                                                        class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-semibold inter text-gray-900 sm:pl-6">
+                                                                        <%= item.date %>
+                                                                    </td>
+                                                                    <td
+                                                                        class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-semibold inter text-gray-900 sm:pl-6">
+                                                                        <div class="flex">
+                                                                            <button
+                                                                                onclick="removeAccount('<%= item.idAccount %>', '<%= item.platform %>')"
+                                                                                class="flex items-center rounded-r-lg">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    fill="none" viewBox="0 0 24 24"
+                                                                                    stroke-width="1.5"
+                                                                                    stroke="currentColor"
+                                                                                    class="w-6 h-6 text-red-700">
+                                                                                    <path stroke-linecap="round"
+                                                                                        stroke-linejoin="round"
+                                                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                                                                </svg>
+                                                                                <p class="text-red-700 ml-2">Remover</p>
+                                                                            </button>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <% }) %>
+
+                                                                    <% user.accountsIg.forEach(function(item) { %>
+                                                                        <tr>
+                                                                            <td
+                                                                                class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                                                                                <img class="h-10 rounded-full"
+                                                                                    src="<%= item.photo %>" alt="img">
+                                                                            </td>
+                                                                            <td
+                                                                                class="whitespace-nowrap flex flex-col py-4 pl-4 pr-3 text-sm font-medium inter text-gray-900 sm:pl-6">
+                                                                                <span>
+                                                                                    <%= item.name %>
+                                                                                </span>
+                                                                                <span class="text-xs">@<%= item.username
+                                                                                        %></span>
+                                                                            </td>
+                                                                            <td style="color: #C21F70;"
+                                                                                class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium inter text-gray-900 sm:pl-6">
+                                                                                <%= item.platform %>
+                                                                            </td>
+                                                                            <td
+                                                                                class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium inter text-gray-900 sm:pl-6">
+                                                                                <%= item.date %>
+                                                                            </td>
+                                                                            <td
+                                                                                class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium inter text-gray-900 sm:pl-6">
+                                                                                <div class="flex">
+                                                                                    <button
+                                                                                        onclick="removeAccount('<%= item.idAccount %>', '<%= item.platform %>')"
+                                                                                        class="flex items-center rounded-r-lg">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                            fill="none"
+                                                                                            viewBox="0 0 24 24"
+                                                                                            stroke-width="1.5"
+                                                                                            stroke="currentColor"
+                                                                                            class="w-6 h-6 text-red-700">
+                                                                                            <path stroke-linecap="round"
+                                                                                                stroke-linejoin="round"
+                                                                                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                                                                        </svg>
+                                                                                        <p class="text-red-700 ml-2">
+                                                                                            Remover</p>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <% }) %>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } else { %>
+                                        <div
+                                            class="flex flex-col justify-center items-center px-4 sm:px-2 mt-2 col-span-3 sm:mt-20 lg:mt-40">
+                                           
+                                            <h2 class="text-lg lg:text-xl font-semibold mt-10 text-center">Importe suas
+                                                contas do <span class="font-bold"
+                                                    style="color: #1877F2;">Facebook</span></h2>
+                                            <p class="text-md text-center">Você não possui nenhuma conta importada.</p>
+                                        </div>
+                                        <% } %>
+                            </div>
+
+                            <div class="col-span-1 mt-3">
+                                <article class="bg-white p-[16px] rounded-[10px] shadow-[0_7px_29px_0_rgba(100,100,111,0.2)]">
+                                    <div class="flex flex-col justify-center items-start space-y-[42px]">
+                                        <div class="flex flex-col justify-center items-start space-y-[10px]">
+                                            <!-- CODDING: title-->
+                                            <div class="flex flex-col justify-center items-start">
+                                                <h3 class="inter text-primary font-black text-base/none">Informações disponíveis</h3>
+                                                <p class="inter text-primary font-light text-base">Contas do Facebook</p>
+                                            </div>
+
+                                            <!-- CODDING: contas -->
+                                            <div class="flex flex-col justify-center items-start space-y-[5px]">
+                                                <div class="flex flex-row justify-center items-center space-x-[10px]">
+                                                    <i class="fa-solid fa-user text-sm text-white bg-primary rounded-[10px] shadow-[0_3px_8px_rgba(0,0,0,0.24)] min-w-[40px] min-h-[40px] flex justify-center items-center"></i>
+                                                    <p class="inter text-md mt-2 font-bold leading-tight">Contas importadas: <span
+                                                            class="text-primary font-normal">
+                                                            <%= user.accountsFb.length + user.accountsIg.length %> importadas
+                                                        </span></p>
+                                                </div>
+                                                <% if (!user.isAdmin) { %>
+                                                    <div class="flex flex-row justify-center items-center space-x-[10px]">
+                                                        <i class="fa-solid fa-users text-sm text-white bg-primary rounded-[10px] shadow-[0_3px_8px_rgba(0,0,0,0.24)] min-w-[40px] min-h-[40px] flex justify-center items-center"></i>
+                                                        <p class="inter text-md mt-2 font-bold leading-tight">Contas restantes: <span
+                                                            class="text-primary font-normal">
+                                                            <%= plan.quantityAccounts - (user.accountsFb.length +
+                                                                user.accountsIg.length) %> restantes
+                                                        </span></p>
+                                                    </div>
+                                                <% } else { %>
+                                                    <div class="flex flex-row justify-center items-center space-x-[10px]">
+                                                        <i class="fa-solid fa-users text-sm text-white bg-primary rounded-[10px] shadow-[0_3px_8px_rgba(0,0,0,0.24)] min-w-[40px] min-h-[40px] flex justify-center items-center"></i>
+                                                        <p class="inter text-md mt-2 font-bold leading-tight">Contas restantes: <span
+                                                            class="text-primary font-normal">Ilimitado</span></p>
+                                                    </div>
+                                                <% } %>
+                                            </div>
+                                        </div>
+
+                                        <!-- CODDING: adicionar conta -->
+                                        <div class="w-full">
+                                            <a href="/app/login-facebook" target="_blank"
+                                                class=" shadow-[0_3px_8px_rgba(0,0,0,0.24)] bg-primary w-full flex items-center justify-center rounded-[10px] px-[16px] py-[12px] space-x-[10px]">
+                                                <div >
+                                                    <i class="fa-brands fa-facebook text-white text-2xl"></i>
+                                                </div>
+                                                <div class="flex flex-col justify-center items-start">
+                                                    <p class="text-white font-semibold text-md leading-none">Adicionar Conta</p>
+                                                    <p class="text-white font-light text-md leading-none">Facebook</p>
+                                                    
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </article>
+
+                               
+
+                            </div>
+                        </div>
+                    </main>
             </div>
-            
-            <ul class="h-96 overflow-y-auto px-5" id="list-accounts-instagram" role="listbox"></ul>
-          </div>
-        </div>
-      </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-4 md:gap-x-6">
-        <div class="col-span-3">
-          <% if (user.accountsFb.length > 0 || user.accountsIg.length > 0) { %>
-            <div class="mt-3 flow-root">
-              <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                  <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
-                    <table class="min-w-full divide-y divide-gray-300">
-                      <thead class="bg-gray-50">
-                        <tr>
-                          <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 inter">Foto</th>
-                          <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 inter">Nome da conta</th>
-                          <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 inter">Plataforma</th>
-                          <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 inter">Data de cadastro</th>
-                          <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 inter">Ações</th>
-                        </tr>
-                      </thead>
-
-                      <tbody class="divide-y divide-gray-200 bg-white">
-                        <% user.accountsFb.forEach(function(item) { %>
-                          <tr>
-                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                              <img class="h-10 rounded-full" src="<%= item.photo %>" alt="img">
-                            </td>
-                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium inter text-gray-900 sm:pl-6">
-                              <%= item.name %>
-                            </td>
-                            <td style="color: #1877F2;" class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium inter text-gray-900 sm:pl-6">
-                              <%= item.platform %>
-                            </td>
-                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium inter text-gray-900 sm:pl-6">
-                              <%= item.date %>
-                            </td>
-                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium inter text-gray-900 sm:pl-6">
-                              <div class="flex">
-                                <button onclick="removeAccount('<%= item.idAccount %>', '<%= item.platform %>')" class="flex items-center rounded-r-lg">
-                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-700">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                                  </svg>                                  
-                                  <p class="text-red-700 ml-2">Remover</p>                                                                                                
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                        <% }) %>
-
-                        <% user.accountsIg.forEach(function(item) { %>
-                          <tr>
-                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                              <img class="h-10 rounded-full" src="<%= item.photo %>" alt="img">
-                            </td>
-                            <td class="whitespace-nowrap flex flex-col py-4 pl-4 pr-3 text-sm font-medium inter text-gray-900 sm:pl-6">
-                              <span><%= item.name %></span>
-                              <span class="text-xs">@<%= item.username %></span>
-                            </td>
-                            <td style="color: #C21F70;" class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium inter text-gray-900 sm:pl-6">
-                              <%= item.platform %>
-                            </td>
-                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium inter text-gray-900 sm:pl-6">
-                              <%= item.date %>
-                            </td>
-                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium inter text-gray-900 sm:pl-6">
-                              <div class="flex">
-                                <button onclick="removeAccount('<%= item.idAccount %>', '<%= item.platform %>')" class="flex items-center rounded-r-lg">
-                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-700">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                                  </svg>                                  
-                                  <p class="text-red-700 ml-2">Remover</p>                                                                                                
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                        <% }) %>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
+            <div class="fixed bottom-0 inset-x-0 border-t-orange">
+                <%- include('../../partials/app/footer') %>
             </div>
-          <% } else { %>
-            <div class="flex flex-col justify-center items-center px-4 sm:px-2 mt-2 col-span-3 sm:mt-20 lg:mt-40">
-              <svg class="h-44 md:h-56" viewBox="0 0 365 214" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g clip-path="url(#clip0_34_141)">
-                <path d="M358.15 180.768H93.3949C91.5876 180.766 89.8549 180.047 88.577 178.769C87.299 177.491 86.5802 175.758 86.5781 173.951V10.6978C86.5796 9.37374 87.1062 8.10434 88.0424 7.16807C88.9787 6.23181 90.248 5.70514 91.5721 5.70361H359.886C361.233 5.70514 362.524 6.24091 363.477 7.19336C364.429 8.14581 364.965 9.43717 364.967 10.7841V173.951C364.964 175.758 364.246 177.491 362.968 178.769C361.69 180.047 359.957 180.766 358.15 180.768Z" fill="#F2F2F2"/>
-                <path d="M348.492 171.114H101.747C98.1301 171.114 95.1875 168.358 95.1875 164.971V22.8085C95.1875 20.2966 97.368 18.2529 100.048 18.2529H350.11C352.835 18.2529 355.051 20.3303 355.051 22.8836V164.971C355.051 168.358 352.109 171.114 348.492 171.114Z" fill="white"/>
-                <path d="M364.87 10.3079H86.4805V6.83735C86.4831 5.02404 87.2049 3.28582 88.4875 2.00401C89.7701 0.722206 91.5088 0.001497 93.3221 0H358.028C359.841 0.00148827 361.58 0.722191 362.863 2.004C364.145 3.28581 364.867 5.02404 364.87 6.83735V10.3079Z" fill="#CCCCCC"/>
-                <path d="M98.9142 6.93382C99.8915 6.93382 100.684 6.14152 100.684 5.16418C100.684 4.18683 99.8915 3.39453 98.9142 3.39453C97.9368 3.39453 97.1445 4.18683 97.1445 5.16418C97.1445 6.14152 97.9368 6.93382 98.9142 6.93382Z" fill="white"/>
-                <path d="M105.633 6.93382C106.61 6.93382 107.403 6.14152 107.403 5.16418C107.403 4.18683 106.61 3.39453 105.633 3.39453C104.656 3.39453 103.863 4.18683 103.863 5.16418C103.863 6.14152 104.656 6.93382 105.633 6.93382Z" fill="white"/>
-                <path d="M112.348 6.93382C113.325 6.93382 114.117 6.14152 114.117 5.16418C114.117 4.18683 113.325 3.39453 112.348 3.39453C111.37 3.39453 110.578 4.18683 110.578 5.16418C110.578 6.14152 111.37 6.93382 112.348 6.93382Z" fill="white"/>
-                <path d="M141.127 144.673H79.6362C77.7193 144.671 75.8816 143.908 74.5262 142.553C73.1708 141.197 72.4084 139.36 72.4062 137.443V64.6671C72.4079 63.2335 72.978 61.8591 73.9917 60.8454C75.0054 59.8317 76.3798 59.2614 77.8134 59.2598H142.863C144.32 59.2614 145.716 59.8408 146.746 60.8707C147.776 61.9006 148.355 63.2969 148.357 64.7534V137.443C148.355 139.36 147.592 141.197 146.237 142.553C144.882 143.908 143.044 144.671 141.127 144.673Z" fill="white"/>
-                <path d="M141.127 144.673H79.6362C77.7193 144.671 75.8816 143.908 74.5262 142.553C73.1708 141.197 72.4084 139.36 72.4062 137.443V64.6671C72.4079 63.2335 72.978 61.8591 73.9917 60.8454C75.0054 59.8317 76.3798 59.2614 77.8134 59.2598H142.863C144.32 59.2614 145.716 59.8408 146.746 60.8707C147.776 61.9006 148.355 63.2969 148.357 64.7534V137.443C148.355 139.36 147.592 141.197 146.237 142.553C144.882 143.908 143.044 144.671 141.127 144.673ZM77.8134 60.086C76.5988 60.0874 75.4345 60.5705 74.5757 61.4293C73.7169 62.2882 73.2339 63.4526 73.2325 64.6671V137.443C73.2344 139.141 73.9097 140.768 75.1102 141.969C76.3107 143.169 77.9384 143.845 79.6362 143.847H141.127C142.825 143.845 144.452 143.169 145.653 141.969C146.853 140.768 147.529 139.141 147.531 137.443V64.7534C147.529 63.516 147.037 62.3296 146.162 61.4546C145.287 60.5796 144.101 60.0875 142.863 60.086H77.8134Z" fill="#3F3D56"/>
-                <path d="M110.385 105.787C117.395 105.787 123.078 100.104 123.078 93.094C123.078 86.0838 117.395 80.4009 110.385 80.4009C103.374 80.4009 97.6914 86.0838 97.6914 93.094C97.6914 100.104 103.374 105.787 110.385 105.787Z" fill="#752A7A"/>
-                <path d="M130.717 123.532H90.0469V123.402C90.0511 119.659 91.5399 116.071 94.1866 113.424C96.8333 110.777 100.422 109.288 104.165 109.284H116.599C120.342 109.288 123.93 110.777 126.577 113.424C129.224 116.071 130.712 119.659 130.717 123.402V123.532Z" fill="#752A7A"/>
-                <path d="M74.9241 117.079C74.3818 117.352 73.7861 117.503 73.179 117.522C72.5719 117.54 71.9682 117.425 71.4104 117.185C70.8526 116.944 70.3543 116.585 69.9506 116.131C69.5468 115.677 69.2475 115.14 69.0736 114.559L54.3242 113.914L58.8231 107.7L72.1396 109.265C73.1366 109.037 74.1823 109.184 75.0786 109.676C75.9749 110.168 76.6596 110.972 77.0028 111.935C77.346 112.898 77.324 113.954 76.9409 114.902C76.5577 115.85 75.8402 116.625 74.9241 117.079Z" fill="#FFB8B8"/>
-                <path d="M33.9757 111.191L25.8647 95.5694C24.7471 93.4228 24.2539 91.0059 24.4411 88.5931C24.6284 86.1803 25.4886 83.8683 26.924 81.9199C27.2129 81.5342 27.5196 81.159 27.8354 80.8049C29.1237 79.358 30.7293 78.2287 32.5267 77.5055C34.324 76.7823 36.2643 76.4847 38.1958 76.636C40.1924 76.7717 42.1306 77.3674 43.8588 78.3766C45.5869 79.3858 47.0581 80.7812 48.1574 82.4535L52.0526 88.3415C52.4513 88.6975 57.8129 93.6451 55.8184 100.083L55.4755 106.257C55.4516 106.658 55.299 107.04 55.0404 107.348C54.7818 107.656 54.4309 107.872 54.0398 107.964L36.0464 112.145C35.6443 112.238 35.2224 112.196 34.8474 112.023C34.4723 111.85 34.1656 111.557 33.9757 111.191Z" fill="#752A7A"/>
-                <path d="M28.2862 140.836C27.8626 140.4 27.5396 139.878 27.34 139.304C27.1403 138.73 27.0689 138.12 27.1307 137.516C27.1924 136.912 27.3859 136.328 27.6975 135.807C28.0091 135.286 28.4313 134.839 28.9341 134.498L25.1211 120.236L32.3993 122.662L34.9044 135.834C35.4205 136.717 35.5948 137.758 35.3944 138.761C35.194 139.763 34.6327 140.658 33.8169 141.274C33.0011 141.891 31.9875 142.187 30.9682 142.106C29.9488 142.025 28.9946 141.573 28.2862 140.836Z" fill="#FFB8B8"/>
-                <path d="M26.5005 134.088C26.2332 133.958 26.0011 133.766 25.8241 133.528C25.6471 133.289 25.5303 133.011 25.4837 132.718L22.9729 108.359C22.6349 106.381 22.585 104.365 22.8246 102.373L25.8344 84.1459C25.9599 83.082 26.491 82.1076 27.317 81.4256C28.1431 80.7436 29.2004 80.4066 30.2688 80.4847C30.8307 80.5248 31.3787 80.6784 31.8796 80.9362C32.3805 81.1941 32.8239 81.5508 33.1831 81.9848C33.5422 82.4188 33.8096 82.9212 33.9692 83.4615C34.1288 84.0018 34.1771 84.5688 34.1114 85.1283L31.6541 106.037L34.4681 130.698C34.5117 131.068 34.4424 131.443 34.2691 131.773C34.0959 132.103 33.827 132.374 33.4975 132.548L28.1744 134.068C27.9169 134.204 27.6308 134.276 27.3398 134.28C27.0488 134.283 26.7611 134.217 26.5005 134.088Z" fill="#752A7A"/>
-                <path d="M66.8238 208.37L71.8 207.426L70.5279 187.783L63.1836 189.176L66.8238 208.37Z" fill="#FFB8B8"/>
-                <path d="M65.25 206.986L75.0501 205.128C75.8702 204.972 76.7134 204.979 77.5306 205.15C78.3479 205.32 79.1236 205.649 79.8135 206.119C80.5034 206.589 81.094 207.19 81.5515 207.889C82.0091 208.587 82.3246 209.368 82.4801 210.189L82.5186 210.392L66.473 213.435L65.25 206.986Z" fill="#2F2E41"/>
-                <path d="M22.7899 208.525L27.855 208.525L30.2644 188.988L22.7891 188.989L22.7899 208.525Z" fill="#FFB8B8"/>
-                <path d="M21.4961 206.871L31.4708 206.871H31.4712C32.306 206.871 33.1326 207.035 33.9039 207.354C34.6751 207.674 35.3759 208.142 35.9661 208.732C36.5564 209.323 37.0247 210.023 37.3441 210.795C37.6636 211.566 37.828 212.392 37.828 213.227V213.434L21.4964 213.434L21.4961 206.871Z" fill="#2F2E41"/>
-                <path d="M37.608 72.2546C43.2121 72.2546 47.7551 67.7116 47.7551 62.1075C47.7551 56.5035 43.2121 51.9604 37.608 51.9604C32.0039 51.9604 27.4609 56.5035 27.4609 62.1075C27.4609 67.7116 32.0039 72.2546 37.608 72.2546Z" fill="#FFB8B8"/>
-                <path d="M21.9557 200.673C21.7813 200.485 21.6475 200.263 21.5625 200.021C21.4776 199.779 21.4433 199.523 21.462 199.267L28.3686 136.573C28.3092 135.986 27.3712 125.34 34.9825 111.72L35.0246 111.645L55.4204 105.989L57.6756 115.502L72.7893 198.217C72.8435 198.694 72.7097 199.175 72.4163 199.556C72.123 199.937 71.693 200.189 71.2171 200.259L65.9565 201.048C65.5121 201.115 65.0587 201.018 64.6801 200.776C64.3014 200.534 64.0231 200.164 63.8966 199.732L46.0854 143.947C46.0481 143.818 45.9703 143.705 45.8636 143.625C45.7568 143.544 45.6269 143.5 45.4931 143.5C45.3594 143.499 45.229 143.542 45.1215 143.621C45.014 143.701 44.9351 143.813 44.8966 143.941L30.2846 199.925C30.1709 200.311 29.9358 200.649 29.6141 200.891C29.2924 201.132 28.9014 201.264 28.4992 201.265H23.3157C23.0606 201.265 22.8083 201.212 22.5744 201.11C22.3404 201.008 22.1299 200.86 21.9557 200.673Z" fill="#2F2E41"/>
-                <path d="M65.0632 115.949L43.0874 112.181C41.6588 111.942 40.336 111.276 39.292 110.272C38.248 109.268 37.5316 107.972 37.2364 106.554L32.6478 84.881C32.4696 84.0398 32.4772 83.1699 32.6698 82.3319C32.8625 81.4939 33.2356 80.708 33.7631 80.0291C34.2907 79.3501 34.9601 78.7944 35.7245 78.4007C36.4889 78.007 37.33 77.7848 38.1891 77.7495C39.6747 77.6956 41.1265 78.2004 42.2582 79.1644C43.3898 80.1284 44.119 81.4815 44.302 82.9567L46.6048 102.274L65.9912 107.311C66.3579 107.438 66.6759 107.675 66.9006 107.991C67.1254 108.307 67.2457 108.686 67.2448 109.074L67.2365 114.122C67.2361 114.392 67.1766 114.659 67.0623 114.904C66.9479 115.149 66.7815 115.367 66.5745 115.541C66.3675 115.715 66.1251 115.841 65.864 115.912C65.603 115.983 65.3296 115.995 65.0632 115.949Z" fill="#752A7A"/>
-                <path d="M46.2402 59.7516C47.8554 59.4177 49.4259 58.343 49.8574 56.7511C50.2343 55.3604 49.6767 53.8611 48.8038 52.7147C47.6656 51.2963 46.0859 50.2991 44.3158 49.8816C42.5458 49.4641 40.6869 49.6503 39.0349 50.4106C39.1908 49.5906 38.574 48.7816 37.815 48.4343C37.0293 48.1442 36.1892 48.0313 35.3548 48.1039C32.7149 48.1408 29.9043 48.2289 27.7215 49.7142C25.9809 50.8985 24.8758 52.8459 24.3033 54.8718C23.7308 56.8978 23.6372 59.0236 23.5472 61.127C23.3894 64.8133 24.8338 72.5722 24.8338 72.5722C24.8338 72.5722 29.9415 73.9765 32.1792 74.627C34.5837 75.3262 38.6408 76.0253 41.0454 76.7244C41.6609 76.9033 42.485 77.0038 42.7943 76.4424C43.0412 75.9943 42.7557 75.4484 42.4685 75.0249C41.2042 73.16 39.7557 71.4011 38.7831 69.3687C37.8104 67.3364 37.3553 64.9214 38.1904 62.8288C39.0255 60.7361 44.625 60.0856 46.2402 59.7516Z" fill="#2F2E41"/>
-                <path d="M205.563 131.153H337.701C339.454 131.153 341.135 130.456 342.375 129.216C343.615 127.977 344.311 126.295 344.311 124.542V64.8241C344.311 63.0709 343.615 61.3896 342.375 60.15C341.135 58.9103 339.454 58.2139 337.701 58.2139H205.563C203.81 58.2139 202.129 58.9103 200.889 60.15C199.65 61.3896 198.953 63.0709 198.953 64.8241V124.542C198.953 126.295 199.65 127.977 200.889 129.216C202.129 130.456 203.81 131.153 205.563 131.153Z" fill="#E7E7E7"/>
-                <path d="M323.273 97.9886H217.922C217.046 97.9886 216.205 97.6404 215.585 97.0206C214.965 96.4007 214.617 95.5601 214.617 94.6835C214.617 93.807 214.965 92.9663 215.585 92.3465C216.205 91.7266 217.046 91.3784 217.922 91.3784H323.273C324.149 91.3784 324.99 91.7266 325.61 92.3465C326.229 92.9663 326.578 93.807 326.578 94.6835C326.578 95.5601 326.229 96.4007 325.61 97.0206C324.99 97.6404 324.149 97.9886 323.273 97.9886Z" fill="white"/>
-                <path d="M323.273 112.035H217.922C217.046 112.035 216.205 111.687 215.585 111.067C214.965 110.447 214.617 109.606 214.617 108.73C214.617 107.853 214.965 107.013 215.585 106.393C216.205 105.773 217.046 105.425 217.922 105.425H323.273C324.149 105.425 324.99 105.773 325.61 106.393C326.229 107.013 326.578 107.853 326.578 108.73C326.578 109.606 326.229 110.447 325.61 111.067C324.99 111.687 324.149 112.035 323.273 112.035Z" fill="white"/>
-                <path d="M304.681 83.9418H217.922C217.046 83.9418 216.205 83.5935 215.585 82.9737C214.965 82.3539 214.617 81.5132 214.617 80.6366C214.617 79.7601 214.965 78.9194 215.585 78.2996C216.205 77.6798 217.046 77.3315 217.922 77.3315H304.681C305.558 77.3315 306.399 77.6798 307.018 78.2996C307.638 78.9194 307.986 79.7601 307.986 80.6366C307.986 81.5132 307.638 82.3539 307.018 82.9737C306.399 83.5935 305.558 83.9418 304.681 83.9418Z" fill="white"/>
-                <path d="M99.1532 214H0.413138C0.303567 214 0.198484 213.957 0.121005 213.879C0.0435266 213.802 0 213.697 0 213.587C0 213.477 0.0435266 213.372 0.121005 213.295C0.198484 213.217 0.303567 213.174 0.413138 213.174H99.1532C99.2628 213.174 99.3679 213.217 99.4453 213.295C99.5228 213.372 99.5664 213.477 99.5664 213.587C99.5664 213.697 99.5228 213.802 99.4453 213.879C99.3679 213.957 99.2628 214 99.1532 214Z" fill="#CCCCCC"/>
-                </g>
-                <defs>
-                <clipPath id="clip0_34_141">
-                <rect width="364.965" height="214" fill="white"/>
-                </clipPath>
-                </defs>
-              </svg>                                        
-              <h2 class="text-lg lg:text-xl font-semibold mt-10 text-center">Importe suas contas do <span class="font-bold" style="color: #1877F2;">Facebook</span> e <span style="color: #C21F70;" class="font-bold">Instagram</span>.</h2>
-              <p class="text-md text-center">Você não possui nenhuma conta importada.</p>
-            </div>
-          <% } %>
-        </div>
+    </body>
 
-        <div class="col-span-1 mt-3">
-          <article class="bg-white p-4 rounded-lg shadow">
-            <div>
-              <h3 class="inter font-semibold text-lg">Informações disponíveis:</h3>
-              <p class="inter text-md mt-2">Contas importadas: <span class="color-purple font-semibold"><%= user.accountsFb.length + user.accountsIg.length %> importadas</span></p>
-              <% if (!user.isAdmin) { %>
-                <p class="inter text-md mt-2">Contas restantes: <span class="color-purple font-semibold"><%= plan.quantityAccounts - (user.accountsFb.length + user.accountsIg.length) %> restantes</span></p>
-              <% } else { %>
-                <p class="inter text-md mt-2">Contas restantes: <span class="color-purple font-semibold">Ilimitado</span></p>
-              <% } %>
-            </div>
-          </article>
+    <script src="/js/app/social-accounts.js"></script>
 
-          <article class="bg-white p-4 rounded-lg shadow mt-4">
-            <div>
-              <% if (user.isAdmin || user.accountsFb.length + user.accountsIg.length != plan.quantityAccounts) { %>
-                <a href="/app/social-accounts/auth/facebook" class="w-full inline-flex items-center justify-center gap-x-1.5 rounded-lg px-2.5 py-2 font-semibold text-md shadow-sm inter facebook">
-                  <svg class="mr-0.5" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M20 10.0611C20 4.50451 15.5228 0 10 0C4.47715 0 0 4.50451 0 10.0611C0 15.0829 3.65686 19.2452 8.43746 20V12.9694H5.89844V10.0611H8.43746V7.84453C8.43746 5.32295 9.93045 3.93012 12.2146 3.93012C13.3087 3.93012 14.4531 4.12663 14.4531 4.12663V6.60261H13.1922C11.9499 6.60261 11.5625 7.37815 11.5625 8.17381V10.0611H14.3359L13.8925 12.9694H11.5625V20C16.3432 19.2452 20 15.0829 20 10.0611Z" fill="#1877F2"/>
-                  </svg>                                    
-                  Adicionar nova conta
-                </a>
-              <% } else { %>
-                <button onclick="alertMessage('error', 'Limite de perfis atingidos')" class="w-full inline-flex items-center justify-center gap-x-1.5 rounded-lg px-2.5 py-2 font-semibold text-md shadow-sm inter facebook">
-                  <svg class="mr-0.5" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M20 10.0611C20 4.50451 15.5228 0 10 0C4.47715 0 0 4.50451 0 10.0611C0 15.0829 3.65686 19.2452 8.43746 20V12.9694H5.89844V10.0611H8.43746V7.84453C8.43746 5.32295 9.93045 3.93012 12.2146 3.93012C13.3087 3.93012 14.4531 4.12663 14.4531 4.12663V6.60261H13.1922C11.9499 6.60261 11.5625 7.37815 11.5625 8.17381V10.0611H14.3359L13.8925 12.9694H11.5625V20C16.3432 19.2452 20 15.0829 20 10.0611Z" fill="#1877F2"/>
-                  </svg>                                    
-                  Adicionar nova conta
-                </button>
-              <% } %>
-            </div>
-          </article>
-
-          <article class="bg-white p-4 rounded-lg shadow mt-4">
-            <div>
-              <% if (user.isAdmin || user.accountsFb.length + user.accountsIg.length != plan.quantityAccounts) { %>
-                <button onclick="openImportAccountInstagram()" class="w-full inline-flex items-center justify-center gap-x-1.5 rounded-lg px-2.5 py-2 font-semibold text-md shadow-sm inter instagram">
-                  <svg class="mr-0.5" width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M14.573 3.287C14.3475 3.287 14.1271 3.35386 13.9396 3.47912C13.7522 3.60439 13.6061 3.78243 13.5198 3.99074C13.4335 4.19905 13.4109 4.42826 13.4549 4.6494C13.4989 4.87054 13.6075 5.07367 13.7669 5.2331C13.9263 5.39253 14.1295 5.50111 14.3506 5.5451C14.5717 5.58908 14.801 5.56651 15.0093 5.48022C15.2176 5.39394 15.3956 5.24782 15.5209 5.06035C15.6461 4.87288 15.713 4.65247 15.713 4.427C15.713 4.12465 15.5929 3.83469 15.3791 3.6209C15.1653 3.40711 14.8753 3.287 14.573 3.287ZM18.943 5.586C18.9245 4.79778 18.7769 4.01793 18.506 3.2775C18.2644 2.64398 17.8885 2.07031 17.404 1.596C16.9336 1.10905 16.3586 0.735468 15.7225 0.5035C14.984 0.224353 14.2033 0.0733495 13.414 0.0569999C12.407 -5.30854e-08 12.084 0 9.5 0C6.916 0 6.593 -5.30854e-08 5.586 0.0569999C4.79669 0.0733495 4.01598 0.224353 3.2775 0.5035C2.64259 0.737816 2.06809 1.11108 1.596 1.596C1.10905 2.06642 0.735468 2.64142 0.5035 3.2775C0.224353 4.01598 0.0733495 4.79669 0.0569999 5.586C-5.30854e-08 6.593 0 6.916 0 9.5C0 12.084 -5.30854e-08 12.407 0.0569999 13.414C0.0733495 14.2033 0.224353 14.984 0.5035 15.7225C0.735468 16.3586 1.10905 16.9336 1.596 17.404C2.06809 17.8889 2.64259 18.2622 3.2775 18.4965C4.01598 18.7756 4.79669 18.9267 5.586 18.943C6.593 19 6.916 19 9.5 19C12.084 19 12.407 19 13.414 18.943C14.2033 18.9267 14.984 18.7756 15.7225 18.4965C16.3586 18.2645 16.9336 17.8909 17.404 17.404C17.8906 16.9315 18.2669 16.3573 18.506 15.7225C18.7769 14.9821 18.9245 14.2022 18.943 13.414C18.943 12.407 19 12.084 19 9.5C19 6.916 19 6.593 18.943 5.586ZM17.233 13.3C17.2261 13.903 17.1169 14.5005 16.91 15.067C16.7583 15.4804 16.5147 15.854 16.1975 16.1595C15.8894 16.4735 15.5166 16.7166 15.105 16.872C14.5385 17.0789 13.941 17.1881 13.338 17.195C12.388 17.2425 12.0365 17.252 9.538 17.252C7.0395 17.252 6.688 17.252 5.738 17.195C5.11185 17.2067 4.48836 17.1103 3.895 16.91C3.50149 16.7467 3.14579 16.5041 2.85 16.1975C2.53468 15.8923 2.2941 15.5184 2.147 15.105C1.91506 14.5304 1.78642 13.9193 1.767 13.3C1.767 12.35 1.71 11.9985 1.71 9.5C1.71 7.0015 1.71 6.65 1.767 5.7C1.77126 5.0835 1.8838 4.47255 2.0995 3.895C2.26674 3.49402 2.52345 3.13658 2.85 2.85C3.13862 2.52336 3.49532 2.26394 3.895 2.09C4.47407 1.88104 5.0844 1.77183 5.7 1.767C6.65 1.767 7.0015 1.71 9.5 1.71C11.9985 1.71 12.35 1.71 13.3 1.767C13.903 1.77392 14.5005 1.88313 15.067 2.09C15.4987 2.25022 15.8862 2.5107 16.1975 2.85C16.5088 3.14182 16.7521 3.4986 16.91 3.895C17.1211 4.47349 17.2304 5.08419 17.233 5.7C17.2805 6.65 17.29 7.0015 17.29 9.5C17.29 11.9985 17.2805 12.35 17.233 13.3ZM9.5 4.6265C8.53652 4.62838 7.59521 4.9158 6.79502 5.45245C5.99483 5.98909 5.37166 6.75089 5.00425 7.64157C4.63684 8.53225 4.54169 9.51184 4.7308 10.4566C4.91992 11.4013 5.38482 12.2688 6.06677 12.9494C6.74872 13.6301 7.61711 14.0933 8.56222 14.2805C9.50732 14.4678 10.4867 14.3708 11.3767 14.0016C12.2667 13.6325 13.0272 13.0078 13.5623 12.2066C14.0974 11.4053 14.383 10.4635 14.383 9.5C14.3843 8.85885 14.2587 8.22378 14.0137 7.63131C13.7686 7.03884 13.4088 6.50067 12.955 6.04775C12.5012 5.59483 11.9624 5.23609 11.3694 4.99218C10.7765 4.74827 10.1411 4.62399 9.5 4.6265ZM9.5 12.6635C8.87432 12.6635 8.26269 12.478 7.74245 12.1304C7.22222 11.7827 6.81674 11.2887 6.57731 10.7106C6.33787 10.1326 6.27522 9.49649 6.39729 8.88283C6.51935 8.26917 6.82064 7.70549 7.26307 7.26307C7.70549 6.82064 8.26917 6.51935 8.88283 6.39729C9.49649 6.27522 10.1326 6.33787 10.7106 6.57731C11.2887 6.81674 11.7827 7.22222 12.1304 7.74245C12.478 8.26269 12.6635 8.87432 12.6635 9.5C12.6635 9.91544 12.5817 10.3268 12.4227 10.7106C12.2637 11.0944 12.0307 11.4432 11.7369 11.7369C11.4432 12.0307 11.0944 12.2637 10.7106 12.4227C10.3268 12.5817 9.91544 12.6635 9.5 12.6635Z" fill="#C21F70"/>
-                  </svg>                                                      
-                  Adicionar nova conta
-                </button>
-              <% } else { %>
-                <button onclick="alertMessage('error', 'Limite de perfis atingidos')" class="w-full inline-flex items-center justify-center gap-x-1.5 rounded-lg px-2.5 py-2 font-semibold text-md shadow-sm inter instagram">
-                  <svg class="mr-0.5" width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M14.573 3.287C14.3475 3.287 14.1271 3.35386 13.9396 3.47912C13.7522 3.60439 13.6061 3.78243 13.5198 3.99074C13.4335 4.19905 13.4109 4.42826 13.4549 4.6494C13.4989 4.87054 13.6075 5.07367 13.7669 5.2331C13.9263 5.39253 14.1295 5.50111 14.3506 5.5451C14.5717 5.58908 14.801 5.56651 15.0093 5.48022C15.2176 5.39394 15.3956 5.24782 15.5209 5.06035C15.6461 4.87288 15.713 4.65247 15.713 4.427C15.713 4.12465 15.5929 3.83469 15.3791 3.6209C15.1653 3.40711 14.8753 3.287 14.573 3.287ZM18.943 5.586C18.9245 4.79778 18.7769 4.01793 18.506 3.2775C18.2644 2.64398 17.8885 2.07031 17.404 1.596C16.9336 1.10905 16.3586 0.735468 15.7225 0.5035C14.984 0.224353 14.2033 0.0733495 13.414 0.0569999C12.407 -5.30854e-08 12.084 0 9.5 0C6.916 0 6.593 -5.30854e-08 5.586 0.0569999C4.79669 0.0733495 4.01598 0.224353 3.2775 0.5035C2.64259 0.737816 2.06809 1.11108 1.596 1.596C1.10905 2.06642 0.735468 2.64142 0.5035 3.2775C0.224353 4.01598 0.0733495 4.79669 0.0569999 5.586C-5.30854e-08 6.593 0 6.916 0 9.5C0 12.084 -5.30854e-08 12.407 0.0569999 13.414C0.0733495 14.2033 0.224353 14.984 0.5035 15.7225C0.735468 16.3586 1.10905 16.9336 1.596 17.404C2.06809 17.8889 2.64259 18.2622 3.2775 18.4965C4.01598 18.7756 4.79669 18.9267 5.586 18.943C6.593 19 6.916 19 9.5 19C12.084 19 12.407 19 13.414 18.943C14.2033 18.9267 14.984 18.7756 15.7225 18.4965C16.3586 18.2645 16.9336 17.8909 17.404 17.404C17.8906 16.9315 18.2669 16.3573 18.506 15.7225C18.7769 14.9821 18.9245 14.2022 18.943 13.414C18.943 12.407 19 12.084 19 9.5C19 6.916 19 6.593 18.943 5.586ZM17.233 13.3C17.2261 13.903 17.1169 14.5005 16.91 15.067C16.7583 15.4804 16.5147 15.854 16.1975 16.1595C15.8894 16.4735 15.5166 16.7166 15.105 16.872C14.5385 17.0789 13.941 17.1881 13.338 17.195C12.388 17.2425 12.0365 17.252 9.538 17.252C7.0395 17.252 6.688 17.252 5.738 17.195C5.11185 17.2067 4.48836 17.1103 3.895 16.91C3.50149 16.7467 3.14579 16.5041 2.85 16.1975C2.53468 15.8923 2.2941 15.5184 2.147 15.105C1.91506 14.5304 1.78642 13.9193 1.767 13.3C1.767 12.35 1.71 11.9985 1.71 9.5C1.71 7.0015 1.71 6.65 1.767 5.7C1.77126 5.0835 1.8838 4.47255 2.0995 3.895C2.26674 3.49402 2.52345 3.13658 2.85 2.85C3.13862 2.52336 3.49532 2.26394 3.895 2.09C4.47407 1.88104 5.0844 1.77183 5.7 1.767C6.65 1.767 7.0015 1.71 9.5 1.71C11.9985 1.71 12.35 1.71 13.3 1.767C13.903 1.77392 14.5005 1.88313 15.067 2.09C15.4987 2.25022 15.8862 2.5107 16.1975 2.85C16.5088 3.14182 16.7521 3.4986 16.91 3.895C17.1211 4.47349 17.2304 5.08419 17.233 5.7C17.2805 6.65 17.29 7.0015 17.29 9.5C17.29 11.9985 17.2805 12.35 17.233 13.3ZM9.5 4.6265C8.53652 4.62838 7.59521 4.9158 6.79502 5.45245C5.99483 5.98909 5.37166 6.75089 5.00425 7.64157C4.63684 8.53225 4.54169 9.51184 4.7308 10.4566C4.91992 11.4013 5.38482 12.2688 6.06677 12.9494C6.74872 13.6301 7.61711 14.0933 8.56222 14.2805C9.50732 14.4678 10.4867 14.3708 11.3767 14.0016C12.2667 13.6325 13.0272 13.0078 13.5623 12.2066C14.0974 11.4053 14.383 10.4635 14.383 9.5C14.3843 8.85885 14.2587 8.22378 14.0137 7.63131C13.7686 7.03884 13.4088 6.50067 12.955 6.04775C12.5012 5.59483 11.9624 5.23609 11.3694 4.99218C10.7765 4.74827 10.1411 4.62399 9.5 4.6265ZM9.5 12.6635C8.87432 12.6635 8.26269 12.478 7.74245 12.1304C7.22222 11.7827 6.81674 11.2887 6.57731 10.7106C6.33787 10.1326 6.27522 9.49649 6.39729 8.88283C6.51935 8.26917 6.82064 7.70549 7.26307 7.26307C7.70549 6.82064 8.26917 6.51935 8.88283 6.39729C9.49649 6.27522 10.1326 6.33787 10.7106 6.57731C11.2887 6.81674 11.7827 7.22222 12.1304 7.74245C12.478 8.26269 12.6635 8.87432 12.6635 9.5C12.6635 9.91544 12.5817 10.3268 12.4227 10.7106C12.2637 11.0944 12.0307 11.4432 11.7369 11.7369C11.4432 12.0307 11.0944 12.2637 10.7106 12.4227C10.3268 12.5817 9.91544 12.6635 9.5 12.6635Z" fill="#C21F70"/>
-                  </svg>                                                      
-                  Adicionar nova conta
-                </button>
-              <% } %>
-            </div>
-          </article>
-        </div>
-      </div>
-    </main>
-  </div>
-
-  <div class="fixed bottom-0 inset-x-0 border-t-orange">
-    <%- include('../../partials/app/footer') %>
-  </div>
-</body>
-
-<script src="/js/app/social-accounts.js"></script>
-</html>
+    </html>

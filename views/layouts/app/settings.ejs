@@ -13,9 +13,7 @@
             <% if (user.avatar.length > 0) { %>
               <img class="w-24 h-24 rounded-full" src="/img/avatars/<%= user.avatar %>">
             <% } else { %>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-20 w-20 text-purple">
-                <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
-              </svg>
+              <img src="/img/app/perfil-default.jpg" class="min-w-[80px] max-w-[80px] min-h-[80px] max-h-[80px] rounded-full">
             <% } %>                
 
             <h2 class="text-lg font-semibold text-gray-600 mt-4"><%= user.name %></h2>
@@ -65,13 +63,11 @@
                 <% if (user.avatar.length > 0) { %>
                   <img src="/img/avatars/<%= user.avatar %>" alt="" class="h-24 w-24 flex-none rounded-full object-cover preview">
                 <% } else { %>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-20 w-20 text-purple">
-                    <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
-                  </svg>
+                  <img src="/img/app/perfil-default.jpg" class="min-w-[80px] max-w-[80px] min-h-[80px] max-h-[80px] rounded-full">
                 <% } %>                    
 
                 <div class="mt-2">
-                  <label for="avatar-input" class="rounded-md px-3 py-2 text-sm font-semibold border border-purple text-purple shadow-sm cursor-pointer">Faça upload</label>
+                  <label for="avatar-input" class="rounded-md px-3 py-2 text-sm font-semibold border border-primary text-primary shadow-sm cursor-pointer">Faça upload</label>
                   <p class="mt-4 text-xs leading-5 text-gray-600 fire-sans">JPG, GIF or PNG. 1MB max.</p>
                   <input type="file" id="avatar-input" class="hidden" name="avatar-input">
                 </div>
@@ -109,7 +105,7 @@
             </div>
 
             <div class="flex justify-end p-6">
-              <button onclick="updateAccount()" type="button" class="text-purple border-2 border-purple font-medium rounded-lg text-sm px-5 py-2">Atualizar perfil</button>
+              <button onclick="updateAccount()" type="button" class="text-primary border-2 border-primary font-medium rounded-lg text-sm px-5 py-2">Atualizar perfil</button>
             </div>
           </div>
         </div>
@@ -144,7 +140,7 @@
             </div>
 
             <div class="flex justify-end p-6">
-              <button onclick="updatePassword()" type="button" class="text-purple border-2 border-purple focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2">Atualizar senha</button>
+              <button onclick="updatePassword()" type="button" class="text-primary border-2 border-primary focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2">Atualizar senha</button>
             </div>
           </div>
         </div>
@@ -207,7 +203,7 @@
               </div>
 
               <div class="pt-6">
-                <dt class="font-semibold color-purple">Próximo pagamento em: <span class="text-gray-800"><%= nextPayment %></span></dt>
+                <dt class="font-semibold text-primary">Próximo pagamento em: <span class="text-gray-800"><%= nextPayment %></span></dt>
               </div>
             </div>
           </div>
